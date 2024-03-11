@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 extension ThemeText on BuildContext {
@@ -19,11 +20,11 @@ extension UrlLauncherExtension on String {
     }
   }
 }
-
+*/
 class FadeAnimation extends StatelessWidget {
   final Widget child;
 
-  const FadeAnimation({Key? key, required this.child}) : super(key: key);
+  const FadeAnimation({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -34,4 +35,4 @@ class FadeAnimation extends StatelessWidget {
     );
   }
 }
-*/
+

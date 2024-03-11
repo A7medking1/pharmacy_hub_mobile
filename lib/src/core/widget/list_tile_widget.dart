@@ -41,7 +41,7 @@ class CustomListTileWidget extends StatelessWidget {
               style: style ??
                   Theme.of(context).textTheme.titleSmall!.copyWith(
                         fontSize: 14.sp,
-                        fontFamily: CustomFontFamily.medium,
+                        fontFamily: CustomFontFamily.vazirmatn,
                         color: fontColor ?? AppColors.defaultTextColor,
                       ),
             ),

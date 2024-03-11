@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomFontFamily {
-  static const String medium = 'expo-medium';
-  static const String book = 'expo-book';
-  static const String bold = 'expo-bold';
+  static const String vazirmatn = 'vazirmatn';
+
 }
 
 class FontWeightManager {

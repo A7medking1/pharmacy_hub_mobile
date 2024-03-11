@@ -45,7 +45,7 @@ class CustomTextFormField extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .titleSmall!
-                    .copyWith(color: AppColors.grey, fontSize: 13.sp),
+                    .copyWith(color: AppColors.grey, fontSize: 16.sp),
               )
             : const SizedBox.shrink(),
         title != ''
@@ -56,9 +56,9 @@ class CustomTextFormField extends StatelessWidget {
         TextFormField(
           controller: controller,
           validator: validator,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           onTap: onTap,
           onChanged: onChanged,
-          onTapOutside: (s) => FocusManager.instance.primaryFocus?.unfocus(),
           keyboardType: textInputType,
           // style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
           style: Theme.of(context).textTheme.titleSmall,

@@ -13,11 +13,14 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       useInheritedMediaQuery: true,
       builder: (context, Widget? child) {
-        return MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          theme: getAppTheme(),
-          themeMode: ThemeMode.light,
-          routerConfig: AppRouter.router,
+        return GestureDetector(
+          onTap: ()=> FocusManager.instance.primaryFocus!.unfocus(),
+          child: MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            theme: getAppTheme(),
+            themeMode: ThemeMode.light,
+            routerConfig: AppRouter.router,
+          ),
         );
       },
     );

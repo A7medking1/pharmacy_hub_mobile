@@ -3,7 +3,7 @@ import 'dart:ui';
 /// TODO Light COLOR
 
 class AppColors {
-  static const Color primary = Color(0xFF3834F3);
+  static const Color primary = Color(0xFF6AB784);
   static const Color primaryWithOp = Color(0xBF3834F3);
   static const Color backGroundColor = Color(0xFFFAFAFA);
   static const Color defaultTextColor = Color(0xFF1D1D1D);

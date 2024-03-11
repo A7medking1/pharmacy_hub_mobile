@@ -6,7 +6,7 @@ import 'package:pharmacy_hub/src/core/resources/style.dart';
 
 ThemeData getAppTheme() {
   return ThemeData(
-    fontFamily: CustomFontFamily.medium,
+    fontFamily: CustomFontFamily.vazirmatn,
     scaffoldBackgroundColor: AppColors.white,
     appBarTheme: AppBarTheme(
       elevation: 0.0,

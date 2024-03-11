@@ -14,7 +14,7 @@ AppBar buildAppBar({
     title: Text(
       title,
       style: context.titleSmall.copyWith(
-        fontFamily: CustomFontFamily.medium,
+        fontFamily: CustomFontFamily.vazirmatn,
       ),
     ),
   );
