@@ -5,6 +5,7 @@ import 'package:pharmacy_hub/src/features/auth/logic/auth_bloc.dart';
 import 'package:pharmacy_hub/src/features/auth/ui/screen/login/login_screen.dart';
 import 'package:pharmacy_hub/src/features/auth/ui/screen/signup/sign_up_screen.dart';
 import 'package:pharmacy_hub/src/features/home/ui/home.dart';
+import 'package:pharmacy_hub/src/features/onBoarding/ui/onBoarding_screen.dart';
 
 class Routes {
   Routes._();
@@ -26,10 +27,12 @@ class _RouterPath {
 
 class AppRouter {
   static GoRouter router = GoRouter(
+    initialLocation: _RouterPath.splash,
     routes: [
+      GoRoute(name: Routes.splash, path: _RouterPath.splash, builder: (_, state) => const OnBoardingScreen()),
       GoRoute(
-        name: Routes.splash,
-        path: _RouterPath.splash,
+        name: Routes.login,
+        path: _RouterPath.login,
         builder: (_, state) => BlocProvider(
           create: (context) => sl<AuthBloc>(),
           child: const LogInScreen(),
