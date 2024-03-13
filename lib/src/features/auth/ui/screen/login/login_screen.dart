@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pharmacy_hub/src/core/hepler.dart';
 import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
-import 'package:pharmacy_hub/src/core/services/index.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
 import 'package:pharmacy_hub/src/features/auth/logic/auth_bloc.dart';
 import 'package:pharmacy_hub/src/features/auth/ui/screen/login/widget/login_form_field.dart';
@@ -15,7 +14,7 @@ class LogInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -39,17 +38,17 @@ class LogInScreen extends StatelessWidget {
                     40.verticalSpace,
                     CustomButton(
                       onTap: () {
-                        if (context
+                        /*  if (context
                             .read<AuthBloc>()
                             .formKey
                             .currentState!
                             .validate()) {
+*/
+                        print(context.read<AuthBloc>().email.text);
+                        print(context.read<AuthBloc>().password.text);
 
-                          print(context.read<AuthBloc>().email.text);
-                          print(context.read<AuthBloc>().password.text);
-
-                          context.goNamed(Routes.home);
-                        }
+                        context.goNamed(Routes.appLayOut);
+                        //   }
                       },
                       text: 'Log In',
                     ),

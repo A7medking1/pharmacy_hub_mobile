@@ -42,7 +42,7 @@ class SignUpScreen extends StatelessWidget {
                         .validate()) {
                       print('object');
                       print(context.read<AuthBloc>().phone.text);
-                      context.goNamed(Routes.home);
+                      context.goNamed(Routes.appLayOut);
                     }
                   },
                   text: 'Sign up',

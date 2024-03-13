@@ -1,13 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pharmacy_hub/src/core/app_prefs/app_prefs.dart';
 import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
 import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
+import 'package:pharmacy_hub/src/core/services/index.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
 import 'package:pharmacy_hub/src/features/onBoarding/ui/widget/onBoard_page.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -23,9 +22,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   int pageIndex = 0;
   final CarouselController carouselController = CarouselController();
   PageController pageController = PageController();
-  final String _pageTextOne = "With Pharmacy Hub, streamline your pharmacy operations and enhance your user experience.";
-  final String _pageTextTwo = "Pharmacy Hub offers a range of powerful features designed to meet your pharmacy's needs.";
-  final String _pageTextThree = "Ready to experience the benefits of Pharmacy Hub?";
+  final String _pageTextOne =
+      "With Pharmacy Hub, streamline your pharmacy operations and enhance your user experience.";
+  final String _pageTextTwo =
+      "Pharmacy Hub offers a range of powerful features designed to meet your pharmacy's needs.";
+  final String _pageTextThree =
+      "Ready to experience the benefits of Pharmacy Hub?";
 
   late List<Widget> items;
 
@@ -49,7 +51,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               items: items,
               carouselController: carouselController,
               options: CarouselOptions(
-                  height: 1.sh,
+                  height: 3.sh,
                   aspectRatio: 1,
                   viewportFraction: 1,
                   enableInfiniteScroll: false,
@@ -66,19 +68,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-
                   20.verticalSpace,
-
                   SmoothPageIndicator(
                     controller: pageController, // PageController
                     count: items.length,
                     // forcing the indicator to use a specific direction
                     textDirection: TextDirection.ltr,
-                    effect: WormEffect(dotColor: AppColors.primary.withOpacity(.3), activeDotColor: AppColors.primary, dotHeight: 6.h, dotWidth: 6.w),
+                    effect: WormEffect(
+                      dotColor: AppColors.primary.withOpacity(.3),
+                      activeDotColor: AppColors.primary,
+                      dotHeight: 6.h,
+                      dotWidth: 6.w,
+                    ),
                   ),
-
                   const Spacer(),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -86,7 +89,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       pageIndex != items.length - 1
                           ? CustomButton(
                               onTap: () {
-                                GoRouter.of(context).replaceNamed(Routes.login);
+                                //   GoRouter.of(context).replaceNamed(Routes.login);\
+
+                                sl<AppPreferences>().setOnBoarding();
+                                context.goNamed(Routes.login);
                               },
                               color: AppColors.white,
                               fontColor: AppColors.primary.withOpacity(.5),
@@ -100,7 +106,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           if (pageIndex != items.length - 1) {
                             carouselController.nextPage();
                           } else {
-                            GoRouter.of(context).replaceNamed(Routes.login);
+                            //    GoRouter.of(context).replaceNamed(Routes.login);
+                            sl<AppPreferences>().setOnBoarding();
+                            context.goNamed(Routes.login);
                           }
                         },
                         text: pageIndex == items.length - 1 ? "Go" : "Next",

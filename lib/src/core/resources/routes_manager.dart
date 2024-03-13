@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pharmacy_hub/src/core/app_prefs/app_prefs.dart';
 import 'package:pharmacy_hub/src/core/services/index.dart';
+import 'package:pharmacy_hub/src/features/app_layout.dart';
 import 'package:pharmacy_hub/src/features/auth/logic/auth_bloc.dart';
 import 'package:pharmacy_hub/src/features/auth/ui/screen/login/login_screen.dart';
 import 'package:pharmacy_hub/src/features/auth/ui/screen/signup/sign_up_screen.dart';
@@ -13,7 +15,7 @@ class Routes {
   static const splash = '/';
   static const login = 'login';
   static const signUp = 'signUp';
-  static const home = 'home';
+  static const appLayOut = 'AppLayOut';
 }
 
 class _RouterPath {
@@ -22,14 +24,33 @@ class _RouterPath {
   static const splash = '/';
   static const login = '/login';
   static const signUp = '/signUp';
-  static const home = '/home';
+  static const appLayOut = '/AppLayOut';
 }
 
 class AppRouter {
+  static final AppPreferences _preferences = sl<AppPreferences>();
+
   static GoRouter router = GoRouter(
     initialLocation: _RouterPath.splash,
     routes: [
-      GoRoute(name: Routes.splash, path: _RouterPath.splash, builder: (_, state) => const OnBoardingScreen()),
+      GoRoute(
+        name: Routes.splash,
+        path: _RouterPath.splash,
+        redirect: (context, state) {
+          final isOnBoardingCompleted = _preferences.isOnBoardingInPrefs();
+          // If user has not completed onboarding, redirect to onboarding screen
+          if (!isOnBoardingCompleted) {
+            return _RouterPath.splash;
+          }
+          // If user has completed onboarding and tries to navigate to the splash screen, redirect to login
+          if (isOnBoardingCompleted) {
+            return _RouterPath.login;
+          }
+          // No redirect needed
+          return null;
+        },
+        builder: (_, state) => const OnBoardingScreen(),
+      ),
       GoRoute(
         name: Routes.login,
         path: _RouterPath.login,
@@ -47,9 +68,9 @@ class AppRouter {
         ),
       ),
       GoRoute(
-        name: Routes.home,
-        path: _RouterPath.home,
-        builder: (context, state) => const HomeScreen(),
+        name: Routes.appLayOut,
+        path: _RouterPath.appLayOut,
+        builder: (context, state) =>  AppLayOut(),
       ),
     ],
   );
