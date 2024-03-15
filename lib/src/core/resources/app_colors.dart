@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 /// TODO Light COLOR
 
 class AppColors {
@@ -25,5 +27,7 @@ class AppColors {
   static Color grey2 = const Color(0xff797979);
   static const Color white = Color(0xffFFFFFF);
   static Color white2 = const Color(0xCCdde1e3);
+  static const Color transparent = Colors.transparent;
+  static Gradient get shimmerColor =>
+      LinearGradient(colors: [white.withOpacity(.2), black.withOpacity(.1), white.withOpacity(.2)], stops: [.2, .4, .5]);
 }
-

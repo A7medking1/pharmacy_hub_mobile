@@ -6,6 +6,7 @@ import 'package:pharmacy_hub/src/core/hepler.dart';
 import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
 import 'package:pharmacy_hub/src/features/home/ui/home.dart';
+import 'package:pharmacy_hub/src/features/profile/ui/profile_screen.dart';
 
 class AppLayOut extends StatefulWidget {
   const AppLayOut({super.key});
@@ -19,7 +20,7 @@ class _AppLayOutState extends State<AppLayOut> {
     const HomeScreen(),
     const Center(child: Text('second')),
     const Center(child: Text('third')),
-    const Center(child: Text('fourth')),
+    const ProfileScreen(),
   ];
 
   int currentIndex = 0;
