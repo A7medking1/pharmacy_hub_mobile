@@ -57,7 +57,7 @@ class _AppLayOutState extends State<AppLayOut> {
               buildSvgIcon(
                 index: 1,
                 title: 'favorites',
-                selectedIcon: AppSvg.profile,
+                selectedIcon: AppSvg.fav,
                 onTap: () {
                   setState(
                     () {
@@ -101,23 +101,27 @@ class _AppLayOutState extends State<AppLayOut> {
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: [
-            SvgPicture.asset(
-              selectedIcon,
-              width: 25,
-              color: currentIndex == index ? AppColors.white : Colors.black,
-              // height: 25,
-            ),
-            10.verticalSpace,
-            Text(
-              title,
-              style: context.titleSmall.copyWith(
+        child: Opacity(
+          opacity: currentIndex == index ? 1 : 0.5,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SvgPicture.asset(
+                selectedIcon,
+                width: 25,
                 color: currentIndex == index ? AppColors.white : Colors.black,
-                fontSize: 14.sp,
+                // height: 25,
               ),
-            ),
-          ],
+              5.verticalSpace,
+              Text(
+                title,
+                style: context.titleSmall.copyWith(
+                  color: currentIndex == index ? AppColors.white : Colors.black,
+                  fontSize: 14.sp,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -135,10 +139,17 @@ class DefaultAppBar extends StatelessWidget {
       borderRadius: BorderRadius.vertical(bottom: Radius.circular(25.r)),
       child: AppBar(
         backgroundColor: AppColors.primaryWithOp,
-        leading: const Icon(
-          Icons.notifications_none,
-          color: Colors.white,
-          size: 27,
+        leading: Container(
+          alignment: Alignment.center,
+          // color: Colors.red,
+          child: IconButton(
+            onPressed: () {},
+            icon: SvgPicture.asset(
+              AppSvg.notification,
+              color: Colors.white,
+              fit: BoxFit.scaleDown,
+            ),
+          ),
         ),
         actions: [
           Column(
@@ -169,10 +180,7 @@ class DefaultAppBar extends StatelessWidget {
           ),
           10.horizontalSpace,
           Container(
-            margin: EdgeInsetsDirectional.only(
-              end: 20.w,
-              top: 8.h,
-            ),
+            margin: EdgeInsetsDirectional.only(end: 8.w, top: 10.h),
             child: SvgPicture.asset(
               AppSvg.appBarIcon,
             ),

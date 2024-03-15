@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pharmacy_hub/src/core/app_prefs/app_prefs.dart';
@@ -6,7 +7,6 @@ import 'package:pharmacy_hub/src/features/app_layout.dart';
 import 'package:pharmacy_hub/src/features/auth/logic/auth_bloc.dart';
 import 'package:pharmacy_hub/src/features/auth/ui/screen/login/login_screen.dart';
 import 'package:pharmacy_hub/src/features/auth/ui/screen/signup/sign_up_screen.dart';
-import 'package:pharmacy_hub/src/features/home/ui/home.dart';
 import 'package:pharmacy_hub/src/features/onBoarding/ui/onBoarding_screen.dart';
 
 class Routes {
@@ -70,7 +70,20 @@ class AppRouter {
       GoRoute(
         name: Routes.appLayOut,
         path: _RouterPath.appLayOut,
-        builder: (context, state) =>  AppLayOut(),
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: const AppLayOut(),
+            transitionDuration: const Duration(milliseconds: 500),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              // Change the opacity of the screen using a Curve based on the the animation's value
+              return FadeTransition(
+                opacity: CurveTween(curve: Curves.easeInOut).animate(animation),
+                child: child,
+              );
+            },
+          );
+        },
       ),
     ],
   );

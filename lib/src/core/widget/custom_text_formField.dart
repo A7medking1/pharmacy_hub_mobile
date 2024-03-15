@@ -17,6 +17,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType? textInputType;
   final bool readOnly;
   final int? maxLines;
+  final Color borderColor;
 
   const CustomTextFormField({
     super.key,
@@ -32,6 +33,7 @@ class CustomTextFormField extends StatelessWidget {
     this.maxLines = 1,
     this.onTap,
     this.onChanged,
+    this.borderColor = Colors.white,
   });
 
   @override
@@ -71,8 +73,8 @@ class CustomTextFormField extends StatelessWidget {
               borderRadius: BorderRadius.circular(
                 16,
               ),
-              borderSide: const BorderSide(
-                color: AppColors.white,
+              borderSide: BorderSide(
+                color: borderColor,
               ),
             ),
             hintText: hintText,
@@ -94,12 +96,6 @@ class CustomTextFormField extends StatelessWidget {
               ),
             ),
             prefixIcon: prefixIcon,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(
-                15,
-              ),
-              borderSide: const BorderSide(color: AppColors.white),
-            ),
             suffixIcon: suffixIcon,
           ),
         ),
