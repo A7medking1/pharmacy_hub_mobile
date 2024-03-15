@@ -34,7 +34,6 @@ class onBoardPage extends StatelessWidget {
               style: context.titleSmall.copyWith(fontSize: 18.sp, height: 1.3),
               textAlign: TextAlign.center,
             ),
-          
           ],
         ),
       ),

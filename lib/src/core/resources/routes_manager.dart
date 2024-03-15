@@ -8,6 +8,7 @@ import 'package:pharmacy_hub/src/features/auth/ui/screen/login/login_screen.dart
 import 'package:pharmacy_hub/src/features/auth/ui/screen/signup/sign_up_screen.dart';
 import 'package:pharmacy_hub/src/features/home/ui/home.dart';
 import 'package:pharmacy_hub/src/features/onBoarding/ui/onBoarding_screen.dart';
+import 'package:pharmacy_hub/src/features/profile/logic/bloc/profile_bloc.dart';
 
 class Routes {
   Routes._();
@@ -70,7 +71,10 @@ class AppRouter {
       GoRoute(
         name: Routes.appLayOut,
         path: _RouterPath.appLayOut,
-        builder: (context, state) =>  AppLayOut(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => ProfileBloc(),
+          child: AppLayOut(),
+        ),
       ),
     ],
   );
