@@ -12,6 +12,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   FutureOr<void> _getUserInfo(GetUserInfoEvent event, Emitter<ProfileState> emit) async {
-    emit(UserInfoState(null, null, null));
+    emit(UserInfoState("Ahmed Jihad Attia", "ahmedjihad@gmail.com", "https:\\www.aha.com"));
   }
 }
