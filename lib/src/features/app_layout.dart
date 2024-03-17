@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,6 +7,7 @@ import 'package:pharmacy_hub/src/core/hepler.dart';
 import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
 import 'package:pharmacy_hub/src/features/home/ui/home.dart';
+import 'package:pharmacy_hub/src/features/profile/logic/bloc/profile_bloc.dart';
 import 'package:pharmacy_hub/src/features/profile/ui/profile_screen.dart';
 
 class AppLayOut extends StatefulWidget {
@@ -27,65 +29,68 @@ class _AppLayOutState extends State<AppLayOut> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight + 15.h),
-        child: const DefaultAppBar(),
-      ),
-      body: screens[currentIndex],
-      bottomNavigationBar: Container(
-        height: kBottomNavigationBarHeight * 1.7,
-        decoration: BoxDecoration(
-            color: AppColors.primaryWithOp,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25.r),
-              topRight: Radius.circular(25.r),
-            )),
-        child: Padding(
-          padding: EdgeInsetsDirectional.only(start: 30.w, end: 30.w),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              buildSvgIcon(
-                  title: 'Home',
-                  index: 0,
-                  selectedIcon: AppSvg.home,
+    return BlocProvider(
+      create: (context) => ProfileBloc(),
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight + 15.h),
+          child: const DefaultAppBar(),
+        ),
+        body: screens[currentIndex],
+        bottomNavigationBar: Container(
+          height: kBottomNavigationBarHeight * 1.7,
+          decoration: BoxDecoration(
+              color: AppColors.primaryWithOp,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25.r),
+                topRight: Radius.circular(25.r),
+              )),
+          child: Padding(
+            padding: EdgeInsetsDirectional.only(start: 30.w, end: 30.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                buildSvgIcon(
+                    title: 'Home',
+                    index: 0,
+                    selectedIcon: AppSvg.home,
+                    onTap: () {
+                      setState(() {
+                        currentIndex = 0;
+                      });
+                    }),
+                buildSvgIcon(
+                  index: 1,
+                  title: 'favorites',
+                  selectedIcon: AppSvg.fav,
                   onTap: () {
-                    setState(() {
-                      currentIndex = 0;
-                    });
-                  }),
-              buildSvgIcon(
-                index: 1,
-                title: 'favorites',
-                selectedIcon: AppSvg.fav,
-                onTap: () {
-                  setState(
-                    () {
-                      currentIndex = 1;
-                    },
-                  );
-                },
-              ),
-              buildSvgIcon(
-                  title: 'Cart',
-                  index: 2,
-                  selectedIcon: AppSvg.cart,
-                  onTap: () {
-                    setState(() {
-                      currentIndex = 2;
-                    });
-                  }),
-              buildSvgIcon(
-                  title: 'Profile',
-                  index: 3,
-                  selectedIcon: AppSvg.profile,
-                  onTap: () {
-                    setState(() {
-                      currentIndex = 3;
-                    });
-                  }),
-            ],
+                    setState(
+                      () {
+                        currentIndex = 1;
+                      },
+                    );
+                  },
+                ),
+                buildSvgIcon(
+                    title: 'Cart',
+                    index: 2,
+                    selectedIcon: AppSvg.cart,
+                    onTap: () {
+                      setState(() {
+                        currentIndex = 2;
+                      });
+                    }),
+                buildSvgIcon(
+                    title: 'Profile',
+                    index: 3,
+                    selectedIcon: AppSvg.profile,
+                    onTap: () {
+                      setState(() {
+                        currentIndex = 3;
+                      });
+                    }),
+              ],
+            ),
           ),
         ),
       ),
@@ -103,21 +108,22 @@ class _AppLayOutState extends State<AppLayOut> {
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Opacity(
-          opacity: currentIndex == index ? 1 : 0.5,
+          opacity: currentIndex == index ? 1 : 0.7,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SvgPicture.asset(
                 selectedIcon,
                 width: 25,
-                color: currentIndex == index ? AppColors.white : Colors.black,
+                color: currentIndex == index ? AppColors.white : Colors.white60,
                 // height: 25,
               ),
               5.verticalSpace,
               Text(
                 title,
                 style: context.titleSmall.copyWith(
-                  color: currentIndex == index ? AppColors.white : Colors.black,
+                  color:
+                      currentIndex == index ? AppColors.white : Colors.white70,
                   fontSize: 14.sp,
                 ),
               ),

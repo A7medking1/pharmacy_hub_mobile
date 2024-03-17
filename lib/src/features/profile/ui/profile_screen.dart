@@ -45,7 +45,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsetsDirectional.symmetric(vertical: 20.h, horizontal: 20.w),
+          padding:
+              EdgeInsetsDirectional.symmetric(vertical: 20.h, horizontal: 20.w),
           child: Column(
             children: [
               50.verticalSpace,
@@ -53,11 +54,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: double.infinity,
                 alignment: Alignment.center,
                 padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-                decoration: BoxDecoration(color: AppColors.primaryWithOp, borderRadius: BorderRadius.circular(25.r)),
+                decoration: BoxDecoration(
+                    color: AppColors.primaryWithOp,
+                    borderRadius: BorderRadius.circular(25.r)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    BlocBuilder<ProfileBloc, ProfileState>(buildWhen: (previous, current) {
+                    BlocBuilder<ProfileBloc, ProfileState>(
+                        buildWhen: (previous, current) {
                       // it will call the builder funcion when do emit ot UserInfoState Just
                       return current is UserInfoState ? true : false;
                       // if (current is UserInfoState) {
@@ -79,7 +83,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               height: 80.h,
                               fit: BoxFit.cover,
                               errorWidget: (context, url, error) => Container(
-                                decoration: BoxDecoration(color: AppColors.white.withOpacity(.4), shape: BoxShape.circle),
+                                decoration: BoxDecoration(
+                                    color: AppColors.white.withOpacity(.4),
+                                    shape: BoxShape.circle),
                                 child: Icon(
                                   Icons.person,
                                   color: AppColors.black.withOpacity(.3),
@@ -94,12 +100,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 Text(
                                   state.name!,
-                                  style: context.titleMedium.copyWith(color: AppColors.white, fontSize: 17.sp, height: 1),
+                                  style: context.titleMedium.copyWith(
+                                      color: AppColors.white,
+                                      fontSize: 17.sp,
+                                      height: 1),
                                 ),
                                 Text(
                                   state.email!,
-                                  style: context.titleMedium
-                                      .copyWith(color: AppColors.white.withOpacity(.5), fontSize: 12.sp, fontWeight: FontWeightManager.regular),
+                                  style: context.titleMedium.copyWith(
+                                      color: AppColors.white.withOpacity(.5),
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeightManager.regular),
                                 )
                               ],
                             )
@@ -107,41 +118,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         );
                       } else {
                         return Shimmer(
-                          gradient: AppColors.shimmerColor,
-                          child:Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              width: 80.w,
-                              height: 80.h,
-                              decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                            ),
-                            15.horizontalSpace,
-                            Column(
+                            gradient: AppColors.shimmerColor,
+                            child: Row(
                               mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  height: 12.h,
-                                  width: 75.w,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100),
-                                    color: Colors.white
-                                  ),
+                                  width: 80.w,
+                                  height: 80.h,
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.circle),
                                 ),
-                                5.verticalSpace,
-                                Container(
-                                  height: 12.h,
-                                  width: 100.w,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100),
-                                    color: Colors.white
-                                  ),
-                                ),
+                                15.horizontalSpace,
+                                Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 12.h,
+                                      width: 75.w,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          color: Colors.white),
+                                    ),
+                                    5.verticalSpace,
+                                    Container(
+                                      height: 12.h,
+                                      width: 100.w,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          color: Colors.white),
+                                    ),
+                                  ],
+                                )
                               ],
-                            )
-                          ],
-                        ));
+                            ));
                       }
                     }),
                     CustomButton(
@@ -166,14 +179,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: double.infinity,
                 alignment: Alignment.center,
                 // padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-                decoration: BoxDecoration(color: AppColors.primaryWithOp, borderRadius: BorderRadius.circular(25.r)),
+                decoration: BoxDecoration(
+                    color: AppColors.primaryWithOp,
+                    borderRadius: BorderRadius.circular(25.r)),
                 child: Column(
                   children: [
                     ...profileItemsGroupPartOne.map((item) {
                       return CustomButton(
                         onTap: item.onTap,
                         height: 60.h,
-                        padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 20.w),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 0.h, horizontal: 20.w),
                         color: AppColors.transparent,
                         borderRadius: 0,
                         widget: Row(
@@ -191,7 +207,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 10.horizontalSpace,
                                 Text(
                                   item.text,
-                                  style: context.titleSmall.copyWith(fontSize: 16.sp, color: AppColors.white, height: 0),
+                                  style: context.titleSmall.copyWith(
+                                      fontSize: 16.sp,
+                                      color: AppColors.white,
+                                      height: 0),
                                 ),
                               ],
                             ),
@@ -213,14 +232,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: double.infinity,
                 alignment: Alignment.center,
                 // padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-                decoration: BoxDecoration(color: AppColors.primaryWithOp, borderRadius: BorderRadius.circular(25.r)),
+                decoration: BoxDecoration(
+                    color: AppColors.primaryWithOp,
+                    borderRadius: BorderRadius.circular(25.r)),
                 child: Column(
                   children: [
                     ...profileItemsGroupPartTwo.map((item) {
                       return CustomButton(
                         onTap: item.onTap,
                         height: 60.h,
-                        padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 20.w),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 0.h, horizontal: 20.w),
                         color: AppColors.transparent,
                         borderRadius: 0,
                         widget: Row(
@@ -238,7 +260,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 10.horizontalSpace,
                                 Text(
                                   item.text,
-                                  style: context.titleSmall.copyWith(fontSize: 16.sp, color: AppColors.white, height: 0),
+                                  style: context.titleSmall.copyWith(
+                                      fontSize: 16.sp,
+                                      color: AppColors.white,
+                                      height: 0),
                                 ),
                               ],
                             ),
@@ -266,5 +291,6 @@ class ProfileItem {
   IconData icon;
   String text;
   Function() onTap;
+
   ProfileItem(this.icon, this.text, this.onTap);
 }

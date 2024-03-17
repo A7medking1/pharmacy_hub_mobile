@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       useInheritedMediaQuery: true,
       builder: (context, Widget? child) {
         return GestureDetector(
-          onTap: ()=> FocusManager.instance.primaryFocus!.unfocus(),
+          onTap: () => FocusManager.instance.primaryFocus!.unfocus(),
           child: MaterialApp.router(
             debugShowCheckedModeBanner: false,
             theme: getAppTheme(),
