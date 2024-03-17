@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pharmacy_hub/src/core/app_prefs/app_prefs.dart';
 import 'package:pharmacy_hub/src/core/services/index.dart';
-import 'package:pharmacy_hub/src/features/app_layout.dart';
+import 'package:pharmacy_hub/src/features/layout/logic/app_layout_bloc.dart';
+import 'package:pharmacy_hub/src/features/layout/ui/app_layout.dart';
 import 'package:pharmacy_hub/src/features/auth/logic/auth_bloc.dart';
 import 'package:pharmacy_hub/src/features/auth/ui/screen/login/login_screen.dart';
 import 'package:pharmacy_hub/src/features/auth/ui/screen/signup/sign_up_screen.dart';
 import 'package:pharmacy_hub/src/features/onBoarding/ui/onBoarding_screen.dart';
+import 'package:pharmacy_hub/src/features/profile/logic/profile_bloc.dart';
 
 class Routes {
   Routes._();
@@ -67,15 +69,13 @@ class AppRouter {
           child: const SignUpScreen(),
         ),
       ),
-      GoRoute(
-        name: Routes.appLayOut,
-        path: _RouterPath.appLayOut,
-        pageBuilder: (context, state) {
+
+      /*
+              pageBuilder: (context, state) {
           return CustomTransitionPage(
             child: const AppLayOut(),
             transitionDuration: const Duration(milliseconds: 500),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
               // Change the opacity of the screen using a Curve based on the the animation's value
               return FadeTransition(
                 opacity: CurveTween(curve: Curves.easeInOut).animate(animation),
@@ -84,7 +84,16 @@ class AppRouter {
             },
           );
         },
-        builder: (context, state) => const AppLayOut(),
+
+      */
+      /// The Code Above Make AppLayoutBloc Does Not Work So I Removed It
+      GoRoute(
+        name: Routes.appLayOut,
+        path: _RouterPath.appLayOut,
+        builder: (context, state) => BlocProvider(
+          create: (context) => AppLayoutBloc(),
+          child: const AppLayOut(),
+        ),
       ),
     ],
   );

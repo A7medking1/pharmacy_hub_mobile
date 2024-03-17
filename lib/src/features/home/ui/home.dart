@@ -4,16 +4,23 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharmacy_hub/src/core/hepler.dart';
 import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
+import 'package:pharmacy_hub/src/core/resources/size_manager.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_text_formField.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin<HomeScreen>{
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -110,11 +117,15 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
             ),
+            (AppSize.buttomNavigationHeight + (20.h * 1)).verticalSpace
           ],
         ),
       ),
     );
   }
+  
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class MedicineCard extends StatelessWidget {
