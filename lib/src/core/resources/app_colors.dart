@@ -30,5 +30,5 @@ class AppColors {
   static Color white2 = const Color(0xCCdde1e3);
   static const Color transparent = Colors.transparent;
   static Gradient get shimmerColor =>
-      LinearGradient(colors: [white.withOpacity(.2), black.withOpacity(.1), white.withOpacity(.2)], stops: [.2, .4, .5]);
+      LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight ,colors: [black.withOpacity(.2), white.withOpacity(.1), black.withOpacity(.2)], stops: const [.3, .4, .5]);
 }

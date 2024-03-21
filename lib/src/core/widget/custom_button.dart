@@ -16,6 +16,8 @@ class CustomButton extends StatelessWidget {
   final double? height;
   final TextStyle? textStyle;
   final bool isBorderButton;
+  final Color? splashColor;
+  final Color? highlightColor;
  
   // you can use Text or Icon or widget 'just One'
   const CustomButton(
@@ -23,7 +25,10 @@ class CustomButton extends StatelessWidget {
       required this.onTap,
       this.text,
       this.icon,
+        this.widget,
       this.color = AppColors.primary,
+        this.splashColor,
+        this.highlightColor,
       this.width,
       this.fontColor = Colors.white,
       this.textStyle,
@@ -31,7 +36,7 @@ class CustomButton extends StatelessWidget {
       this.isBorderButton = false,
       this.borderRadius,
       this.padding,
-      this.widget});
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +53,9 @@ class CustomButton extends StatelessWidget {
       child: MaterialButton(
         onPressed: onTap,
         elevation: 0.0,
+        splashColor: splashColor ?? AppColors.primary.withOpacity(.1),
+        highlightColor: highlightColor ?? AppColors.primary.withOpacity(.1),
+        highlightElevation: 0, // this attribute remove the shadow under the button in 'long press' state
         padding: padding,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(borderRadius == null ? 15.r : borderRadius!),

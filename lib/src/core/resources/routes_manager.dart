@@ -10,6 +10,7 @@ import 'package:pharmacy_hub/src/features/auth/ui/screen/login/login_screen.dart
 import 'package:pharmacy_hub/src/features/auth/ui/screen/signup/sign_up_screen.dart';
 import 'package:pharmacy_hub/src/features/onBoarding/ui/onBoarding_screen.dart';
 import 'package:pharmacy_hub/src/features/profile/logic/profile_bloc.dart';
+import 'package:pharmacy_hub/src/features/profile/ui/about_screen.dart';
 
 class Routes {
   Routes._();
@@ -18,6 +19,7 @@ class Routes {
   static const login = 'login';
   static const signUp = 'signUp';
   static const appLayOut = 'AppLayOut';
+  static const about = 'about';
 }
 
 class _RouterPath {
@@ -27,6 +29,7 @@ class _RouterPath {
   static const login = '/login';
   static const signUp = '/signUp';
   static const appLayOut = '/AppLayOut';
+  static const about = '/about';
 }
 
 class AppRouter {
@@ -94,6 +97,12 @@ class AppRouter {
           create: (context) => AppLayoutBloc(),
           child: const AppLayOut(),
         ),
+      ),
+
+      GoRoute(
+        name: Routes.about,
+        path: _RouterPath.about,
+        builder: (context, state) => const AboutScreen(),
       ),
     ],
   );

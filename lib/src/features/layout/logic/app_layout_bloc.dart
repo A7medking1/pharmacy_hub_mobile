@@ -23,8 +23,10 @@ class AppLayoutBloc extends Bloc<AppLayoutEvent, AppLayoutState> {
     emit(TapChangeState());
   }
 
-  void onTapChange(int pageIndex,CarouselPageChangedReason _) {
-    currentTap = pageIndex;
-    emit(TapChangeState());
+  void onTapChange(int pageIndex,CarouselPageChangedReason reason) {
+    if(reason == CarouselPageChangedReason.manual){
+      currentTap = pageIndex;
+      emit(TapChangeState());
+    }
   }
 }
