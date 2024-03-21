@@ -27,7 +27,12 @@ class AppLayOut extends StatefulWidget {
 
 class _AppLayOutState extends State<AppLayOut> {
   late List<Widget> screens;
-  ScrollController scrollController = ScrollController();
+  ScrollController nestedScrollController = ScrollController();
+
+  void hideAppBar() => nestedScrollController.animateTo(
+      nestedScrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 100),
+      curve: Curves.easeIn);
 
   @override
   void initState() {
@@ -35,7 +40,7 @@ class _AppLayOutState extends State<AppLayOut> {
     screens = [
       const HomeScreen(),
       const Center(child: Text('second')),
-      const Center(child: Text('third')),
+      // const Center(child: Text('third')),
       BlocProvider(
         create: (context) => ProfileBloc(),
         child: const ProfileScreen(),
@@ -47,45 +52,46 @@ class _AppLayOutState extends State<AppLayOut> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          NestedScrollView(
-            controller: scrollController,
-            headerSliverBuilder: (_, b) {
-              return [
-                SliverAppBar(
-                  flexibleSpace: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: 90.h,
-                      margin:
-                          EdgeInsets.symmetric(vertical: 0, horizontal: 20.w),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 0, horizontal: 20.w),
-                      decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          borderRadius: BorderRadius.circular(25.r),
-                          boxShadow: [
-                            BoxShadow(
-                                color: AppColors.black.withOpacity(.2),
-                                offset: Offset(3.w, 3.h),
-                                blurRadius: 16)
-                          ]),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+      body: NestedScrollView(
+        controller: nestedScrollController,
+        scrollBehavior: ScrollBehavior(),
+        headerSliverBuilder: (_, b) {
+          return [
+            SliverAppBar(
+              flexibleSpace: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: 90.h,
+                  margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20.w),
+                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20.w),
+                  decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(25.r),
+                      boxShadow: [
+                        BoxShadow(
+                            color: AppColors.black.withOpacity(.2),
+                            offset: Offset(3.w, 3.h),
+                            blurRadius: 16)
+                      ]),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          AppSvg.appBarIcon,
+                        ),
+                        10.horizontalSpace,
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            // leading icon
-                            Container(
-                              alignment: Alignment.center,
-                              // color: Colors.red,
-                              child: IconButton(
-                                onPressed: () {},
-                                icon: SvgPicture.asset(
-                                  AppSvg.notification,
-                                  color: Colors.white,
-                                  fit: BoxFit.scaleDown,
-                                ),
+                            Text(
+                              'PHARMACY HUB',
+                              style: GoogleFonts.dosis(
+                                fontSize: 18.sp,
+                                textStyle: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                             Container(
@@ -106,125 +112,139 @@ class _AppLayOutState extends State<AppLayOut> {
                                 ),
                               ),
                             ),
-                            const Spacer(),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'PHARMACY HUB',
-                                  style: GoogleFonts.dosis(
-                                    fontSize: 18.sp,
-                                    textStyle: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                Text(
-                                  'Your medicine with one click',
-                                  style: context.titleSmall.copyWith(
-                                    fontSize: 10.sp,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
+                          ],
+                        ),
+                        const Spacer(),
+                        // leading icon
+                        Container(
+                          alignment: Alignment.center,
+                          // color: Colors.red,
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: SvgPicture.asset(
+                              AppSvg.notification,
+                              color: Colors.white,
+                              fit: BoxFit.scaleDown,
                             ),
-                            10.horizontalSpace,
-                            SvgPicture.asset(
-                              AppSvg.appBarIcon,
-                            )
-                          ]),
-                    ),
-                  ),
-                  backgroundColor: AppColors.transparent,
-                  surfaceTintColor: AppColors.transparent,
-                  foregroundColor: AppColors.transparent,
-                  expandedHeight: Platform.isIOS
-                      ? kToolbarHeight * 1.5
-                      : kToolbarHeight * 2,
-                  floating: true,
-                  snap: true,
-                )
-              ];
-            },
-            body: CarouselSlider(
-              items: screens,
+                          ),
+                        ),
+                      ]),
+                ),
+              ),
+              backgroundColor: AppColors.transparent,
+              surfaceTintColor: AppColors.transparent,
+              foregroundColor: AppColors.transparent,
+              expandedHeight: kToolbarHeight * 2,
+              floating: true,
+              snap: true,
+            )
+          ];
+        },
+        body: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            CarouselSlider(
+              items: [
+                const HomeScreen(),
+                const Center(child: Text('second')),
+                BlocProvider(
+                  create: (context) => ProfileBloc(),
+                  child: const ProfileScreen(),
+                ),
+
+              ],
               carouselController:
                   context.read<AppLayoutBloc>().carouselController,
               options: CarouselOptions(
-                  height: 1.sh,
+                  height: double.infinity,
                   aspectRatio: 1,
+                  // clipBehavior: Clip.antiAliasWithSaveLayer,
                   viewportFraction: 1,
                   enableInfiniteScroll: false,
-                  onPageChanged: context.read<AppLayoutBloc>().onTapChange),
+                  onPageChanged:
+                      (int pageIndex, CarouselPageChangedReason reason) {
+                    if (pageIndex == screens.length - 1) hideAppBar();
+                    context
+                        .read<AppLayoutBloc>()
+                        .onTapChange(pageIndex, reason);
+                  }),
             ),
-          ),
 
-          /// Buttom navigation
-          Container(
-            clipBehavior: Clip.antiAlias,
-            alignment: Alignment.center,
-            height: AppSize.buttomNavigationHeight,
-            margin: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-            // padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20.w),
-            decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(25.r),
-                boxShadow: [
-                  BoxShadow(
-                      color: AppColors.black.withOpacity(.2),
-                      offset: Offset(3.w, 3.h),
-                      blurRadius: 16)
-                ]),
-            child: BlocBuilder<AppLayoutBloc, AppLayoutState>(
-              buildWhen: (previous, current) => (current is TapChangeState),
-              builder: (_, state) {
-                return Row(
-                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: buttomTap(
-                          title: 'Home',
-                          index: 0,
-                          selectedIcon: AppSvg.home,
-                          onTap: () {
-                            context.read<AppLayoutBloc>().add(AnimatePageTo(0));
-                          }),
-                    ),
-                    Expanded(
-                      child: buttomTap(
-                          index: 1,
-                          title: 'favorites',
-                          selectedIcon: AppSvg.fav,
-                          onTap: () {
-                            context.read<AppLayoutBloc>().add(AnimatePageTo(1));
-                          }),
-                    ),
-                    Expanded(
-                      child: buttomTap(
-                          title: 'Cart',
-                          index: 2,
-                          selectedIcon: AppSvg.cart,
-                          onTap: () {
-                            context.read<AppLayoutBloc>().add(AnimatePageTo(2));
-                          }),
-                    ),
-                    Expanded(
-                      child: buttomTap(
-                          title: 'Profile',
-                          index: 3,
-                          selectedIcon: AppSvg.profile,
-                          onTap: () {
-                            context.read<AppLayoutBloc>().add(AnimatePageTo(3));
-                          }),
-                    ),
-                  ],
-                );
-              },
-            ),
-          )
-        ],
+            /// Bottom navigation
+            Container(
+              clipBehavior: Clip.antiAlias,
+              alignment: Alignment.center,
+              height: AppSize.buttomNavigationHeight,
+              width: 0.7.sw,
+              margin: EdgeInsets.symmetric(
+                  vertical: AppSize.pagePadding.h,
+                  horizontal: AppSize.pagePadding.w),
+              // padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20.w),
+              decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(25.r),
+                  boxShadow: [
+                    BoxShadow(
+                        color: AppColors.black.withOpacity(.2),
+                        offset: Offset(3.w, 3.h),
+                        blurRadius: 16)
+                  ]),
+              child: BlocBuilder<AppLayoutBloc, AppLayoutState>(
+                buildWhen: (previous, current) => (current is TapChangeState),
+                builder: (_, state) {
+                  return Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: buttomTap(
+                            title: 'Home',
+                            index: 0,
+                            selectedIcon: AppSvg.home,
+                            onTap: () {
+                              context
+                                  .read<AppLayoutBloc>()
+                                  .add(AnimatePageTo(0));
+                            }),
+                      ),
+                      Expanded(
+                        child: buttomTap(
+                            index: 1,
+                            title: 'favorites',
+                            selectedIcon: AppSvg.fav,
+                            onTap: () {
+                              context
+                                  .read<AppLayoutBloc>()
+                                  .add(AnimatePageTo(1));
+                            }),
+                      ),
+                      // Expanded(
+                      //   child: buttomTap(
+                      //       title: 'Cart',
+                      //       index: 2,
+                      //       selectedIcon: AppSvg.cart,
+                      //       onTap: () {
+                      //         context.read<AppLayoutBloc>().add(AnimatePageTo(2));
+                      //       }),
+                      // ),
+                      Expanded(
+                        child: buttomTap(
+                            title: 'Profile',
+                            index: 2,
+                            selectedIcon: AppSvg.profile,
+                            onTap: () {
+                              hideAppBar();
+                              context
+                                  .read<AppLayoutBloc>()
+                                  .add(AnimatePageTo(2));
+                            }),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -238,6 +258,7 @@ class _AppLayOutState extends State<AppLayOut> {
     return CustomButton(
         onTap: onTap,
         height: double.infinity,
+        splashColor: AppColors.white.withOpacity(.1),
         borderRadius: 0,
         widget: Column(
           mainAxisSize: MainAxisSize.min,
@@ -250,13 +271,9 @@ class _AppLayOutState extends State<AppLayOut> {
                       ? AppColors.white
                       : AppColors.white.withOpacity(.6),
                   BlendMode.srcIn),
-              // theme: SvgTheme(
-              //   currentColor: currentIndex == index ? AppColors.white : AppColors.white.withOpacity(.6)
-              // ),
-              // height: 25,
             ),
             context.read<AppLayoutBloc>().currentTap == index
-                ? 2.5.verticalSpace
+                ? 3.verticalSpace
                 : const SizedBox.shrink(),
             context.read<AppLayoutBloc>().currentTap == index
                 ? Text(

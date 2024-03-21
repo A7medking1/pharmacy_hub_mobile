@@ -11,6 +11,8 @@ import 'package:pharmacy_hub/src/features/cart/ui/cart_screen.dart';
 import 'package:pharmacy_hub/src/features/layout/logic/app_layout_bloc.dart';
 import 'package:pharmacy_hub/src/features/layout/ui/app_layout.dart';
 import 'package:pharmacy_hub/src/features/onBoarding/ui/onBoarding_screen.dart';
+import 'package:pharmacy_hub/src/features/profile/logic/profile_bloc.dart';
+import 'package:pharmacy_hub/src/features/profile/ui/about_screen.dart';
 
 class Routes {
   Routes._();
@@ -20,6 +22,7 @@ class Routes {
   static const signUp = 'signUp';
   static const appLayOut = 'appLayOut';
   static const cart = 'cart';
+  static const about = 'about';
 }
 
 class _RouterPath {
@@ -30,6 +33,7 @@ class _RouterPath {
   static const signUp = '/signUp';
   static const appLayOut = '/appLayOut';
   static const cart = '/cart';
+  static const about = '/about';
 }
 
 class AppRouter {
@@ -103,6 +107,12 @@ class AppRouter {
               create: (context) => CartBloc(),
               child: CartScreen(),
             ),
+      ),
+
+      GoRoute(
+        name: Routes.about,
+        path: _RouterPath.about,
+        builder: (context, state) => const AboutScreen(),
       ),
     ],
   );
