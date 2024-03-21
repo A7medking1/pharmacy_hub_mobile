@@ -11,7 +11,6 @@ import 'package:pharmacy_hub/src/features/cart/ui/cart_screen.dart';
 import 'package:pharmacy_hub/src/features/layout/logic/app_layout_bloc.dart';
 import 'package:pharmacy_hub/src/features/layout/ui/app_layout.dart';
 import 'package:pharmacy_hub/src/features/onBoarding/ui/onBoarding_screen.dart';
-import 'package:pharmacy_hub/src/features/profile/logic/profile_bloc.dart';
 import 'package:pharmacy_hub/src/features/profile/ui/about_screen.dart';
 
 class Routes {
@@ -63,20 +62,18 @@ class AppRouter {
       GoRoute(
         name: Routes.login,
         path: _RouterPath.login,
-        builder: (_, state) =>
-            BlocProvider(
-              create: (context) => sl<AuthBloc>(),
-              child: const LogInScreen(),
-            ),
+        builder: (_, state) => BlocProvider(
+          create: (context) => sl<AuthBloc>(),
+          child: const LogInScreen(),
+        ),
       ),
       GoRoute(
         name: Routes.signUp,
         path: _RouterPath.signUp,
-        builder: (context, state) =>
-            BlocProvider(
-              create: (context) => sl<AuthBloc>(),
-              child: const SignUpScreen(),
-            ),
+        builder: (context, state) => BlocProvider(
+          create: (context) => sl<AuthBloc>(),
+          child: const SignUpScreen(),
+        ),
       ),
       GoRoute(
         name: Routes.appLayOut,
@@ -102,13 +99,11 @@ class AppRouter {
       GoRoute(
         name: Routes.cart,
         path: _RouterPath.cart,
-        builder: (_, state) =>
-            BlocProvider(
-              create: (context) => CartBloc(),
-              child: CartScreen(),
-            ),
+        builder: (_, state) => BlocProvider(
+          create: (context) => CartBloc(),
+          child: const CartScreen(),
+        ),
       ),
-
       GoRoute(
         name: Routes.about,
         path: _RouterPath.about,

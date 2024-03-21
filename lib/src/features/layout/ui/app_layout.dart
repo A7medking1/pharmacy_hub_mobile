@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,7 +52,7 @@ class _AppLayOutState extends State<AppLayOut> {
     return Scaffold(
       body: NestedScrollView(
         controller: nestedScrollController,
-        scrollBehavior: ScrollBehavior(),
+      //  scrollBehavior: ScrollBehavior(),
         headerSliverBuilder: (_, b) {
           return [
             SliverAppBar(
@@ -82,7 +80,7 @@ class _AppLayOutState extends State<AppLayOut> {
                         10.horizontalSpace,
                         Column(
                           mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'PHARMACY HUB',
@@ -94,28 +92,35 @@ class _AppLayOutState extends State<AppLayOut> {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            Container(
-                              alignment: Alignment.center,
-                              // color: Colors.red,
-                              child: IconButton(
-                                onPressed: () {
-                                  context.pushNamed(Routes.cart);
-                                },
-                                icon: Hero(
-                                  tag: 'cart',
-
-                                  child: SvgPicture.asset(
-                                    AppSvg.cart,
-                                    color: Colors.white,
-                                    fit: BoxFit.scaleDown,
-                                  ),
-                                ),
+                            Text(
+                              'Your medicine with one click',
+                              style: context.titleSmall.copyWith(
+                                fontSize: 10.sp,
+                                color: Colors.white,
                               ),
                             ),
                           ],
                         ),
                         const Spacer(),
                         // leading icon
+                        Container(
+                          alignment: Alignment.center,
+                          // color: Colors.red,
+                          child: IconButton(
+                            onPressed: () {
+                              context.pushNamed(Routes.cart);
+                            },
+                            icon: Hero(
+                              tag: 'cart',
+                              child: SvgPicture.asset(
+                                AppSvg.cart,
+                                color: Colors.white,
+                                fit: BoxFit.scaleDown,
+                              ),
+                            ),
+                          ),
+                        ),
+
                         Container(
                           alignment: Alignment.center,
                           // color: Colors.red,
@@ -134,6 +139,7 @@ class _AppLayOutState extends State<AppLayOut> {
               backgroundColor: AppColors.transparent,
               surfaceTintColor: AppColors.transparent,
               foregroundColor: AppColors.transparent,
+              //      expandedHeight: Platform.isIOS ? kToolbarHeight *1.5:  kToolbarHeight * 2,
               expandedHeight: kToolbarHeight * 2,
               floating: true,
               snap: true,
@@ -151,7 +157,6 @@ class _AppLayOutState extends State<AppLayOut> {
                   create: (context) => ProfileBloc(),
                   child: const ProfileScreen(),
                 ),
-
               ],
               carouselController:
                   context.read<AppLayoutBloc>().carouselController,

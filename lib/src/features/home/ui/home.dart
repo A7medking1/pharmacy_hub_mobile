@@ -6,9 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharmacy_hub/src/core/hepler.dart';
 import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
-import 'package:pharmacy_hub/src/core/resources/font_manager.dart';
 import 'package:pharmacy_hub/src/core/resources/size_manager.dart';
-import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_text_formField.dart';
 import 'package:pharmacy_hub/src/features/home/ui/widget/medicine_card.dart';
 
@@ -19,7 +17,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>{
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -153,8 +151,8 @@ class _HomeScreenState extends State<HomeScreen>{
     );
   }
 
-  // @override
-  // bool get wantKeepAlive => true;
+// @override
+// bool get wantKeepAlive => true;
 }
 
 // Popular medicine
