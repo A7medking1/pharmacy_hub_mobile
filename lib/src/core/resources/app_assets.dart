@@ -7,6 +7,7 @@ class AppImages {
   static const String cat2 = '$_image/cat2.png';
   static const String med = '$_image/med.png';
   static const String medicine = '$_image/medicine.png';
+  static const String cart1 = '$_image/cart1.png';
 }
 
 class AppSvg {

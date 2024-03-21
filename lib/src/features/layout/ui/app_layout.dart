@@ -1,12 +1,16 @@
+import 'dart:io';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pharmacy_hub/src/core/hepler.dart';
 import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
+import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
 import 'package:pharmacy_hub/src/core/resources/size_manager.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
 import 'package:pharmacy_hub/src/features/home/ui/home.dart';
@@ -55,59 +59,90 @@ class _AppLayOutState extends State<AppLayOut> {
                     alignment: Alignment.bottomCenter,
                     child: Container(
                       height: 90.h,
-                      margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20.w),
-                      padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20.w),
+                      margin:
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 20.w),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 20.w),
                       decoration: BoxDecoration(
                           color: AppColors.primary,
                           borderRadius: BorderRadius.circular(25.r),
-                          boxShadow: [BoxShadow(color: AppColors.black.withOpacity(.2), offset: Offset(3.w, 3.h), blurRadius: 16)]),
-                      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                        // leading icon
-                        Container(
-                          alignment: Alignment.center,
-                          // color: Colors.red,
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: SvgPicture.asset(
-                              AppSvg.notification,
-                              color: Colors.white,
-                              fit: BoxFit.scaleDown,
-                            ),
-                          ),
-                        ),
-                        const Spacer(),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          boxShadow: [
+                            BoxShadow(
+                                color: AppColors.black.withOpacity(.2),
+                                offset: Offset(3.w, 3.h),
+                                blurRadius: 16)
+                          ]),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              'PHARMACY HUB',
-                              style: GoogleFonts.dosis(
-                                fontSize: 18.sp,
-                                textStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                                fontWeight: FontWeight.w700,
+                            // leading icon
+                            Container(
+                              alignment: Alignment.center,
+                              // color: Colors.red,
+                              child: IconButton(
+                                onPressed: () {},
+                                icon: SvgPicture.asset(
+                                  AppSvg.notification,
+                                  color: Colors.white,
+                                  fit: BoxFit.scaleDown,
+                                ),
                               ),
                             ),
-                            Text(
-                              'Your medicine with one click',
-                              style: context.titleSmall.copyWith(
-                                fontSize: 10.sp,
-                                color: Colors.white,
+                            Container(
+                              alignment: Alignment.center,
+                              // color: Colors.red,
+                              child: IconButton(
+                                onPressed: () {
+                                  context.pushNamed(Routes.cart);
+                                },
+                                icon: Hero(
+                                  tag: 'cart',
+
+                                  child: SvgPicture.asset(
+                                    AppSvg.cart,
+                                    color: Colors.white,
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                ),
                               ),
                             ),
-                          ],
-                        ),
-                        10.horizontalSpace,
-                        SvgPicture.asset(
-                          AppSvg.appBarIcon,
-                        )
-                      ]),
+                            const Spacer(),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'PHARMACY HUB',
+                                  style: GoogleFonts.dosis(
+                                    fontSize: 18.sp,
+                                    textStyle: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                Text(
+                                  'Your medicine with one click',
+                                  style: context.titleSmall.copyWith(
+                                    fontSize: 10.sp,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            10.horizontalSpace,
+                            SvgPicture.asset(
+                              AppSvg.appBarIcon,
+                            )
+                          ]),
                     ),
                   ),
                   backgroundColor: AppColors.transparent,
                   surfaceTintColor: AppColors.transparent,
                   foregroundColor: AppColors.transparent,
-                  expandedHeight: kToolbarHeight * 2,
+                  expandedHeight: Platform.isIOS
+                      ? kToolbarHeight * 1.5
+                      : kToolbarHeight * 2,
                   floating: true,
                   snap: true,
                 )
@@ -115,8 +150,14 @@ class _AppLayOutState extends State<AppLayOut> {
             },
             body: CarouselSlider(
               items: screens,
-              carouselController: context.read<AppLayoutBloc>().carouselController,
-              options: CarouselOptions(height: 1.sh, aspectRatio: 1, viewportFraction: 1, enableInfiniteScroll: false, onPageChanged: context.read<AppLayoutBloc>().onTapChange),
+              carouselController:
+                  context.read<AppLayoutBloc>().carouselController,
+              options: CarouselOptions(
+                  height: 1.sh,
+                  aspectRatio: 1,
+                  viewportFraction: 1,
+                  enableInfiniteScroll: false,
+                  onPageChanged: context.read<AppLayoutBloc>().onTapChange),
             ),
           ),
 
@@ -130,9 +171,14 @@ class _AppLayOutState extends State<AppLayOut> {
             decoration: BoxDecoration(
                 color: AppColors.primary,
                 borderRadius: BorderRadius.circular(25.r),
-                boxShadow: [BoxShadow(color: AppColors.black.withOpacity(.2), offset: Offset(3.w, 3.h), blurRadius: 16)]),
+                boxShadow: [
+                  BoxShadow(
+                      color: AppColors.black.withOpacity(.2),
+                      offset: Offset(3.w, 3.h),
+                      blurRadius: 16)
+                ]),
             child: BlocBuilder<AppLayoutBloc, AppLayoutState>(
-              buildWhen:(previous, current) => (current is TapChangeState),
+              buildWhen: (previous, current) => (current is TapChangeState),
               builder: (_, state) {
                 return Row(
                   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -200,18 +246,25 @@ class _AppLayOutState extends State<AppLayOut> {
               selectedIcon,
               width: 25.sp,
               colorFilter: ColorFilter.mode(
-                  context.read<AppLayoutBloc>().currentTap == index ? AppColors.white : AppColors.white.withOpacity(.6), BlendMode.srcIn),
+                  context.read<AppLayoutBloc>().currentTap == index
+                      ? AppColors.white
+                      : AppColors.white.withOpacity(.6),
+                  BlendMode.srcIn),
               // theme: SvgTheme(
               //   currentColor: currentIndex == index ? AppColors.white : AppColors.white.withOpacity(.6)
               // ),
               // height: 25,
             ),
-            context.read<AppLayoutBloc>().currentTap == index ? 2.5.verticalSpace : const SizedBox.shrink(),
+            context.read<AppLayoutBloc>().currentTap == index
+                ? 2.5.verticalSpace
+                : const SizedBox.shrink(),
             context.read<AppLayoutBloc>().currentTap == index
                 ? Text(
                     title,
                     style: context.titleSmall.copyWith(
-                      color: context.read<AppLayoutBloc>().currentTap == index ? AppColors.white : AppColors.white.withOpacity(.6),
+                      color: context.read<AppLayoutBloc>().currentTap == index
+                          ? AppColors.white
+                          : AppColors.white.withOpacity(.6),
                       fontSize: 12.sp,
                     ),
                   )

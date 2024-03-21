@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy_hub/src/core/hepler.dart';
@@ -18,7 +16,8 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveClientMixin<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen>
+    with AutomaticKeepAliveClientMixin<ProfileScreen> {
   List<ProfileItem> profileItemsGroupPartOne = [
     ProfileItem(Icons.account_circle_outlined, "Account", () => null),
     ProfileItem(Icons.wallet, "Wallet", () => null),
@@ -56,7 +55,9 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                 width: double.infinity,
                 alignment: Alignment.center,
                 padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-                decoration: BoxDecoration(color: AppColors.palePrimary, borderRadius: BorderRadius.circular(25.r)),
+                decoration: BoxDecoration(
+                    color: AppColors.palePrimary,
+                    borderRadius: BorderRadius.circular(25.r)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -93,7 +94,8 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                                   Expanded(
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           state.name!,
@@ -109,9 +111,11 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                                           state.email!,
                                           softWrap: false,
                                           style: context.titleMedium.copyWith(
-                                            color: AppColors.white.withOpacity(.5),
+                                            color:
+                                                AppColors.white.withOpacity(.5),
                                             fontSize: 12.sp,
-                                            fontWeight: FontWeightManager.regular,
+                                            fontWeight:
+                                                FontWeightManager.regular,
                                             overflow: TextOverflow.fade,
                                           ),
                                         )
@@ -132,7 +136,9 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                                 Container(
                                   width: 80.w,
                                   height: 80.h,
-                                  decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.circle),
                                 ),
                                 15.horizontalSpace,
                                 Column(
@@ -142,13 +148,19 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                                     Container(
                                       height: 12.h,
                                       width: 75.w,
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: Colors.white),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          color: Colors.white),
                                     ),
                                     5.verticalSpace,
                                     Container(
                                       height: 12.h,
                                       width: 100.w,
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: Colors.white),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          color: Colors.white),
                                     ),
                                   ],
                                 )
@@ -180,7 +192,9 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                       padding: EdgeInsets.only(left: 20.w),
                       child: Text(
                         "ACCOUNT SETTING",
-                        style: context.titleSmall.copyWith(color: AppColors.black.withOpacity(.7), fontSize: 14.sp),
+                        style: context.titleSmall.copyWith(
+                            color: AppColors.black.withOpacity(.7),
+                            fontSize: 14.sp),
                       )),
                 ],
               ),
@@ -190,7 +204,9 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                 width: double.infinity,
                 alignment: Alignment.center,
                 // padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-                decoration: BoxDecoration(color: AppColors.palePrimary, borderRadius: BorderRadius.circular(25.r)),
+                decoration: BoxDecoration(
+                    color: AppColors.palePrimary,
+                    borderRadius: BorderRadius.circular(25.r)),
                 child: Column(
                   children: [
                     ...profileItemsGroupPartOne.map((item) {
@@ -242,7 +258,9 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                       padding: EdgeInsets.only(left: 20.w),
                       child: Text(
                         "PREFERENCES",
-                        style: context.titleSmall.copyWith(color: AppColors.black.withOpacity(.7), fontSize: 14.sp),
+                        style: context.titleSmall.copyWith(
+                            color: AppColors.black.withOpacity(.7),
+                            fontSize: 14.sp),
                       )),
                 ],
               ),
@@ -252,7 +270,9 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                 width: double.infinity,
                 alignment: Alignment.center,
                 // padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-                decoration: BoxDecoration(color: AppColors.palePrimary, borderRadius: BorderRadius.circular(25.r)),
+                decoration: BoxDecoration(
+                    color: AppColors.palePrimary,
+                    borderRadius: BorderRadius.circular(25.r)),
                 child: Column(
                   children: [
                     ...profileItemsGroupPartTwo.map((item) {

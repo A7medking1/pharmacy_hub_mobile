@@ -32,6 +32,7 @@ dependencies:
       url: https://github.com/A7medking1/intl_phone_field
   animate_do: ^3.3.4
   google_fonts: ^6.2.0
+  easy_stepper: ^0.8.3
 
 
 dev_dependencies:

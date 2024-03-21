@@ -14,8 +14,8 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin<HomeScreen>{
-
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -117,13 +117,51 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                 },
               ),
             ),
+            20.verticalSpace,
+            Text(
+              'Popular medicine',
+              style: context.titleMedium.copyWith(
+                color: AppColors.primary,
+                fontSize: 20.sp,
+              ),
+            ),
+            8.verticalSpace,
+            SizedBox(
+              height: 260,
+              child: ListView.builder(
+                itemCount: 4,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return const MedicineCard();
+                },
+              ),
+            ),
+            20.verticalSpace,
+            Text(
+              'Popular medicine',
+              style: context.titleMedium.copyWith(
+                color: AppColors.primary,
+                fontSize: 20.sp,
+              ),
+            ),
+            8.verticalSpace,
+            SizedBox(
+              height: 260,
+              child: ListView.builder(
+                itemCount: 4,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return const MedicineCard();
+                },
+              ),
+            ),
             (AppSize.buttomNavigationHeight + (20.h * 1)).verticalSpace
           ],
         ),
       ),
     );
   }
-  
+
   @override
   bool get wantKeepAlive => true;
 }
