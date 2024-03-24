@@ -47,7 +47,7 @@ class _AboutScreenState extends State<AboutScreen> {
                     Platform.isIOS
                         ? Icons.arrow_back_ios_new_rounded
                         : Icons.arrow_back_rounded,
-                    color: AppColors.primary,
+                    color: AppColors.black,
                     size: 23.sp,
                   ),
                 ),

@@ -31,20 +31,41 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                CustomTextFormField(
-                  title: '',
-                  readOnly: true,
-                  hintText: 'Search for medicine & wellness products',
-                  borderColor: AppColors.primary,
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: SvgPicture.asset(
-                      AppSvg.search,
-                      width: 10,
-                      height: 10,
-                    ),
+                Container(
+                  padding:EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16.r),
+                    color: AppColors.primary.withOpacity(.05),
+                    border: Border.all(color: AppColors.primary.withOpacity(.1)),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        AppSvg.search,
+                        width: 25.w,
+                        color: AppColors.palePrimary,
+                      ),
+                      5.horizontalSpace,
+                      Text("Search for medicine & wellness products", style: context.titleMedium.copyWith(fontSize: 12.sp, color: AppColors.palePrimary, height: .7, letterSpacing: .6))
+                    ],
                   ),
                 ),
+                // CustomTextFormField(
+                //   title: '',
+                //   readOnly: true,
+                //   hintText: 'Search for medicine & wellness products',
+                //   borderColor: AppColors.primary,
+                //   prefixIcon: Padding(
+                //     padding: const EdgeInsets.all(3.0),
+                //     child: SvgPicture.asset(
+                //       AppSvg.search,
+                //       width: 10,
+                //       height: 10,
+                //     ),
+                //   ),
+                // ),
                 18.verticalSpace,
                 Image.asset(
                   AppImages.slide,
@@ -111,13 +132,13 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.symmetric(horizontal: AppSize.pagePadding.w),
             scrollDirection: Axis.horizontal,
             child: Row(children: [
-              MedicineCard(context),
+              MedicineCard(),
               10.horizontalSpace,
-              MedicineCard(context),
+              MedicineCard(),
               10.horizontalSpace,
-              MedicineCard(context),
+              MedicineCard(),
               10.horizontalSpace,
-              MedicineCard(context)
+              MedicineCard()
             ]),
           ),
           20.verticalSpace,
@@ -136,13 +157,13 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.symmetric(horizontal: AppSize.pagePadding.w),
             scrollDirection: Axis.horizontal,
             child: Row(children: [
-              MedicineCard(context),
+              MedicineCard(),
               10.horizontalSpace,
-              MedicineCard(context),
+              MedicineCard(),
               10.horizontalSpace,
-              MedicineCard(context),
+              MedicineCard(),
               10.horizontalSpace,
-              MedicineCard(context)
+              MedicineCard()
             ]),
           ),
           (AppSize.buttomNavigationHeight + (20.h * 1)).verticalSpace

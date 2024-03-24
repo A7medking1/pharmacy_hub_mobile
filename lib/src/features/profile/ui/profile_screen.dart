@@ -2,8 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pharmacy_hub/src/core/hepler.dart';
+import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
 import 'package:pharmacy_hub/src/core/resources/font_manager.dart';
 import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
@@ -105,16 +107,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     profileItemsGroupPartOne = [
-      ProfileItem(Icons.account_circle_outlined, "Account", () => null),
-      ProfileItem(Icons.shopping_cart_outlined, "Cart", () => null),
-      ProfileItem(Icons.favorite_outline_rounded, "Favorite", () => null),
-      // ProfileItem(Icons.wallet, "Wallet", () => null),
-      // ProfileItem(Icons.settings, "Settings", () => null),
+      ProfileItem(icon: Icons.account_circle_outlined, text: "Account", onTap: () => null),
+      ProfileItem(imageIcon: AppSvg.cart, text:"Cart", onTap:() => null),
+      ProfileItem(icon: Icons.favorite_outline_rounded, text:"Favorite",onTap: () => null),
+      // ProfileItem(icon:Icons.wallet, text:"Wallet",onTap:  () => null),
+      // ProfileItem(icon:Icons.settings, text:"Settings",onTap:  () => null),
     ];
     profileItemsGroupPartTwo = [
-      ProfileItem(Icons.contact_support, "Contact us", () => null),
-      ProfileItem(Icons.error_outline, "About", () => context.pushNamed(Routes.about)),
-      ProfileItem(Icons.logout, "Log out", logout)
+      ProfileItem(icon:Icons.contact_support,text: "Contact us", onTap:() => context.pushNamed(Routes.contactUs)),
+      ProfileItem(icon:Icons.error_outline, text:"About", onTap:() => context.pushNamed(Routes.about)),
+      ProfileItem(icon:Icons.logout,text: "Log out", onTap:logout)
     ];
 
     context.read<ProfileBloc>().add(GetUserInfoEvent());
@@ -128,247 +130,256 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        // controller: scrollController,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        child: Column(
-          children: [
-            BlocBuilder<ProfileBloc, ProfileState>(
-                buildWhen: (previous, current) {
-                  return current is UserInfoState ? true : false;
-                }, builder: (context, state) {
-              if (state is UserInfoState && state.email != null) {
-                return SizedBox(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // User image
-                      CachedNetworkImage(
-                        imageUrl: state.imageUrl!,
-                        width: 100.w,
-                        height: 100.h,
-                        fit: BoxFit.cover,
-                        errorWidget: (context, url, error) => Container(
+    return SingleChildScrollView(
+      // controller: scrollController,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      padding: EdgeInsets.only(top: MediaQuery.paddingOf(context).top),
+      child: Column(
+        children: [
+          BlocBuilder<ProfileBloc, ProfileState>(
+              buildWhen: (previous, current) {
+                return current is UserInfoState ? true : false;
+              }, builder: (context, state) {
+            if (state is UserInfoState && state.email != null) {
+              return SizedBox(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // User image
+                    CachedNetworkImage(
+                      imageUrl: state.imageUrl!,
+                      width: 100.w,
+                      height: 100.h,
+                      fit: BoxFit.cover,
+                      errorWidget: (context, url, error) => Container(
+                        decoration: BoxDecoration(
+                            color: AppColors.black.withOpacity(.05),
+                            shape: BoxShape.circle),
+                        child: Icon(
+                          Icons.person,
+                          color: AppColors.black.withOpacity(.3),
+                          size: 35.sp,
+                        ),
+                      ),
+                    ),
+                    15.verticalSpace,
+                    // User name and email
+                    Text(
+                      state.name!,
+                      softWrap: false,
+                      style: context.titleMedium.copyWith(
+                        color: AppColors.black,
+                        fontSize: 18.sp,
+                        height: 1,
+                        overflow: TextOverflow.fade,
+                      ),
+                    ),
+                    2.verticalSpace,
+                    Text(
+                      state.email!,
+                      softWrap: false,
+                      style: context.titleMedium.copyWith(
+                        color: AppColors.black.withOpacity(.5),
+                        fontSize: 12.sp,
+                        fontWeight: FontWeightManager.regular,
+                        overflow: TextOverflow.fade,
+                      ),
+                    )
+                  ],
+                ),
+              );
+            } else {
+              return Shimmer(
+                  gradient: AppColors.shimmerColor,
+                  period: const Duration(seconds: 3),
+                  child: SizedBox(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 100.w,
+                          height: 100.h,
                           decoration: BoxDecoration(
-                              color: AppColors.black.withOpacity(.05),
+                              color: Colors.black.withOpacity(.2),
                               shape: BoxShape.circle),
-                          child: Icon(
-                            Icons.person,
-                            color: AppColors.black.withOpacity(.3),
-                            size: 35.sp,
-                          ),
                         ),
-                      ),
-                      15.verticalSpace,
-                      // User name and email
-                      Text(
-                        state.name!,
-                        softWrap: false,
-                        style: context.titleMedium.copyWith(
-                          color: AppColors.black,
-                          fontSize: 18.sp,
-                          height: 1,
-                          overflow: TextOverflow.fade,
+                        15.verticalSpace,
+                        Container(
+                          height: 18.h,
+                          width: 120.w,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: Colors.black.withOpacity(.2)),
                         ),
-                      ),
-                      2.verticalSpace,
-                      Text(
-                        state.email!,
-                        softWrap: false,
-                        style: context.titleMedium.copyWith(
-                          color: AppColors.black.withOpacity(.5),
-                          fontSize: 12.sp,
-                          fontWeight: FontWeightManager.regular,
-                          overflow: TextOverflow.fade,
+                        5.verticalSpace,
+                        Container(
+                          height: 12.h,
+                          width: 85.w,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: Colors.black.withOpacity(.2)),
                         ),
-                      )
-                    ],
-                  ),
-                );
-              } else {
-                return Shimmer(
-                    gradient: AppColors.shimmerColor,
-                    period: const Duration(seconds: 3),
-                    child: SizedBox(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 100.w,
-                            height: 100.h,
-                            decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(.2),
-                                shape: BoxShape.circle),
-                          ),
-                          15.verticalSpace,
-                          Container(
-                            height: 18.h,
-                            width: 120.w,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                color: Colors.black.withOpacity(.2)),
-                          ),
-                          5.verticalSpace,
-                          Container(
-                            height: 12.h,
-                            width: 85.w,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                color: Colors.black.withOpacity(.2)),
-                          ),
-                        ],
-                      ),
-                    ));
-              }
-            }),
-            // MediaQuery.paddingOf(context).top  ->  get the status bar height it like [SafeArea Widget]
-            MediaQuery.paddingOf(context).top.verticalSpace,
-            // 20.verticalSpace,
-            Row(
+                      ],
+                    ),
+                  ));
+            }
+          }),
+          // MediaQuery.paddingOf(context).top  ->  get the status bar height it like [SafeArea Widget]
+          MediaQuery.paddingOf(context).top.verticalSpace,
+          // 20.verticalSpace,
+          Row(
+            children: [
+              Padding(
+                  padding: EdgeInsets.only(left: AppSize.pagePadding.w),
+                  child: Text(
+                    "ACCOUNT SETTING",
+                    style: context.titleSmall.copyWith(
+                        color: AppColors.black.withOpacity(.7),
+                        fontSize: 14.sp),
+                  )),
+            ],
+          ),
+          10.verticalSpace,
+          Container(
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            width: double.infinity,
+            alignment: Alignment.center,
+            // padding: EdgeInsets.symmetric(vertical: AppSize.pagePadding.h, horizontal: AppSize.pagePadding.w),
+            decoration: BoxDecoration(
+                color: AppColors.transparent,
+                borderRadius: BorderRadius.circular(0.r)),
+            child: Column(
               children: [
-                Padding(
-                    padding: EdgeInsets.only(left: AppSize.pagePadding.w),
-                    child: Text(
-                      "ACCOUNT SETTING",
-                      style: context.titleSmall.copyWith(
-                          color: AppColors.black.withOpacity(.7),
-                          fontSize: 14.sp),
-                    )),
+                ...profileItemsGroupPartOne.map((item) {
+                  return CustomButton(
+                    onTap: item.onTap,
+                    height: 60.h,
+                    padding: EdgeInsets.symmetric(
+                        vertical: 0.h, horizontal: (AppSize.pagePadding * 2).w),
+                    color: AppColors.transparent,
+                    borderRadius: 0,
+                    widget: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            item.icon != null ? Icon(
+                              item.icon,
+                              color: AppColors.black,
+                              size: 25.w,
+                            ) : SvgPicture.asset(
+                                item.imageIcon!,
+                                width: 26.w,
+                              colorFilter: ColorFilter.mode(AppColors.black, BlendMode.dst),
+                              ),
+                            10.horizontalSpace,
+                            Text(
+                              item.text,
+                              style: context.titleSmall.copyWith(
+                                  fontSize: 16.sp,
+                                  color: AppColors.black,
+                                  height: 0),
+                            ),
+                          ],
+                        ),
+                        Icon(
+                          Icons.navigate_next_rounded,
+                          color: AppColors.black.withOpacity(.4),
+                          size: 25.sp,
+                        ),
+                      ],
+                    ),
+                  );
+                })
               ],
             ),
-            10.verticalSpace,
-            Container(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              width: double.infinity,
-              alignment: Alignment.center,
-              // padding: EdgeInsets.symmetric(vertical: AppSize.pagePadding.h, horizontal: AppSize.pagePadding.w),
-              decoration: BoxDecoration(
-                  color: AppColors.transparent,
-                  borderRadius: BorderRadius.circular(0.r)),
-              child: Column(
-                children: [
-                  ...profileItemsGroupPartOne.map((item) {
-                    return CustomButton(
-                      onTap: item.onTap,
-                      height: 60.h,
-                      padding: EdgeInsets.symmetric(
-                          vertical: 0.h, horizontal: (AppSize.pagePadding * 2).w),
-                      color: AppColors.transparent,
-                      borderRadius: 0,
-                      widget: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                item.icon,
-                                color: AppColors.black,
-                                size: 25.sp,
-                              ),
-                              10.horizontalSpace,
-                              Text(
-                                item.text,
-                                style: context.titleSmall.copyWith(
-                                    fontSize: 16.sp,
-                                    color: AppColors.black,
-                                    height: 0),
-                              ),
-                            ],
-                          ),
-                          Icon(
-                            Icons.navigate_next_rounded,
-                            color: AppColors.black.withOpacity(.4),
-                            size: 25.sp,
-                          ),
-                        ],
-                      ),
-                    );
-                  })
-                ],
-              ),
-            ),
-            20.verticalSpace,
-            Row(
+          ),
+          20.verticalSpace,
+          Row(
+            children: [
+              Padding(
+                  padding: EdgeInsets.only(left: AppSize.pagePadding.w),
+                  child: Text(
+                    "PREFERENCES",
+                    style: context.titleSmall.copyWith(
+                        color: AppColors.black.withOpacity(.7),
+                        fontSize: 14.sp),
+                  )),
+            ],
+          ),
+          10.verticalSpace,
+          Container(
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            width: double.infinity,
+            alignment: Alignment.center,
+            // padding: EdgeInsets.symmetric(vertical: AppSize.pagePadding.h, horizontal: AppSize.pagePadding.w),
+            decoration: BoxDecoration(
+                color: AppColors.transparent,
+                borderRadius: BorderRadius.circular(0.r)),
+            child: Column(
               children: [
-                Padding(
-                    padding: EdgeInsets.only(left: AppSize.pagePadding.w),
-                    child: Text(
-                      "PREFERENCES",
-                      style: context.titleSmall.copyWith(
-                          color: AppColors.black.withOpacity(.7),
-                          fontSize: 14.sp),
-                    )),
+                ...profileItemsGroupPartTwo.map((item) {
+                  return CustomButton(
+                    onTap: item.onTap,
+                    height: 60.h,
+                    padding: EdgeInsets.symmetric(
+                        vertical: 0.h, horizontal: (AppSize.pagePadding * 2).w),
+                    color: AppColors.transparent,
+                    borderRadius: 0,
+                    widget: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            item.icon != null ? Icon(
+                              item.icon,
+                              color: AppColors.black,
+                              size: 25.w,
+                            ) : SvgPicture.asset(
+                              item.imageIcon!,
+                              width: 26.w,
+                              colorFilter: ColorFilter.mode(AppColors.black, BlendMode.dst),
+                            ),
+                            10.horizontalSpace,
+                            Text(
+                              item.text,
+                              style: context.titleSmall.copyWith(
+                                  fontSize: 16.sp,
+                                  color: AppColors.black,
+                                  height: 0),
+                            ),
+                          ],
+                        ),
+                        Icon(
+                          Icons.navigate_next_rounded,
+                          color: AppColors.black.withOpacity(.4),
+                          size: 25.sp,
+                        ),
+                      ],
+                    ),
+                  );
+                })
               ],
             ),
-            10.verticalSpace,
-            Container(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              width: double.infinity,
-              alignment: Alignment.center,
-              // padding: EdgeInsets.symmetric(vertical: AppSize.pagePadding.h, horizontal: AppSize.pagePadding.w),
-              decoration: BoxDecoration(
-                  color: AppColors.transparent,
-                  borderRadius: BorderRadius.circular(0.r)),
-              child: Column(
-                children: [
-                  ...profileItemsGroupPartTwo.map((item) {
-                    return CustomButton(
-                      onTap: item.onTap,
-                      height: 60.h,
-                      padding: EdgeInsets.symmetric(
-                          vertical: 0.h, horizontal: (AppSize.pagePadding * 2).w),
-                      color: AppColors.transparent,
-                      borderRadius: 0,
-                      widget: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                item.icon,
-                                color: AppColors.black,
-                                size: 25.sp,
-                              ),
-                              10.horizontalSpace,
-                              Text(
-                                item.text,
-                                style: context.titleSmall.copyWith(
-                                    fontSize: 16.sp,
-                                    color: AppColors.black,
-                                    height: 0),
-                              ),
-                            ],
-                          ),
-                          Icon(
-                            Icons.navigate_next_rounded,
-                            color: AppColors.black.withOpacity(.4),
-                            size: 25.sp,
-                          ),
-                        ],
-                      ),
-                    );
-                  })
-                ],
-              ),
-            )
-          ],
-        ),
+          ),
+          (AppSize.buttomNavigationHeight + (20.h * 1)).verticalSpace
+        ],
       ),
     );
   }
 }
 
 class ProfileItem {
-  IconData icon;
+  IconData? icon;
+  String? imageIcon;
   String text;
-  Function() onTap;
+  Function()? onTap;
 
-  ProfileItem(this.icon, this.text, this.onTap);
+  ProfileItem({this.icon, this.imageIcon, this.text = "", this.onTap});
 }

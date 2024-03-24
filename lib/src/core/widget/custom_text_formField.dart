@@ -18,6 +18,8 @@ class CustomTextFormField extends StatelessWidget {
   final bool readOnly;
   final int? maxLines;
   final Color borderColor;
+  final TextStyle? hintStyle;
+  final TextStyle? textStyle;
 
   const CustomTextFormField({
     super.key,
@@ -34,6 +36,8 @@ class CustomTextFormField extends StatelessWidget {
     this.onTap,
     this.onChanged,
     this.borderColor = Colors.white,
+    this.hintStyle,
+    this.textStyle
   });
 
   @override
@@ -63,7 +67,7 @@ class CustomTextFormField extends StatelessWidget {
           onChanged: onChanged,
           keyboardType: textInputType,
           // style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
-          style: Theme.of(context).textTheme.titleSmall,
+          style: textStyle ?? Theme.of(context).textTheme.titleSmall,
           readOnly: readOnly,
           obscureText: obscureText,
           maxLines: maxLines,
@@ -82,7 +86,7 @@ class CustomTextFormField extends StatelessWidget {
             prefixIconConstraints:
                 const BoxConstraints(minHeight: 30, minWidth: 40),
             fillColor: AppColors.backGroundColor,
-            hintStyle: TextStyle(color: AppColors.grey, fontSize: 14.sp),
+            hintStyle: hintStyle ?? TextStyle(color: AppColors.grey, fontSize: 14.sp),
             errorStyle: Theme.of(context)
                 .textTheme
                 .titleSmall!
