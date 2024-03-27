@@ -52,7 +52,7 @@ class _AppLayOutState extends State<AppLayOut> {
     return Scaffold(
       body: NestedScrollView(
         controller: nestedScrollController,
-      //  scrollBehavior: ScrollBehavior(),
+        //  scrollBehavior: ScrollBehavior(),
         headerSliverBuilder: (_, b) {
           return [
             SliverAppBar(
