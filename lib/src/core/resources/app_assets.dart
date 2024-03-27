@@ -26,4 +26,6 @@ class AppSvg {
   static const String search = '$_svg/search.svg';
   static const String heart = '$_svg/heart.svg';
   static const String cartSmall = '$_svg/cart_small.svg';
+  static const String cartAddress = '$_svg/cartAddress.svg';
+  static const String location = '$_svg/location_icon.svg';
 }

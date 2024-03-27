@@ -8,6 +8,7 @@ import 'package:pharmacy_hub/src/features/auth/ui/screen/login/login_screen.dart
 import 'package:pharmacy_hub/src/features/auth/ui/screen/signup/sign_up_screen.dart';
 import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/cart_screen.dart';
+import 'package:pharmacy_hub/src/features/cart/ui/map_screen.dart';
 import 'package:pharmacy_hub/src/features/layout/logic/app_layout_bloc.dart';
 import 'package:pharmacy_hub/src/features/layout/ui/app_layout.dart';
 import 'package:pharmacy_hub/src/features/onBoarding/ui/onBoarding_screen.dart';
@@ -24,6 +25,7 @@ class Routes {
   static const cart = 'cart';
   static const about = 'about';
   static const contactUs = 'contact-us';
+  static const map   = 'map';
 }
 
 class _RouterPath {
@@ -36,6 +38,7 @@ class _RouterPath {
   static const cart = '/cart';
   static const about = '/about';
   static const contactUs = '/contact-us';
+  static const map = '/map';
 }
 
 class AppRouter {
@@ -116,6 +119,11 @@ class AppRouter {
         name: Routes.contactUs,
         path: _RouterPath.contactUs,
         builder: (context, state) => const ContactUsScreen(),
+      ),
+      GoRoute(
+        name: Routes.map,
+        path: _RouterPath.map,
+        builder: (context, state) => const MapScreen(),
       ),
     ],
   );
