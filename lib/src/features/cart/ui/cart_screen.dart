@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,12 +27,20 @@ class CartScreen extends StatelessWidget {
                   tag: 'cart',
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: IconButton(
-                      onPressed: () {
-                        context.pop();
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back_ios,
+                    // Use CustomButton widget you was created, i added some features to it.
+                    child: CustomButton(
+                      onTap: () => context.pop(),
+                      width: 60.h,
+                      height: 60.h,
+                      borderRadius: 999,
+                      color: AppColors.transparent,
+                      padding: EdgeInsets.zero,
+                      icon: Icon(
+                        Platform.isIOS
+                            ? Icons.arrow_back_ios_new_rounded
+                            : Icons.arrow_back_rounded,
+                        color: AppColors.black,
+                        size: 23.w,
                       ),
                     ),
                   ),

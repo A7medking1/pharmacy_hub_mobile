@@ -1,3 +1,5 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -17,5 +19,7 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
 
-  runApp(const MyApp());
+  runApp(
+    DevicePreview(enabled: !kReleaseMode, builder: (_)=> const MyApp())
+  );
 }

@@ -73,9 +73,12 @@ class _AppLayOutState extends State<AppLayOut> {
                       ]),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SvgPicture.asset(
                           AppSvg.appBarIcon,
+                          fit: BoxFit.cover,
+                          width: 45.w,
                         ),
                         10.horizontalSpace,
                         Column(
@@ -103,34 +106,38 @@ class _AppLayOutState extends State<AppLayOut> {
                         ),
                         const Spacer(),
                         // leading icon
-                        Container(
-                          alignment: Alignment.center,
-                          // color: Colors.red,
-                          child: IconButton(
-                            onPressed: () {
-                              context.pushNamed(Routes.cart);
-                            },
-                            icon: Hero(
-                              tag: 'cart',
-                              child: SvgPicture.asset(
-                                AppSvg.cart,
-                                color: Colors.white,
-                                fit: BoxFit.scaleDown,
-                              ),
+                        CustomButton(
+                          onTap: () {
+                            context.pushNamed(Routes.cart);
+                          },
+                          padding: EdgeInsets.zero,
+                          width: 45.h,
+                          height: 45.h,
+                          borderRadius: 999,
+                          splashColor: AppColors.white.withOpacity(.1),
+                          widget: Hero(
+                            tag: 'cart',
+                            child: SvgPicture.asset(
+                              AppSvg.cart,
+                              color: Colors.white,
+                              fit: BoxFit.scaleDown,
+                              width: 30.w,
                             ),
                           ),
                         ),
 
-                        Container(
-                          alignment: Alignment.center,
-                          // color: Colors.red,
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: SvgPicture.asset(
-                              AppSvg.notification,
-                              color: Colors.white,
-                              fit: BoxFit.scaleDown,
-                            ),
+                        CustomButton(
+                          onTap: () {},
+                          padding: EdgeInsets.zero,
+                          width: 45.h,
+                          height: 45.h,
+                          borderRadius: 999,
+                          splashColor: AppColors.white.withOpacity(.1),
+                          widget: SvgPicture.asset(
+                            AppSvg.notification,
+                            color: Colors.white,
+                            fit: BoxFit.scaleDown,
+                            width: 30.w,
                           ),
                         ),
                       ]),
@@ -140,7 +147,7 @@ class _AppLayOutState extends State<AppLayOut> {
               surfaceTintColor: AppColors.transparent,
               foregroundColor: AppColors.transparent,
               //      expandedHeight: Platform.isIOS ? kToolbarHeight *1.5:  kToolbarHeight * 2,
-              expandedHeight: kToolbarHeight * 2,
+              expandedHeight: kToolbarHeight.h * 2,
               floating: true,
               snap: true,
             )
@@ -180,7 +187,7 @@ class _AppLayOutState extends State<AppLayOut> {
               clipBehavior: Clip.antiAlias,
               alignment: Alignment.center,
               height: AppSize.buttomNavigationHeight,
-              width: 0.7.sw,
+              width: 280.w,
               margin: EdgeInsets.symmetric(
                   vertical: AppSize.pagePadding.h,
                   horizontal: AppSize.pagePadding.w),
@@ -270,7 +277,7 @@ class _AppLayOutState extends State<AppLayOut> {
           children: [
             SvgPicture.asset(
               selectedIcon,
-              width: 25.sp,
+              width: 24.w,
               colorFilter: ColorFilter.mode(
                   context.read<AppLayoutBloc>().currentTap == index
                       ? AppColors.white

@@ -19,6 +19,7 @@ ThemeData getAppTheme() {
       titleTextStyle: getBoldStyle(),
       iconTheme: const IconThemeData(color: Colors.black),
     ),
+
     tabBarTheme: TabBarTheme(
       labelColor: AppColors.primary,
       indicator: const BoxDecoration(),

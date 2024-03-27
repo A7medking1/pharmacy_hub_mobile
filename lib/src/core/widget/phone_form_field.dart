@@ -12,10 +12,14 @@ import 'package:pharmacy_hub/src/core/resources/font_manager.dart';
 class PhoneFormField extends StatelessWidget {
   const PhoneFormField({
     super.key,
+    this.hintText,
+    this.title,
     this.controller,
     this.onChanged,
   });
 
+  final String? hintText;
+  final String? title;
   final TextEditingController? controller;
   final void Function(PhoneNumber)? onChanged;
 
@@ -24,23 +28,23 @@ class PhoneFormField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'phone number',
-          style: Theme.of(context)
-              .textTheme
-              .titleSmall!
-              .copyWith(color: AppColors.grey, fontSize: 16.sp),
-        ),
-        SizedBox(
-          height: 10.h,
-        ),
+        if (title != '') ...[
+          Text(
+            title ?? 'Phone number',
+            style: Theme.of(context)
+                .textTheme
+                .titleSmall!
+                .copyWith(color: AppColors.grey, fontSize: 16.sp),
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+        ],
         IntlPhoneField(
           controller: controller,
           countries: countriesField,
           invalidNumberMessage: 'Please enter a valid Number',
-          validator: (value){
-
-          },
+          validator: (value) {},
           pickerDialogStyle: PickerDialogStyle(
             backgroundColor: Colors.white,
             countryNameStyle: context.titleSmall,
@@ -65,7 +69,7 @@ class PhoneFormField extends StatelessWidget {
           decoration: InputDecoration(
             counterStyle: context.titleSmall.copyWith(fontSize: 12.sp),
             labelStyle: context.titleSmall,
-            hintText: 'phone number',
+            hintText: hintText ?? 'Phone number',
             fillColor: AppColors.backGroundColor,
             filled: true,
             hintStyle: TextStyle(
