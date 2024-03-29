@@ -8,6 +8,7 @@ class AppImages {
   static const String med = '$_image/med.png';
   static const String medicine = '$_image/medicine.png';
   static const String cart1 = '$_image/cart1.png';
+  static const String pick_marker = '$_image/pick_marker.png';
 }
 
 class AppSvg {
@@ -28,4 +29,8 @@ class AppSvg {
   static const String cartSmall = '$_svg/cart_small.svg';
   static const String cartAddress = '$_svg/cartAddress.svg';
   static const String location = '$_svg/location_icon.svg';
+  static const String marker = '$_svg/marker.svg';
+  static const String money = '$_svg/money.svg';
+  static const String paypal = '$_svg/paypal.svg';
+  static const String stripe = '$_svg/stripe.svg';
 }

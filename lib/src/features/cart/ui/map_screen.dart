@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -9,14 +10,41 @@ import 'package:pharmacy_hub/src/core/hepler.dart';
 import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
+import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 
 class MapScreen extends StatelessWidget {
-  const MapScreen({super.key});
+  final CartBloc cartBloc;
+
+  const MapScreen({super.key, required this.cartBloc});
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider.value(
+      value: cartBloc,
+      child: const MapContent(),
+    );
+  }
+}
+
+class MapContent extends StatefulWidget {
+  const MapContent({super.key});
+
+  @override
+  State<MapContent> createState() => _MapContentState();
+}
+
+class _MapContentState extends State<MapContent> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<CartBloc>().initCameraPositionMap();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bloc = context.read<CartBloc>();
     return Scaffold(
-      //   appBar: AppBar(),
       body: Padding(
         padding: EdgeInsetsDirectional.only(
           bottom: 20.h,
@@ -25,16 +53,27 @@ class MapScreen extends StatelessWidget {
           bottom: false,
           child: Stack(
             children: [
-              const GoogleMap(
+              GoogleMap(
                 compassEnabled: false,
                 myLocationEnabled: true,
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(
-                    31.039766446743734,
-                    31.380098058259826,
-                  ),
-                  zoom: 17,
-                ),
+                onMapCreated: (controller) async {
+                  await bloc.onMapCreated(controller);
+                },
+                onCameraIdle: () {
+                  // print('onCameraIdle');
+                  bloc.add(GetCurrentAddressEvent());
+                },
+                onCameraMove: (position) {
+                  bloc.onCameraMove(position);
+                },
+                initialCameraPosition: bloc.cameraPosition ??
+                    const CameraPosition(
+                      target: LatLng(
+                        31.039766446743734,
+                        31.380098058259826,
+                      ),
+                      zoom: 12,
+                    ),
               ),
               CustomButton(
                 onTap: () => context.pop(),
@@ -77,13 +116,21 @@ class MapScreen extends StatelessWidget {
                               Colors.white, BlendMode.srcIn),
                         ),
                         10.horizontalSpace,
-                        Text(
-                          '100 st , mansora , dakahlia',
-                          style: context.titleSmall.copyWith(
-                            fontSize: 17.sp,
-                            color: Colors.white,
-                          ),
-                        ),
+                        BlocBuilder<CartBloc, CartState>(
+                          builder: (context, state) {
+                            return Flexible(
+                              child: Text(
+                                state.currentAddress,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: context.titleSmall.copyWith(
+                                  fontSize: 17.sp,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            );
+                          },
+                        )
                       ],
                     ),
                   ),
@@ -91,10 +138,10 @@ class MapScreen extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.center,
-                child: Icon(
-                  Icons.location_on,
-                  color: Colors.red,
-                  size: 40.sp,
+                child: Image.asset(
+                  AppImages.pick_marker,
+                  height: 40.h,
+                  width: 40.w,
                 ),
               ),
               Align(
@@ -105,7 +152,7 @@ class MapScreen extends StatelessWidget {
                   ),
                   child: CustomButton(
                     width: 170.w,
-                    onTap: () {},
+                    onTap: () => context.pop(),
                     text: 'Save Address',
                   ),
                 ),

@@ -7,7 +7,7 @@ import 'package:pharmacy_hub/src/features/auth/logic/auth_bloc.dart';
 import 'package:pharmacy_hub/src/features/auth/ui/screen/login/login_screen.dart';
 import 'package:pharmacy_hub/src/features/auth/ui/screen/signup/sign_up_screen.dart';
 import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
-import 'package:pharmacy_hub/src/features/cart/ui/cart_screen.dart';
+import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/cart_screen.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/map_screen.dart';
 import 'package:pharmacy_hub/src/features/layout/logic/app_layout_bloc.dart';
 import 'package:pharmacy_hub/src/features/layout/ui/app_layout.dart';
@@ -123,7 +123,9 @@ class AppRouter {
       GoRoute(
         name: Routes.map,
         path: _RouterPath.map,
-        builder: (context, state) => const MapScreen(),
+        builder: (context, state) =>  MapScreen(
+          cartBloc: state.extra as CartBloc,
+        ),
       ),
     ],
   );

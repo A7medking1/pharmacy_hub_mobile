@@ -9,3 +9,6 @@ abstract class CartEvent extends Equatable {
 
 
 class ChangeStepperEvent extends CartEvent {}
+
+
+class GetCurrentAddressEvent extends CartEvent {}

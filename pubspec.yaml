@@ -35,6 +35,8 @@ dependencies:
   google_fonts: ^6.2.0
   easy_stepper: ^0.8.3
   google_maps_flutter: ^2.2.8
+  geocoding: ^3.0.0
+  geolocator: ^11.0.0
 
 
 dev_dependencies:
