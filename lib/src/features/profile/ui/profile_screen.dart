@@ -121,8 +121,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ProfileItem(
           icon: Icons.account_circle_outlined,
           text: "Account",
-          onTap: () => null),
-      ProfileItem(imageIcon: AppSvg.cart, text: "Cart", onTap: () => null),
+          onTap: () => context.pushNamed(Routes.account)),
+      ProfileItem(imageIcon: AppSvg.cart, text: "Cart", onTap: () => context.pushNamed(Routes.cart)),
       ProfileItem(
           icon: Icons.favorite_outline_rounded,
           text: "Favorite",

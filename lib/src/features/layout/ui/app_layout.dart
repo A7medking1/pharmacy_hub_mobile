@@ -16,6 +16,8 @@ import 'package:pharmacy_hub/src/features/layout/logic/app_layout_bloc.dart';
 import 'package:pharmacy_hub/src/features/profile/logic/profile_bloc.dart';
 import 'package:pharmacy_hub/src/features/profile/ui/profile_screen.dart';
 
+import '../../../core/services/index.dart';
+
 class AppLayOut extends StatefulWidget {
   const AppLayOut({super.key});
 
@@ -40,7 +42,7 @@ class _AppLayOutState extends State<AppLayOut> {
       const Center(child: Text('second')),
       // const Center(child: Text('third')),
       BlocProvider(
-        create: (context) => ProfileBloc(),
+        create: (context) => sl<ProfileBloc>(),
         child: const ProfileScreen(),
       )
     ];
