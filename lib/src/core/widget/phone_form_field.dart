@@ -64,7 +64,10 @@ class PhoneFormField extends StatelessWidget {
             fontWeight: FontWeight.w400,
             fontFamily: CustomFontFamily.vazirmatn,
           ),
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+            // LengthLimitingTextInputFormatter(10)
+            ],
           dropdownTextStyle: context.titleSmall,
           decoration: InputDecoration(
             counterStyle: context.titleSmall.copyWith(fontSize: 12.sp),

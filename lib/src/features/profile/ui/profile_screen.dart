@@ -29,7 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final ScrollController scrollController = ScrollController();
 
   void logout() {
-    Dialog();
+    //Dialog();
     showDialog(
         context: context,
         barrierColor: AppColors.primary.withOpacity(.12),
@@ -44,7 +44,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               decoration: BoxDecoration(
                   color: AppColors.primary,
                   borderRadius: BorderRadius.circular(25.r),
-                  boxShadow: [BoxShadow(color: AppColors.black.withOpacity(.2), offset: Offset(3.w, 3.h), blurRadius: 16)]),
+                  boxShadow: [
+                    BoxShadow(
+                        color: AppColors.black.withOpacity(.2),
+                        offset: Offset(3.w, 3.h),
+                        blurRadius: 16)
+                  ]),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -53,8 +58,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     padding: EdgeInsets.only(left: 25.w, top: 25.h),
                     child: Text(
                       'Log out',
-                      style: context.titleMedium.copyWith(
-                          color: AppColors.white, fontSize: 20.sp),
+                      style: context.titleMedium
+                          .copyWith(color: AppColors.white, fontSize: 20.sp),
                     ),
                   ),
                   Padding(
@@ -72,12 +77,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       Expanded(
                         child: CustomButton(
-                          onTap: (){
+                          onTap: () {
                             dialogContext.pop();
                             // TODO: navigate to login screen
                           },
                           text: "Log out",
-                          textStyle: context.titleSmall.copyWith(fontSize: 16, color: AppColors.white, fontWeight: FontWeightManager.regular),
+                          textStyle: context.titleSmall.copyWith(
+                              fontSize: 16,
+                              color: AppColors.white,
+                              fontWeight: FontWeightManager.regular),
                           color: AppColors.white.withOpacity(.1),
                           splashColor: AppColors.white.withOpacity(.3),
                           borderRadius: 0,
@@ -88,7 +96,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: CustomButton(
                           onTap: () => dialogContext.pop(),
                           text: "Cancle",
-                          textStyle: context.titleSmall.copyWith(fontSize: 16, color: AppColors.white, fontWeight: FontWeightManager.regular),
+                          textStyle: context.titleSmall.copyWith(
+                              fontSize: 16,
+                              color: AppColors.white,
+                              fontWeight: FontWeightManager.regular),
                           // color: AppColors.white.withOpacity(.1),
                           splashColor: AppColors.white.withOpacity(.3),
                           borderRadius: 0,
@@ -107,16 +118,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     profileItemsGroupPartOne = [
-      ProfileItem(icon: Icons.account_circle_outlined, text: "Account", onTap: () => null),
-      ProfileItem(imageIcon: AppSvg.cart, text:"Cart", onTap:() => null),
-      ProfileItem(icon: Icons.favorite_outline_rounded, text:"Favorite",onTap: () => null),
+      ProfileItem(
+          icon: Icons.account_circle_outlined,
+          text: "Account",
+          onTap: () => context.pushNamed(Routes.account)),
+      ProfileItem(imageIcon: AppSvg.cart, text: "Cart", onTap: () => context.pushNamed(Routes.cart)),
+      ProfileItem(
+          icon: Icons.favorite_outline_rounded,
+          text: "Favorite",
+          onTap: () => null),
       // ProfileItem(icon:Icons.wallet, text:"Wallet",onTap:  () => null),
       // ProfileItem(icon:Icons.settings, text:"Settings",onTap:  () => null),
     ];
     profileItemsGroupPartTwo = [
-      ProfileItem(icon:Icons.contact_support,text: "Contact us", onTap:() => context.pushNamed(Routes.contactUs)),
-      ProfileItem(icon:Icons.error_outline, text:"About", onTap:() => context.pushNamed(Routes.about)),
-      ProfileItem(icon:Icons.logout,text: "Log out", onTap:logout)
+      ProfileItem(
+          icon: Icons.contact_support,
+          text: "Contact us",
+          onTap: () => context.pushNamed(Routes.contactUs)),
+      ProfileItem(
+          icon: Icons.error_outline,
+          text: "About",
+          onTap: () => context.pushNamed(Routes.about)),
+      ProfileItem(icon: Icons.logout, text: "Log out", onTap: logout)
     ];
 
     context.read<ProfileBloc>().add(GetUserInfoEvent());
@@ -138,8 +161,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           BlocBuilder<ProfileBloc, ProfileState>(
               buildWhen: (previous, current) {
-                return current is UserInfoState ? true : false;
-              }, builder: (context, state) {
+            return current is UserInfoState ? true : false;
+          }, builder: (context, state) {
             if (state is UserInfoState && state.email != null) {
               return SizedBox(
                 child: Column(
@@ -267,15 +290,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            item.icon != null ? Icon(
-                              item.icon,
-                              color: AppColors.black,
-                              size: 25.w,
-                            ) : SvgPicture.asset(
-                                item.imageIcon!,
-                                width: 26.w,
-                              colorFilter: ColorFilter.mode(AppColors.black, BlendMode.dst),
-                              ),
+                            item.icon != null
+                                ? Icon(
+                                    item.icon,
+                                    color: AppColors.black,
+                                    size: 25.w,
+                                  )
+                                : SvgPicture.asset(
+                                    item.imageIcon!,
+                                    width: 26.w,
+                                    colorFilter: ColorFilter.mode(
+                                        AppColors.black, BlendMode.dst),
+                                  ),
                             10.horizontalSpace,
                             Text(
                               item.text,
@@ -337,15 +363,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            item.icon != null ? Icon(
-                              item.icon,
-                              color: AppColors.black,
-                              size: 25.w,
-                            ) : SvgPicture.asset(
-                              item.imageIcon!,
-                              width: 26.w,
-                              colorFilter: ColorFilter.mode(AppColors.black, BlendMode.dst),
-                            ),
+                            item.icon != null
+                                ? Icon(
+                                    item.icon,
+                                    color: AppColors.black,
+                                    size: 25.w,
+                                  )
+                                : SvgPicture.asset(
+                                    item.imageIcon!,
+                                    width: 26.w,
+                                    colorFilter: ColorFilter.mode(
+                                        AppColors.black, BlendMode.dst),
+                                  ),
                             10.horizontalSpace,
                             Text(
                               item.text,
