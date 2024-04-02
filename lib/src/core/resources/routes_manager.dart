@@ -15,6 +15,9 @@ import 'package:pharmacy_hub/src/features/onBoarding/ui/onBoarding_screen.dart';
 import 'package:pharmacy_hub/src/features/profile/ui/about_screen.dart';
 import 'package:pharmacy_hub/src/features/profile/ui/contact_us_screen.dart';
 
+import '../../features/profile/logic/profile_bloc.dart';
+import '../../features/profile/ui/account_screen.dart';
+
 class Routes {
   Routes._();
 
@@ -25,7 +28,8 @@ class Routes {
   static const cart = 'cart';
   static const about = 'about';
   static const contactUs = 'contact-us';
-  static const map   = 'map';
+  static const map = 'map';
+  static const account = 'account';
 }
 
 class _RouterPath {
@@ -39,6 +43,7 @@ class _RouterPath {
   static const about = '/about';
   static const contactUs = '/contact-us';
   static const map = '/map';
+  static const account = '/account';
 }
 
 class AppRouter {
@@ -91,8 +96,7 @@ class AppRouter {
               child: const AppLayOut(),
             ),
             transitionDuration: const Duration(milliseconds: 300),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
               // Change the opacity of the screen using a Curve based on the the animation's value
               return FadeTransition(
                 opacity: CurveTween(curve: Curves.easeInOut).animate(animation),
@@ -113,18 +117,33 @@ class AppRouter {
       GoRoute(
         name: Routes.about,
         path: _RouterPath.about,
-        builder: (context, state) => const AboutScreen(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => sl<ProfileBloc>(),
+          child: const AboutScreen(),
+        ),
       ),
       GoRoute(
         name: Routes.contactUs,
         path: _RouterPath.contactUs,
-        builder: (context, state) => const ContactUsScreen(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => sl<ProfileBloc>(),
+          child: const ContactUsScreen(),
+        ),
       ),
       GoRoute(
         name: Routes.map,
         path: _RouterPath.map,
-        builder: (context, state) =>  MapScreen(
+        builder: (context, state) => MapScreen(
           cartBloc: state.extra as CartBloc,
+        ),
+      ),
+
+       GoRoute(
+        name: Routes.account,
+        path: _RouterPath.account,
+        builder: (context, state) => BlocProvider(
+          create: (context) => sl<ProfileBloc>(),
+          child: const AccountScreen(),
         ),
       ),
     ],
