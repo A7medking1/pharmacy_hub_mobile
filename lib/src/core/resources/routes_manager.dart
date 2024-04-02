@@ -9,6 +9,7 @@ import 'package:pharmacy_hub/src/features/auth/ui/screen/signup/sign_up_screen.d
 import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/cart_screen.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/map_screen.dart';
+import 'package:pharmacy_hub/src/features/cart/ui/success_payment.dart';
 import 'package:pharmacy_hub/src/features/layout/logic/app_layout_bloc.dart';
 import 'package:pharmacy_hub/src/features/layout/ui/app_layout.dart';
 import 'package:pharmacy_hub/src/features/onBoarding/ui/onBoarding_screen.dart';
@@ -30,6 +31,7 @@ class Routes {
   static const contactUs = 'contact-us';
   static const map = 'map';
   static const account = 'account';
+  static const successPayment = 'successPayment';
 }
 
 class _RouterPath {
@@ -44,6 +46,7 @@ class _RouterPath {
   static const contactUs = '/contact-us';
   static const map = '/map';
   static const account = '/account';
+  static const successPayment = '/successPayment';
 }
 
 class AppRouter {
@@ -96,7 +99,8 @@ class AppRouter {
               child: const AppLayOut(),
             ),
             transitionDuration: const Duration(milliseconds: 300),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
               // Change the opacity of the screen using a Curve based on the the animation's value
               return FadeTransition(
                 opacity: CurveTween(curve: Curves.easeInOut).animate(animation),
@@ -137,14 +141,18 @@ class AppRouter {
           cartBloc: state.extra as CartBloc,
         ),
       ),
-
-       GoRoute(
+      GoRoute(
         name: Routes.account,
         path: _RouterPath.account,
         builder: (context, state) => BlocProvider(
           create: (context) => sl<ProfileBloc>(),
           child: const AccountScreen(),
         ),
+      ),
+      GoRoute(
+        name: Routes.successPayment,
+        path: _RouterPath.successPayment,
+        builder: (context, state) => const SuccessPaymentScreen(),
       ),
     ],
   );

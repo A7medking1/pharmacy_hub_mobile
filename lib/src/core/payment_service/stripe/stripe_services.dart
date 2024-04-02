@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:pharmacy_hub/src/core/api/api_constant.dart';
 import 'package:pharmacy_hub/src/core/payment_service/stripe/payment_intent_request_model.dart';
 
 // 1- create payment intent (amount , currency ) ;
@@ -28,7 +29,7 @@ class StripServices {
   }
 
   Future<void> displayPaymentSheet() async {
-    await Stripe.instance.presentCustomerSheet();
+    await Stripe.instance.presentPaymentSheet();
   }
 
   Future<void> makePayment(PaymentIntentRequestModel model) async {
@@ -46,14 +47,12 @@ Future<Response> _getPaymentIntent(Map<String, dynamic> body) async {
     options: Options(
       contentType: Headers.formUrlEncodedContentType,
       headers: {
-        'Authorization': 'Bearer $stripeToken',
+        'Authorization': 'Bearer ${ApiConstant.STRIPE_SECRET_KEY}',
       },
     ),
     data: body,
   );
 
+  print(response);
   return response;
 }
-
-String stripeToken =
-    'sk_test_51NQvF0Dx12lB0i83bDzHZxRe0Jkck5pAorCPj4m6mKCJHiz3JE6qV4EQAPG4RLvD8S5K37Oia3wxxMTRa2JCRXXB00468BAclL';

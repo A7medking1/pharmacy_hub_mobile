@@ -184,9 +184,9 @@ class PaypalCheckoutViewState extends State<PaypalCheckoutView> {
 Navigator.of(context).push(MaterialPageRoute(
 builder: (BuildContext context) => PaypalCheckoutView(
 clientId:
-"AaLQ7pM6-3U4_Ne33WnfUm0ydlYGGRwf4NMUZGcbflClqQIukbN3im_Cwt8opDfcke7py_V-FfIouo8Y",
+"",
 secretKey:
-"ELaGyXNG7bnNDg7LBtenWZiMPELUQEitSxgyf5MbS25mJrZJw-3O3GX4Eu9as0tcQtssPXhFtyQ9sq2d",
+"",
 transactions: const [
 {
 "amount": {
