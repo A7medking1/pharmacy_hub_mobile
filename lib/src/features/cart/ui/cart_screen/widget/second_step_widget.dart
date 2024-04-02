@@ -104,7 +104,7 @@ class SecondStepAddressWidget extends StatelessWidget {
                         ? Container(
                             width: MediaQuery.sizeOf(context).width,
                             height: 60.h,
-                            padding: EdgeInsetsDirectional.all(8),
+                            padding: const EdgeInsetsDirectional.all(8),
                             decoration: BoxDecoration(
                               color: AppColors.backGroundColor,
                               borderRadius:

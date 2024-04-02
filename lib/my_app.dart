@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return ScreenUtilInit(
+   return ScreenUtilInit(
       designSize: const Size(414, 896),
       minTextAdapt: true,
       useInheritedMediaQuery: true,
@@ -17,11 +17,11 @@ class MyApp extends StatelessWidget {
         return GestureDetector(
           onTap: () => FocusManager.instance.primaryFocus!.unfocus(),
           child: MaterialApp.router(
+            debugShowCheckedModeBanner: false,
             locale: DevicePreview.locale(context),
             builder: DevicePreview.appBuilder,
-            debugShowCheckedModeBanner: false,
-            theme: getAppTheme(),
             themeMode: ThemeMode.light,
+            theme: getAppTheme(),
             routerConfig: AppRouter.router,
           ),
         );

@@ -42,7 +42,6 @@ class ThirdStepPaymentWidget extends StatelessWidget {
                 ],
               ),
             )*/
-
             CustomButton(
               color: AppColors.backGroundColor,
               isBorderButton: true,
