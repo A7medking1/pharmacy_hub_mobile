@@ -25,6 +25,10 @@ class ServicesLocator {
 
     sl.registerLazySingleton<ApiConsumer>(() => DioConsumer(client: sl()));
     sl.registerFactory(() => AuthBloc());
+
+    sl.registerLazySingleton(() => HomeRepository(sl()));
+
+    sl.registerFactory(() => HomeBloc(sl()));
     sl.registerFactory(() => ProfileBloc());
   }
 }

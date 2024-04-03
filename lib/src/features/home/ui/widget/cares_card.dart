@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy_hub/src/core/hepler.dart';
-import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
 import 'package:pharmacy_hub/src/core/resources/font_manager.dart';
 import 'package:pharmacy_hub/src/core/resources/size_manager.dart';
 import 'package:pharmacy_hub/src/core/widget/cached_image_network.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
 import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
-import 'package:shimmer/shimmer.dart';
 
-class MedicineCard extends StatelessWidget {
-  const MedicineCard({super.key, required this.product});
+class CaresCard extends StatelessWidget {
+  const CaresCard({super.key, required this.product});
 
   final List<ProductModel> product;
 
@@ -23,7 +21,7 @@ class MedicineCard extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: AppSize.pagePadding.w),
           child: Text(
-            'Popular medicine',
+            'Popular Cares',
             style: context.titleMedium.copyWith(
               color: AppColors.primary,
               fontSize: 20.sp,
@@ -32,17 +30,17 @@ class MedicineCard extends StatelessWidget {
         ),
         15.verticalSpace,
         SizedBox(
-          height: 285.h,
+          height: 290.h,
           child: ListView.separated(
             itemCount: product.length,
+            scrollDirection: Axis.horizontal,
             separatorBuilder: (context, index) => 15.horizontalSpace,
             padding: EdgeInsets.symmetric(horizontal: AppSize.pagePadding.w),
-            scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               final ProductModel model = product[index];
               return FittedBox(
                 child: Container(
-                  height: 255.h,
+                  height: 260.h,
                   width: 180.w,
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   decoration: BoxDecoration(
@@ -165,78 +163,6 @@ class MedicineCard extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-List<String> phramacies = [
-  'Egy phar.',
-  'One phar.',
-  'Egy phar.',
-];
-
-class MedicineCardShimmer extends StatelessWidget {
-  const MedicineCardShimmer({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        height: 280.h,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.only(start: 10),
-              child: Shimmer.fromColors(
-                baseColor: Colors.grey[100]!,
-                // Adjust the shimmer base color
-                highlightColor: Colors.grey[300]!,
-                child: Container(
-                  height: 30.w,
-                  width: 110.h,
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.r),
-                    color:
-                        Colors.white, // Background color for the shimmer effect
-                  ),
-                ),
-              ),
-            ),
-            10.verticalSpace,
-            Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 10.h, horizontal: 5.w),
-                    child: Shimmer.fromColors(
-                      baseColor: Colors.grey[100]!,
-                      // Adjust the shimmer base color
-                      highlightColor: Colors.grey[300]!,
-                      // Adjust the shimmer highlight color
-                      child: Container(
-                        height: 200.w,
-                        width: 180.h,
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.r),
-                          color: Colors
-                              .white, // Background color for the shimmer effect
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                itemCount: 4,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
