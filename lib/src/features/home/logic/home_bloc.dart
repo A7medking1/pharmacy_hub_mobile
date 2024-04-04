@@ -19,6 +19,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<GetVitaminsEvent>(_getVitamins);
     on<GetEquipmentsEvent>(_getEquipment);
     on<GetCaresEvent>(_getCares);
+    on<GetMedicineSimilarEvent>(_getMedicineSimilar);
+    on<GetMedicineAlternativeEvent>(_getAlternativeMedicine);
   }
 
   final HomeRepository _homeRepository;
@@ -126,6 +128,57 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         state.copyWith(
           errorMessage: e.errorMessageModel!.statusMessage,
           getCaresReqState: ReqState.error,
+        ),
+      );
+    }
+  }
+
+  FutureOr<void> _getMedicineSimilar(
+      GetMedicineSimilarEvent event, Emitter<HomeState> emit) async {
+    emit(state.copyWith(
+        getSimilarMedicineReqState: ReqState.loading, similarMedicine: []));
+
+    try {
+      final List<ProductModel> cares =
+          await _homeRepository.getSimilarMedicine(event.params);
+
+      emit(
+        state.copyWith(
+          similarMedicine: cares,
+          getSimilarMedicineReqState: ReqState.success,
+        ),
+      );
+    } on ServerException catch (e) {
+      emit(
+        state.copyWith(
+          errorMessage: e.errorMessageModel!.statusMessage,
+          getSimilarMedicineReqState: ReqState.error,
+        ),
+      );
+    }
+  }
+
+  FutureOr<void> _getAlternativeMedicine(
+      GetMedicineAlternativeEvent event, Emitter<HomeState> emit) async {
+    emit(state.copyWith(
+        getAlternativeMedicineReqState: ReqState.loading,
+        alternativeMedicine: []));
+
+    try {
+      final List<ProductModel> cares =
+          await _homeRepository.getAlternativeMedicine(event.params);
+
+      emit(
+        state.copyWith(
+          alternativeMedicine: cares,
+          getAlternativeMedicineReqState: ReqState.success,
+        ),
+      );
+    } on ServerException catch (e) {
+      emit(
+        state.copyWith(
+          errorMessage: e.errorMessageModel!.statusMessage,
+          getAlternativeMedicineReqState: ReqState.error,
         ),
       );
     }

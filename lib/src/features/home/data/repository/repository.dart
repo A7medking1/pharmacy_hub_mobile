@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:equatable/equatable.dart';
 import 'package:pharmacy_hub/src/core/api/api_constant.dart';
 import 'package:pharmacy_hub/src/core/api/api_consumer.dart';
 import 'package:pharmacy_hub/src/features/home/data/models/category_model.dart';
@@ -62,4 +63,58 @@ class HomeRepository {
       ),
     );
   }
+
+  Future<List<ProductModel>> getAlternativeMedicine(
+      AlternativeProductParams params) async {
+    final Response response =
+        await _apiConsumer.get(ApiConstant.medicineAlternative(params: params));
+    return List<ProductModel>.from(
+      (response.data['data']).map(
+        (e) => ProductModel.fromMap(e),
+      ),
+    );
+  }
+
+  Future<List<ProductModel>> getSimilarMedicine(
+      SimilarProductParams params) async {
+    final Response response =
+        await _apiConsumer.get(ApiConstant.medicineSimilar(params: params));
+    return List<ProductModel>.from(
+      (response.data['data']).map(
+        (e) => ProductModel.fromMap(e),
+      ),
+    );
+  }
+}
+
+class AlternativeProductParams extends Equatable {
+  final String categoryId;
+
+  final String activeIngredientId;
+
+  final String page;
+
+  const AlternativeProductParams({
+    required this.categoryId,
+    required this.activeIngredientId,
+    required this.page,
+  });
+
+  @override
+  List<Object> get props => [categoryId, activeIngredientId, page];
+}
+
+class SimilarProductParams extends Equatable {
+  final String categoryId;
+  final String diseaseId;
+  final String page;
+
+  const SimilarProductParams({
+    required this.categoryId,
+    required this.diseaseId,
+    required this.page,
+  });
+
+  @override
+  List<Object> get props => [categoryId, diseaseId, page];
 }

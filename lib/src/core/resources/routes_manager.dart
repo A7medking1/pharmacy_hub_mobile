@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -10,6 +11,8 @@ import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/cart_screen.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/map_screen.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/success_payment.dart';
+import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
+import 'package:pharmacy_hub/src/features/home/ui/product_details_screen.dart';
 import 'package:pharmacy_hub/src/features/layout/logic/app_layout_bloc.dart';
 import 'package:pharmacy_hub/src/features/layout/ui/app_layout.dart';
 import 'package:pharmacy_hub/src/features/onBoarding/ui/onBoarding_screen.dart';
@@ -32,6 +35,7 @@ class Routes {
   static const map = 'map';
   static const account = 'account';
   static const successPayment = 'successPayment';
+  static const productDetails = 'productDetails';
 }
 
 class _RouterPath {
@@ -47,6 +51,7 @@ class _RouterPath {
   static const map = '/map';
   static const account = '/account';
   static const successPayment = '/successPayment';
+  static const productDetails = '/productDetails';
 }
 
 class AppRouter {
@@ -154,6 +159,25 @@ class AppRouter {
         path: _RouterPath.successPayment,
         builder: (context, state) => const SuccessPaymentScreen(),
       ),
+      GoRoute(
+        name: Routes.productDetails,
+        path: _RouterPath.productDetails,
+        builder: (context, state) => ProductDetailsScreen(
+          params: state.extra as ProductDetailsParams,
+        ),
+      ),
     ],
   );
+}
+
+class ProductDetailsParams extends Equatable {
+  final ProductModel productModel;
+
+  final UniqueKey uniqueKey;
+
+  const ProductDetailsParams(
+      {required this.productModel, required this.uniqueKey});
+
+  @override
+  List<Object> get props => [productModel, uniqueKey];
 }

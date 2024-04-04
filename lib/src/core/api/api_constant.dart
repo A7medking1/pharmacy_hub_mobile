@@ -1,4 +1,5 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:pharmacy_hub/src/features/home/data/repository/repository.dart';
 
 class ApiConstant {
   static const String baseUrl = 'http://e-pharmacy.runasp.net/';
@@ -9,7 +10,15 @@ class ApiConstant {
   static const String cares = 'api/product?CategoryId=4';
   static const String categories = 'api/product/Categories';
 
+  static String medicineAlternative({
+    required AlternativeProductParams params,
+  }) =>
+      'api/product?CategoryId=${params.categoryId}&ActiveIngredientId=${params.activeIngredientId}&page=${params.page}';
 
+  static String medicineSimilar({
+    required SimilarProductParams params,
+  }) =>
+      'api/product?CategoryId=${params.categoryId}&DiseaseId=${params.diseaseId}&page=${params.page}';
 
   /// TODO  payment keys
   static String STRIPE_SECRET_KEY = dotenv.env['STRIPE_SECRET_KEY']!;

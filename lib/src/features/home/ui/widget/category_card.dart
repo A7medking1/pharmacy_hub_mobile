@@ -4,6 +4,7 @@ import 'package:pharmacy_hub/src/core/hepler.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
 import 'package:pharmacy_hub/src/core/resources/size_manager.dart';
 import 'package:pharmacy_hub/src/core/widget/cached_image_network.dart';
+import 'package:pharmacy_hub/src/core/widget/list_view_horizontal.dart';
 import 'package:pharmacy_hub/src/features/home/data/models/category_model.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -31,38 +32,34 @@ class CategoryCard extends StatelessWidget {
           ),
         ),
         15.verticalSpace,
-        SizedBox(
-          height: 100.h,
-          child: ListView.separated(
-            itemCount: categories.length,
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: AppSize.pagePadding.w),
-            itemBuilder: (context, index) {
-              return FittedBox(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15.0.r),
-                      child: CachedImages(
-                        width: 60.w,
-                        height: 50.h,
-                        fit: BoxFit.cover,
-                        imageUrl: categories[index].pictureUrl,
-                      ),
+        ListViewHorizontal(
+          count: categories.length,
+          height: 100,
+          isHasViewAllWidget: false,
+          itemBuilder: (context, index) {
+            return FittedBox(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(15.0.r),
+                    child: CachedImages(
+                      width: 60.w,
+                      height: 50.h,
+                      fit: BoxFit.cover,
+                      imageUrl: categories[index].pictureUrl,
                     ),
-                    5.verticalSpace,
-                    Text(
-                      categories[index].name,
-                      style: context.titleSmall.copyWith(
-                          fontSize: 10.sp, fontWeight: FontWeight.w400),
-                    ),
-                  ],
-                ),
-              );
-            },
-            separatorBuilder: (_, index) => 10.horizontalSpace,
-          ),
+                  ),
+                  5.verticalSpace,
+                  Text(
+                    categories[index].name,
+                    style: context.titleSmall
+                        .copyWith(fontSize: 10.sp, fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ],
     );

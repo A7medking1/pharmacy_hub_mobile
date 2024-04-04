@@ -8,11 +8,15 @@ class HomeState extends Equatable {
   final List<ProductModel> vitamins;
   final List<ProductModel> equipments;
   final List<ProductModel> cares;
+  final List<ProductModel> similarMedicine;
+  final List<ProductModel> alternativeMedicine;
   final ReqState getMedicineReqState;
   final ReqState getCategoriesReqState;
   final ReqState getVitaminsReqState;
   final ReqState getEquipmentsReqState;
   final ReqState getCaresReqState;
+  final ReqState getSimilarMedicineReqState;
+  final ReqState getAlternativeMedicineReqState;
 
   const HomeState({
     this.errorMessage = '',
@@ -26,6 +30,10 @@ class HomeState extends Equatable {
     this.getEquipmentsReqState = ReqState.loading,
     this.cares = const [],
     this.getCaresReqState = ReqState.loading,
+    this.alternativeMedicine = const [],
+    this.similarMedicine = const [],
+    this.getAlternativeMedicineReqState = ReqState.empty,
+    this.getSimilarMedicineReqState = ReqState.empty,
   });
 
   HomeState copyWith({
@@ -36,10 +44,14 @@ class HomeState extends Equatable {
     List<ProductModel>? vitamins,
     List<ProductModel>? equipments,
     List<ProductModel>? cares,
+    List<ProductModel>? alternativeMedicine,
+    List<ProductModel>? similarMedicine,
     ReqState? getCategoriesReqState,
     ReqState? getVitaminsReqState,
     ReqState? getEquipmentsReqState,
     ReqState? getCaresReqState,
+    ReqState? getAlternativeMedicineReqState,
+    ReqState? getSimilarMedicineReqState,
   }) {
     return HomeState(
       errorMessage: errorMessage ?? this.errorMessage,
@@ -55,6 +67,12 @@ class HomeState extends Equatable {
           getEquipmentsReqState ?? this.getEquipmentsReqState,
       cares: cares ?? this.cares,
       getCaresReqState: getCaresReqState ?? this.getCaresReqState,
+      similarMedicine: similarMedicine ?? this.similarMedicine,
+      alternativeMedicine: alternativeMedicine ?? this.alternativeMedicine,
+      getAlternativeMedicineReqState:
+          getAlternativeMedicineReqState ?? this.getAlternativeMedicineReqState,
+      getSimilarMedicineReqState:
+          getSimilarMedicineReqState ?? this.getSimilarMedicineReqState,
     );
   }
 
@@ -66,10 +84,14 @@ class HomeState extends Equatable {
         vitamins,
         equipments,
         cares,
+        similarMedicine,
+        alternativeMedicine,
         getMedicineReqState,
         getCategoriesReqState,
         getVitaminsReqState,
         getEquipmentsReqState,
         getCaresReqState,
+        getSimilarMedicineReqState,
+        getAlternativeMedicineReqState,
       ];
 }
