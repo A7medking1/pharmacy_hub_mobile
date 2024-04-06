@@ -62,7 +62,7 @@ class ViewAllWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: tag,
+      tag: tag.toString(),
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: GestureDetector(

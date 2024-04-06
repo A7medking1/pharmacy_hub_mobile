@@ -21,9 +21,11 @@ class ProductCard extends StatelessWidget {
     this.onTapViewAll,
     required this.tag,
     required this.productType,
+    required this.similar,
   });
 
   final List<ProductModel> product;
+  final List<ProductModel> similar;
   final String title;
   final double listViewHeight;
   final void Function()? onTapViewAll;
@@ -54,10 +56,9 @@ class ProductCard extends StatelessWidget {
             tag: tag,
             itemBuilder: (context, index) {
               UniqueKey _key = UniqueKey();
-
               final ProductModel model = product[index];
               return Hero(
-                tag: _key,
+                tag: _key.toString(),
                 child: GestureDetector(
                   onTap: () {
                     context.pushNamed(Routes.productDetails,
@@ -65,6 +66,7 @@ class ProductCard extends StatelessWidget {
                           productType: productType,
                           productModel: model,
                           uniqueKey: _key,
+                          similar: similar,
                         ));
                   },
                   child: ProductItemWidget(model: model),
@@ -139,24 +141,23 @@ class ProductItemWidget extends StatelessWidget {
                   1.verticalSpace,
                   Wrap(
                     children: model.pharmacies
-                        .map((e) =>
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 5.h, horizontal: 3.w),
-                          margin: EdgeInsets.only(right: 2.w, bottom: 2.h),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.r),
-                            color: AppColors.primary.withOpacity(.03),
-                            border: Border.all(
-                                color: AppColors.primary.withOpacity(.1)),
-                          ),
-                          child: Text(
-                            e,
-                            style: context.titleSmall.copyWith(
-                                fontSize: 8.sp,
-                                color: AppColors.black.withOpacity(.8)),
-                          ),
-                        ))
+                        .map((e) => Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 5.h, horizontal: 3.w),
+                              margin: EdgeInsets.only(right: 2.w, bottom: 2.h),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.r),
+                                color: AppColors.primary.withOpacity(.03),
+                                border: Border.all(
+                                    color: AppColors.primary.withOpacity(.1)),
+                              ),
+                              child: Text(
+                                e,
+                                style: context.titleSmall.copyWith(
+                                    fontSize: 8.sp,
+                                    color: AppColors.black.withOpacity(.8)),
+                              ),
+                            ))
                         .toList(),
                   )
                 ],

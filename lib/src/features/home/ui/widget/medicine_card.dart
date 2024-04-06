@@ -61,6 +61,7 @@ class MedicineCard extends StatelessWidget {
                           productType: ProductType.medicine,
                           productModel: model,
                           uniqueKey: _key,
+                          similar: const [],
                         ));
                   },
                   child: FittedBox(

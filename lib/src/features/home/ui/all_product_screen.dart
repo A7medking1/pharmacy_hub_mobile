@@ -1,9 +1,12 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pharmacy_hub/src/core/enums.dart';
 import 'package:pharmacy_hub/src/core/helper.dart';
+import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
 import 'package:pharmacy_hub/src/core/services/index.dart';
 import 'package:pharmacy_hub/src/core/widget/RequestWidget.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_grid_view.dart';
@@ -86,10 +89,28 @@ class PaginationScreenContent extends StatelessWidget {
                   return const SingleShimmerWidget();
                 }
                 if (isProductMedicine) {
-                  return MedicineItem(model: state.medicine[index]);
+                  return GestureDetector(
+                    onTap: () {
+                      context.pushNamed(Routes.productDetails,
+                          extra: ProductDetailsParams(
+                            productType: productType,
+                            productModel: state.medicine[index],
+                            uniqueKey: UniqueKey(),
+                            similar: const [],
+                          ));
+                    },
+                    child: MedicineItem(
+                      model: state.medicine[index],
+                    ),
+                  );
                 }
-                return ProductItemWidget(
-                  model: state.medicine[index],
+                return GestureDetector(
+                  onTap: () {
+                    buildPushNamed(context, state, index);
+                  },
+                  child: ProductItemWidget(
+                    model: state.medicine[index],
+                  ),
                 );
               },
               addEvent: () {
@@ -102,6 +123,17 @@ class PaginationScreenContent extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<Object?> buildPushNamed(
+      BuildContext context, PaginationState state, int index) {
+    return context.pushNamed(Routes.productDetails,
+        extra: ProductDetailsParams(
+          productType: productType,
+          productModel: state.medicine[index],
+          uniqueKey: UniqueKey(),
+          similar: state.medicine,
+        ));
   }
 
   bool get isProductMedicine => productType == ProductType.medicine;

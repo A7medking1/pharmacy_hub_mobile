@@ -117,6 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 reqState: state.getVitaminsReqState,
                 onLoading: const MedicineCardShimmer(),
                 onSuccess: ProductCard(
+                  similar: state.vitamins,
                   productType: ProductType.vitamins,
                   product: state.vitamins,
                   title: 'Popular vitamins',
@@ -143,6 +144,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 reqState: state.getEquipmentsReqState,
                 onLoading: const MedicineCardShimmer(),
                 onSuccess: ProductCard(
+                  similar: state.equipments,
+
                   productType: ProductType.equipment,
                   product: state.equipments,
                   title: 'Popular Equipments',
@@ -165,6 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 reqState: state.getCaresReqState,
                 onLoading: const MedicineCardShimmer(),
                 onSuccess: ProductCard(
+                  similar: state.cares,
                   productType: ProductType.cares,
                   product: state.cares,
                   title: 'Popular Cares',

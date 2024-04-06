@@ -188,9 +188,16 @@ class ProductDetailsParams extends Equatable {
 
   final ProductType productType;
 
-  const ProductDetailsParams(
-      {required this.productType ,  required this.productModel, required this.uniqueKey});
+  // this for vitamins , equipment and cares  only because does not have similar or alternative ;
+  final List<ProductModel> similar;
+
+  const ProductDetailsParams({
+    required this.productType,
+    required this.productModel,
+    required this.uniqueKey,
+    required this.similar,
+  });
 
   @override
-  List<Object> get props => [productModel, uniqueKey, productType];
+  List<Object> get props => [productModel, uniqueKey, productType, similar];
 }
