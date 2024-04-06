@@ -5,7 +5,7 @@ import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
-import 'package:pharmacy_hub/src/core/hepler.dart';
+import 'package:pharmacy_hub/src/core/helper.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
 import 'package:pharmacy_hub/src/core/resources/font_manager.dart';
 

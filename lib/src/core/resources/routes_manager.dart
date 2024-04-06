@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pharmacy_hub/src/core/app_prefs/app_prefs.dart';
+import 'package:pharmacy_hub/src/core/enums.dart';
 import 'package:pharmacy_hub/src/core/services/index.dart';
 import 'package:pharmacy_hub/src/features/auth/logic/auth_bloc.dart';
 import 'package:pharmacy_hub/src/features/auth/ui/screen/login/login_screen.dart';
@@ -12,6 +13,7 @@ import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/cart_screen.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/map_screen.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/success_payment.dart';
 import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
+import 'package:pharmacy_hub/src/features/home/ui/all_product_screen.dart';
 import 'package:pharmacy_hub/src/features/home/ui/product_details_screen.dart';
 import 'package:pharmacy_hub/src/features/layout/logic/app_layout_bloc.dart';
 import 'package:pharmacy_hub/src/features/layout/ui/app_layout.dart';
@@ -36,6 +38,7 @@ class Routes {
   static const account = 'account';
   static const successPayment = 'successPayment';
   static const productDetails = 'productDetails';
+  static const allProduct = 'allProduct';
 }
 
 class _RouterPath {
@@ -51,6 +54,7 @@ class _RouterPath {
   static const map = '/map';
   static const account = '/account';
   static const successPayment = '/successPayment';
+  static const allProduct = '/allProduct';
   static const productDetails = '/productDetails';
 }
 
@@ -166,6 +170,13 @@ class AppRouter {
           params: state.extra as ProductDetailsParams,
         ),
       ),
+      GoRoute(
+        name: Routes.allProduct,
+        path: _RouterPath.allProduct,
+        builder: (context, state) => AllProductScreen(
+          params: state.extra as AllProductScreenParams,
+        ),
+      ),
     ],
   );
 }
@@ -175,9 +186,11 @@ class ProductDetailsParams extends Equatable {
 
   final UniqueKey uniqueKey;
 
+  final ProductType productType;
+
   const ProductDetailsParams(
-      {required this.productModel, required this.uniqueKey});
+      {required this.productType ,  required this.productModel, required this.uniqueKey});
 
   @override
-  List<Object> get props => [productModel, uniqueKey];
+  List<Object> get props => [productModel, uniqueKey, productType];
 }

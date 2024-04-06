@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pharmacy_hub/src/core/hepler.dart';
+import 'package:pharmacy_hub/src/core/helper.dart';
 import 'package:pharmacy_hub/src/core/resources/size_manager.dart';
 
 class ListViewHorizontal extends StatelessWidget {
@@ -11,7 +11,8 @@ class ListViewHorizontal extends StatelessWidget {
   final Widget Function(BuildContext, int)? separatorBuilder;
   final bool isHasViewAllWidget;
   final void Function()? onTapViewAll;
-  final EdgeInsetsGeometry? padding ;
+  final EdgeInsetsGeometry? padding;
+  final Object tag;
 
   const ListViewHorizontal({
     super.key,
@@ -22,8 +23,9 @@ class ListViewHorizontal extends StatelessWidget {
     this.width,
     this.isHasViewAllWidget = true,
     this.onTapViewAll,
-    this.padding,
-  });
+    this.padding,required this.tag,
+  }) : assert(isHasViewAllWidget || onTapViewAll == null,
+  'If isHasViewAllWidget is false, onTapViewAll must be null.');
 
   @override
   Widget build(BuildContext context) {
@@ -32,26 +34,19 @@ class ListViewHorizontal extends StatelessWidget {
       width: width,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: padding ?? EdgeInsets.symmetric(horizontal: AppSize.pagePadding.w),
+        padding:
+        padding ?? EdgeInsets.symmetric(horizontal: AppSize.pagePadding.w),
         itemCount: isHasViewAllWidget ? count + 1 : count,
-        // Increase the count to include the additional widget
         physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
-          if (isHasViewAllWidget) {
-            if (index == count) {
-              // Check if it's the last item
-              return ViewAllWidget(
-                onTap: onTapViewAll,
-              ); // Return the widget to add at the end
-            }
+          if (isHasViewAllWidget && index == count) {
+            return ViewAllWidget(onTap: onTapViewAll, tag: tag,);
           }
-          return itemBuilder(context, index); // Return your usual item
+          return itemBuilder(context, index);
         },
         separatorBuilder: separatorBuilder ??
-            (BuildContext context, int index) {
-              return SizedBox(
-                width: 15.w,
-              ); // Assuming 20.w is your desired space
+                (BuildContext context, int index) {
+              return SizedBox(width: 15.w);
             },
       ),
     );
@@ -59,45 +54,52 @@ class ListViewHorizontal extends StatelessWidget {
 }
 
 class ViewAllWidget extends StatelessWidget {
-  const ViewAllWidget({super.key, required this.onTap});
+  const ViewAllWidget({super.key, required this.onTap, required this.tag});
 
   final void Function()? onTap;
+  final Object tag;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FittedBox(
-              child: CircleAvatar(
-                radius: 30.h,
-                backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
-                child: Icon(
-                  Icons.add_circle_outline,
-                  size: 30.sp,
-                  color: const Color.fromRGBO(0, 0, 0, 1),
+    return Hero(
+      tag: tag,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: GestureDetector(
+          onTap: onTap,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FittedBox(
+                  child: CircleAvatar(
+                    radius: 30.h,
+                    backgroundColor: const Color.fromRGBO(237, 237, 237, 1),
+                    child: Icon(
+                      Icons.add_circle_outline,
+                      size: 30.sp,
+                      color: const Color.fromRGBO(0, 0, 0, 1),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(height: 12.h),
-            FittedBox(
-              child: Text(
-                "view all",
-                style: context.titleSmall.copyWith(
-                  fontSize: 13.sp,
+                SizedBox(height: 12.h),
+                FittedBox(
+                  child: Text(
+                    "view all",
+                    style: context.titleSmall.copyWith(
+                      fontSize: 13.sp,
+                    ),
+                    // color: ColorManager.white,
+                    //  lightColor: ColorManager.black,
+                    //  fontSize: 12,
+                    ///  fontWeight: FontWeight.w400,
+                    //  fontFamily: "Regular",
+                  ),
                 ),
-                // color: ColorManager.white,
-                //  lightColor: ColorManager.black,
-                //  fontSize: 12,
-                ///  fontWeight: FontWeight.w400,
-                //  fontFamily: "Regular",
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

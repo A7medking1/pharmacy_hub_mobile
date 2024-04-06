@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharmacy_hub/src/core/api/api_constant.dart';
-import 'package:pharmacy_hub/src/core/hepler.dart';
+import 'package:pharmacy_hub/src/core/helper.dart';
 import 'package:pharmacy_hub/src/core/payment_service/paypal/paypal_checkout_view.dart';
 import 'package:pharmacy_hub/src/core/payment_service/stripe/payment_intent_request_model.dart';
 import 'package:pharmacy_hub/src/core/payment_service/stripe/stripe_services.dart';

@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pharmacy_hub/src/core/hepler.dart';
+import 'package:pharmacy_hub/src/core/enums.dart';
+import 'package:pharmacy_hub/src/core/helper.dart';
 import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
 import 'package:pharmacy_hub/src/core/resources/font_manager.dart';
@@ -16,7 +17,8 @@ import 'package:pharmacy_hub/src/core/widget/list_view_horizontal.dart';
 import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
 import 'package:pharmacy_hub/src/features/home/data/repository/repository.dart';
 import 'package:pharmacy_hub/src/features/home/logic/home_bloc.dart';
-import 'package:pharmacy_hub/src/features/home/ui/widget/medicine_card.dart';
+import 'package:pharmacy_hub/src/features/home/ui/widget/product_card.dart';
+import 'package:pharmacy_hub/src/features/home/ui/widget/shimmer_widget.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key, required this.params});
@@ -32,22 +34,24 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<HomeBloc>().add(GetMedicineSimilarEvent(SimilarProductParams(
-        page: '1',
-        diseaseId: widget.params.productModel.diseaseId.toString(),
-        categoryId: widget.params.productModel.categoryId.toString())));
-    context.read<HomeBloc>().add(GetMedicineAlternativeEvent(
-        AlternativeProductParams(
-            page: '1',
-            activeIngredientId:
-                widget.params.productModel.activeIngredientId.toString(),
-            categoryId: widget.params.productModel.categoryId.toString())));
+    if (widget.params.productType == ProductType.medicine) {
+      context.read<HomeBloc>().add(GetMedicineSimilarEvent(SimilarProductParams(
+          productId: widget.params.productModel.id.toString(),
+          page: '1',
+          diseaseId: widget.params.productModel.diseaseId.toString(),
+          categoryId: widget.params.productModel.categoryId.toString())));
+      context.read<HomeBloc>().add(GetMedicineAlternativeEvent(
+          AlternativeProductParams(
+              productId: widget.params.productModel.id.toString(),
+              page: '1',
+              activeIngredientId:
+                  widget.params.productModel.activeIngredientId.toString(),
+              categoryId: widget.params.productModel.categoryId.toString())));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    print('_key ${widget.params.uniqueKey}');
-
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -125,11 +129,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         Container(
                           padding: const EdgeInsetsDirectional.all(8),
                           decoration: BoxDecoration(
-                            color: AppColors.primary,
+                            color: stockColor,
                             borderRadius: BorderRadius.circular(15.r),
                           ),
                           child: Text(
-                            'in stock',
+                            stockTitle,
                             style: context.titleSmall.copyWith(
                               fontSize: 12.sp,
                               color: Colors.white,
@@ -164,188 +168,276 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                   ),
                 ),
-                SliverPadding(
-                  padding: EdgeInsetsDirectional.only(
-                      start: 15.w, end: 15.w, top: 15.h),
-                  sliver: SliverToBoxAdapter(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Available in',
-                          style: context.titleSmall.copyWith(
-                            fontSize: 13.sp,
+
+                if (isProductInStock)
+                  SliverPadding(
+                    padding: EdgeInsetsDirectional.only(
+                        start: 15.w, end: 15.w, top: 15.h),
+                    sliver: SliverToBoxAdapter(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Available in',
+                            style: context.titleSmall.copyWith(
+                              fontSize: 13.sp,
+                            ),
                           ),
-                        ),
-                        10.verticalSpace,
-                        Wrap(
-                          children: widget.params.productModel.pharmacies
-                              .map((e) => Container(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 8.h, horizontal: 8.w),
-                                    margin: EdgeInsets.only(
-                                        right: 10.w, bottom: 8.h),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5.r),
-                                      color: AppColors.primary.withOpacity(.03),
-                                      border: Border.all(
-                                          color: AppColors.primary
-                                              .withOpacity(.1)),
-                                    ),
-                                    child: Text(
-                                      e,
-                                      style: context.titleSmall.copyWith(
-                                          fontSize: 13.sp,
-                                          color:
-                                              AppColors.black.withOpacity(.8)),
-                                    ),
-                                  ))
-                              .toList(),
-                        ),
-                      ],
+                          10.verticalSpace,
+                          Wrap(
+                            children: widget.params.productModel.pharmacies
+                                .map((e) => Container(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 8.h, horizontal: 8.w),
+                                      margin: EdgeInsets.only(
+                                          right: 10.w, bottom: 8.h),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(5.r),
+                                        color:
+                                            AppColors.primary.withOpacity(.03),
+                                        border: Border.all(
+                                            color: AppColors.primary
+                                                .withOpacity(.1)),
+                                      ),
+                                      child: Text(
+                                        e,
+                                        style: context.titleSmall.copyWith(
+                                            fontSize: 13.sp,
+                                            color: AppColors.black
+                                                .withOpacity(.8)),
+                                      ),
+                                    ))
+                                .toList(),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
 
-                BlocBuilder<HomeBloc, HomeState>(
-                  buildWhen: (previous, current) =>
-                      previous.getAlternativeMedicineReqState !=
-                      current.getAlternativeMedicineReqState,
-                  builder: (context, state) {
-                    return RequestStateWidgetWithSlivers(
-                      reqState: state.getAlternativeMedicineReqState,
-                      onLoading: const SliverToBoxAdapter(
-                          child: MedicineCardShimmer()),
-                      onSuccess: SliverPadding(
-                        padding: EdgeInsetsDirectional.only(
-                            start: 15.w, end: 15.w, top: 15.h),
-                        sliver: SliverToBoxAdapter(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Medicine Alternative',
-                                style: context.titleSmall.copyWith(
-                                  fontSize: 13.sp,
+                if (widget.params.productType == ProductType.medicine) ...[
+                  BlocBuilder<HomeBloc, HomeState>(
+                    buildWhen: (previous, current) =>
+                        previous.getAlternativeMedicineReqState !=
+                        current.getAlternativeMedicineReqState,
+                    builder: (context, state) {
+                      return RequestStateWidgetWithSlivers(
+                        reqState: state.getAlternativeMedicineReqState,
+                        onLoading: const SliverToBoxAdapter(
+                            child: MedicineCardShimmer()),
+                        onSuccess: SliverPadding(
+                          padding: EdgeInsetsDirectional.only(
+                              start: 15.w, end: 15.w, top: 15.h),
+                          sliver: SliverToBoxAdapter(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Medicine Alternative',
+                                  style: context.titleSmall.copyWith(
+                                    fontSize: 13.sp,
+                                  ),
                                 ),
-                              ),
-                              20.verticalSpace,
-                              ListViewHorizontal(
-                                count: state.alternativeMedicine.length,
-                                height: 160.h,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 0),
-                                itemBuilder: (context, index) {
-                                  UniqueKey _key = UniqueKey();
+                                20.verticalSpace,
+                                ListViewHorizontal(
+                                  count: state.alternativeMedicine.length,
+                                  height: 160.h,
+                                  tag: 7,
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 0),
+                                  itemBuilder: (context, index) {
+                                    UniqueKey _key = UniqueKey();
 
-                                  return GestureDetector(
-                                    onTap: () {
-                                      context.pushNamed(Routes.productDetails,
+                                    return GestureDetector(
+                                      onTap: () {
+                                        /*context.pushNamed(Routes.productDetails,
                                           extra: ProductDetailsParams(
                                               productModel: state
                                                   .alternativeMedicine[index],
-                                              uniqueKey: _key));
-                                    },
-                                    child: MedicineSimilarItem(
-                                      model: state.alternativeMedicine[index],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-
-                BlocBuilder<HomeBloc, HomeState>(
-                  buildWhen: (previous, current) =>
-                      previous.getSimilarMedicineReqState !=
-                      current.getSimilarMedicineReqState,
-                  builder: (context, state) {
-                    return RequestStateWidgetWithSlivers(
-                      reqState: state.getSimilarMedicineReqState,
-                      onLoading: const SliverToBoxAdapter(
-                          child: MedicineCardShimmer()),
-                      onSuccess: SliverPadding(
-                        padding: EdgeInsetsDirectional.only(
-                            start: 15.w, end: 15.w, top: 15.h),
-                        sliver: SliverToBoxAdapter(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Medicine Similar',
-                                style: context.titleSmall.copyWith(
-                                  fontSize: 13.sp,
-                                ),
-                              ),
-                              20.verticalSpace,
-                              ListViewHorizontal(
-                                count: state.similarMedicine.length,
-                                height: 160.h,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 0),
-                                itemBuilder: (context, index) {
-                                  UniqueKey _key = UniqueKey();
-                                  return Hero(
-                                    tag: _key.toString(),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        print('_key $_key');
-                                        context.pushNamed(Routes.productDetails,
-                                            extra: ProductDetailsParams(
-                                                productModel: state
-                                                    .similarMedicine[index],
-                                                uniqueKey: _key));
+                                              uniqueKey: _key));*/
                                       },
                                       child: MedicineSimilarItem(
-                                        model: state.similarMedicine[index],
+                                        model: state.alternativeMedicine[index],
                                       ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                ),
+                      );
+                    },
+                  ),
+                  BlocBuilder<HomeBloc, HomeState>(
+                    buildWhen: (previous, current) =>
+                        previous.getSimilarMedicineReqState !=
+                        current.getSimilarMedicineReqState,
+                    builder: (context, state) {
+                      return RequestStateWidgetWithSlivers(
+                        reqState: state.getSimilarMedicineReqState,
+                        onLoading: const SliverToBoxAdapter(
+                            child: MedicineCardShimmer()),
+                        onSuccess: SliverPadding(
+                          padding: EdgeInsetsDirectional.only(
+                              start: 15.w, end: 15.w, top: 15.h),
+                          sliver: SliverToBoxAdapter(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Medicine Similar',
+                                  style: context.titleSmall.copyWith(
+                                    fontSize: 13.sp,
+                                  ),
+                                ),
+                                20.verticalSpace,
+                                ListViewHorizontal(
+                                  count: state.similarMedicine.length,
+                                  tag: 6,
+                                  height: 160.h,
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 0),
+                                  itemBuilder: (context, index) {
+                                    UniqueKey _key = UniqueKey();
+
+                                    return Hero(
+                                      tag: _key.toString(),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          /*  context.pushNamed(
+                                          Routes.productDetails,
+                                          extra: ProductDetailsParams(
+                                            productModel:
+                                                state.similarMedicine[index],
+                                            uniqueKey: _key,
+                                          ),
+                                        );*/
+                                        },
+                                        child: MedicineSimilarItem(
+                                          model: state.similarMedicine[index],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ] else ...[
+                  BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
+                      return RequestStateWidgetWithSlivers(
+                        reqState: state.getSimilarMedicineReqState,
+                        onLoading: const SliverToBoxAdapter(
+                            child: MedicineCardShimmer()),
+                        onSuccess: SliverPadding(
+                          padding: EdgeInsetsDirectional.only(
+                              start: 15.w, end: 15.w, top: 15.h),
+                          sliver: SliverToBoxAdapter(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${widget.params.productType.name} Similar'
+                                      .capitalizedFirst(),
+                                  style: context.titleSmall.copyWith(
+                                    fontSize: 13.sp,
+                                  ),
+                                ),
+                                20.verticalSpace,
+                                ListViewHorizontal(
+                                  count: getCurrentList(
+                                          widget.params.productType,
+                                          state.vitamins,
+                                          state.equipments,
+                                          state.cares)
+                                      .length,
+                                  tag: 6,
+                                  height: 200.h,
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 0),
+                                  itemBuilder: (context, index) {
+                                    UniqueKey _key = UniqueKey();
+
+                                    return Hero(
+                                      tag: _key.toString(),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          /*  context.pushNamed(
+                                          Routes.productDetails,
+                                          extra: ProductDetailsParams(
+                                            productModel:
+                                                state.similarMedicine[index],
+                                            uniqueKey: _key,
+                                          ),
+                                        );*/
+                                        },
+                                        child: ProductItemWidget(
+                                          model: getCurrentList(
+                                              widget.params.productType,
+                                              state.vitamins,
+                                              state.equipments,
+                                              state.cares)[index],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
 
                 /// just height from bottom
                 SliverToBoxAdapter(child: 100.verticalSpace),
               ],
             ),
-            Container(
-              padding: const EdgeInsetsDirectional.symmetric(
-                  vertical: 30, horizontal: 100),
-              child: CustomButton(
-                widget: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      AppSvg.cart,
-                      color: Colors.white,
-                    ),
-                    10.horizontalSpace,
-                    Text(
-                      'Add to cart',
-                      style: context.titleSmall.copyWith(color: Colors.white),
-                    )
-                  ],
+            if (isProductInStock)
+              Container(
+                padding: const EdgeInsetsDirectional.symmetric(
+                    vertical: 30, horizontal: 100),
+                child: CustomButton(
+                  widget: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        AppSvg.cart,
+                        color: Colors.white,
+                      ),
+                      10.horizontalSpace,
+                      Text(
+                        'Add to cart',
+                        style: context.titleSmall.copyWith(color: Colors.white),
+                      )
+                    ],
+                  ),
+                  onTap: () {},
                 ),
-                onTap: () {},
               ),
-            ),
           ],
         ),
       ),
     );
   }
+
+  bool get isProductInStock =>
+      widget.params.productModel.pharmacies.isNotEmpty &&
+              widget.params.productModel.quantity > 0
+          ? true
+          : false;
+
+  Color get stockColor => isProductInStock ? AppColors.primary : AppColors.red;
+
+  String get stockTitle => isProductInStock ? 'in stock' : 'out of stock';
 }
 
 class MedicineSimilarItem extends StatelessWidget {

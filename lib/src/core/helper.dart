@@ -36,3 +36,20 @@ class FadeAnimation extends StatelessWidget {
   }
 }
 
+
+extension CapitalizeFirstLast on String {
+  String capitalizedFirst() =>
+      substring(0, 1).toUpperCase() + substring(1).toLowerCase();
+
+  String capitalizeFirstLastSymbols() {
+    if (isNotEmpty && contains('-')) {
+      String firstSymbol = this[0].toUpperCase();
+      String lastSymbol = this[length - 1].toUpperCase();
+      return '$firstSymbol${substring(1, length - 1)}$lastSymbol';
+    } else {
+      return capitalizedFirst();
+    }
+  }
+}
+
+

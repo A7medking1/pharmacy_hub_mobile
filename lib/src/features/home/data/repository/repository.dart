@@ -22,7 +22,7 @@ class HomeRepository {
 
   Future<List<ProductModel>> getMedicine({int page = 1}) async {
     final Response response =
-        await _apiConsumer.get('${ApiConstant.medicine}&page=$page');
+        await _apiConsumer.get('${ApiConstant.medicine}&index=$page');
 
     return List<ProductModel>.from(
       (response.data['data']).map(
@@ -33,7 +33,7 @@ class HomeRepository {
 
   Future<List<ProductModel>> getVitamins({int page = 1}) async {
     final Response response =
-        await _apiConsumer.get('${ApiConstant.vitamins}&page=$page');
+        await _apiConsumer.get('${ApiConstant.vitamins}&index=$page');
 
     return List<ProductModel>.from(
       (response.data['data']).map(
@@ -44,7 +44,7 @@ class HomeRepository {
 
   Future<List<ProductModel>> getEquipments({int page = 1}) async {
     final Response response =
-        await _apiConsumer.get('${ApiConstant.equipments}&page=$page');
+        await _apiConsumer.get('${ApiConstant.equipments}&index=$page');
 
     return List<ProductModel>.from(
       (response.data['data']).map(
@@ -55,7 +55,7 @@ class HomeRepository {
 
   Future<List<ProductModel>> getCares({int page = 1}) async {
     final Response response =
-        await _apiConsumer.get('${ApiConstant.cares}&page=$page');
+        await _apiConsumer.get('${ApiConstant.cares}&index=$page');
 
     return List<ProductModel>.from(
       (response.data['data']).map(
@@ -85,12 +85,27 @@ class HomeRepository {
       ),
     );
   }
+
+  Future<List<ProductModel>> getMoreProducts(
+      {required String categoryId, required String page}) async {
+    final Response response = await _apiConsumer
+        .get('${ApiConstant.product}?categoryId=$categoryId&index=$page');
+    return List<ProductModel>.from(
+      (response.data['data']).map(
+        (e) => ProductModel.fromMap(e),
+      ),
+    );
+  }
 }
+/*print(
+'${ApiConstant.baseUrl}${ApiConstant.product}?categoryId=${params.categoryId}');*/
 
 class AlternativeProductParams extends Equatable {
   final String categoryId;
 
   final String activeIngredientId;
+
+  final String productId;
 
   final String page;
 
@@ -98,23 +113,26 @@ class AlternativeProductParams extends Equatable {
     required this.categoryId,
     required this.activeIngredientId,
     required this.page,
+    required this.productId,
   });
 
   @override
-  List<Object> get props => [categoryId, activeIngredientId, page];
+  List<Object> get props => [categoryId, activeIngredientId, page, productId];
 }
 
 class SimilarProductParams extends Equatable {
   final String categoryId;
   final String diseaseId;
   final String page;
+  final String productId;
 
   const SimilarProductParams({
     required this.categoryId,
     required this.diseaseId,
     required this.page,
+    required this.productId,
   });
 
   @override
-  List<Object> get props => [categoryId, diseaseId, page];
+  List<Object> get props => [categoryId, diseaseId, page, productId];
 }

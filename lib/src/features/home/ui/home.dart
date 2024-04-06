@@ -4,17 +4,20 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pharmacy_hub/src/core/hepler.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pharmacy_hub/src/core/enums.dart';
+import 'package:pharmacy_hub/src/core/helper.dart';
 import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
+import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
 import 'package:pharmacy_hub/src/core/resources/size_manager.dart';
 import 'package:pharmacy_hub/src/core/widget/RequestWidget.dart';
 import 'package:pharmacy_hub/src/features/home/logic/home_bloc.dart';
-import 'package:pharmacy_hub/src/features/home/ui/widget/cares_card.dart';
+import 'package:pharmacy_hub/src/features/home/ui/all_product_screen.dart';
 import 'package:pharmacy_hub/src/features/home/ui/widget/category_card.dart';
-import 'package:pharmacy_hub/src/features/home/ui/widget/equipments_card.dart';
 import 'package:pharmacy_hub/src/features/home/ui/widget/medicine_card.dart';
-import 'package:pharmacy_hub/src/features/home/ui/widget/vitamins_card.dart';
+import 'package:pharmacy_hub/src/features/home/ui/widget/shimmer_widget.dart';
+import 'package:pharmacy_hub/src/features/home/ui/widget/product_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -56,12 +59,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: AppColors.palePrimary,
                       ),
                       5.horizontalSpace,
-                      Text("Search for medicine & wellness products",
-                          style: context.titleMedium.copyWith(
-                              fontSize: 12.sp,
-                              color: AppColors.palePrimary,
-                              height: .7,
-                              letterSpacing: .6))
+                      Text(
+                        "Search for medicine & wellness products",
+                        style: context.titleMedium.copyWith(
+                          fontSize: 12.sp,
+                          color: AppColors.palePrimary,
+                          height: .7,
+                          letterSpacing: .6,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -110,8 +116,20 @@ class _HomeScreenState extends State<HomeScreen> {
               return RequestStateWidget(
                 reqState: state.getVitaminsReqState,
                 onLoading: const MedicineCardShimmer(),
-                onSuccess: VitaminsCard(
+                onSuccess: ProductCard(
+                  productType: ProductType.vitamins,
                   product: state.vitamins,
+                  title: 'Popular vitamins',
+                  tag: 'Popular vitamins',
+                  listViewHeight: 230,
+                  onTapViewAll: () => context.pushNamed(
+                    Routes.allProduct,
+                    extra: const AllProductScreenParams(
+                      productType: ProductType.vitamins,
+                      tag: 'Popular vitamins',
+                      categoryId: '2',
+                    ),
+                  ),
                 ),
               );
             },
@@ -124,8 +142,16 @@ class _HomeScreenState extends State<HomeScreen> {
               return RequestStateWidget(
                 reqState: state.getEquipmentsReqState,
                 onLoading: const MedicineCardShimmer(),
-                onSuccess: EquipmentsCard(
+                onSuccess: ProductCard(
+                  productType: ProductType.equipment,
                   product: state.equipments,
+                  title: 'Popular Equipments',
+                  tag: 'Popular Equipments',
+                  onTapViewAll: () => context.pushNamed(Routes.allProduct,
+                      extra: const AllProductScreenParams(
+                          productType: ProductType.equipment,
+                          tag: 'Popular Equipments',
+                          categoryId: '3')),
                 ),
               );
             },
@@ -138,8 +164,19 @@ class _HomeScreenState extends State<HomeScreen> {
               return RequestStateWidget(
                 reqState: state.getCaresReqState,
                 onLoading: const MedicineCardShimmer(),
-                onSuccess: CaresCard(
+                onSuccess: ProductCard(
+                  productType: ProductType.cares,
                   product: state.cares,
+                  title: 'Popular Cares',
+                  tag: 'Popular Cares',
+                  onTapViewAll: () => context.pushNamed(
+                    Routes.allProduct,
+                    extra: const AllProductScreenParams(
+                      productType: ProductType.cares,
+                      tag: 'Popular Cares',
+                      categoryId: '4',
+                    ),
+                  ),
                 ),
               );
             },
