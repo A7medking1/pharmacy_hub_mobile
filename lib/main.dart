@@ -13,13 +13,13 @@ import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await dotenv.load(fileName: ".env");
+   await dotenv.load(fileName: ".env");
 
   // Bloc.observer = MyBlocObserver();
 
-  // Stripe.publishableKey = ApiConstant.STRIPE_PUBLISHABLE_KEY;
+   Stripe.publishableKey = ApiConstant.STRIPE_PUBLISHABLE_KEY;
 
-  // await Stripe.instance.applySettings();
+   await Stripe.instance.applySettings();
 
   await Hive.initFlutter();
   Hive.registerAdapter(ProductModelAdapter());

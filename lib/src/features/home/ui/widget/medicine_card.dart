@@ -245,7 +245,7 @@ class MedicineItem extends StatelessWidget {
                   ),
                 ),
             ],
-          ),*//*
+          ),*/ /*
 
         ],
       ),

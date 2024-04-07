@@ -22,8 +22,8 @@ class ApiConstant {
       'api/product?CategoryId=${params.categoryId}&DiseaseId=${params.diseaseId}&page=${params.page}&productId=${params.productId}';
 
   /// TODO  payment keys
-  static String STRIPE_SECRET_KEY = dotenv.env['']!; // STRIPE_SECRET_KEY
-  static String STRIPE_PUBLISHABLE_KEY = dotenv.env['']!; // STRIPE_PUBLISHABLE_KEY
-  static String PAYPAL_CLIENT_ID = dotenv.env['']!; // PAYPAL_CLIENT_ID
-  static String PAYPAL_SECRET_KEY = dotenv.env['']!; // PAYPAL_SECRET_KEY
+  static String STRIPE_SECRET_KEY = dotenv.env['STRIPE_SECRET_KEY']!;
+  static String STRIPE_PUBLISHABLE_KEY = dotenv.env['STRIPE_PUBLISHABLE_KEY']!;
+  static String PAYPAL_CLIENT_ID = dotenv.env['PAYPAL_CLIENT_ID']!;
+  static String PAYPAL_SECRET_KEY = dotenv.env['PAYPAL_SECRET_KEY']!;
 }
