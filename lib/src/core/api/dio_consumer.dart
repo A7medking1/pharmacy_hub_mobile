@@ -131,7 +131,10 @@ class DioConsumer implements ApiConsumer {
                 ErrorMessageModel.fromJson(error.response!.data));
           case StatusCode.notFound:
             throw NotFoundException(
-                ErrorMessageModel.fromJson(error.response!.data));
+                ErrorMessageModel.fromJson(
+                  const {
+                    'message': 'Not Found !!',
+                  },));
           case StatusCode.conflict:
             throw ConflictException(
                 ErrorMessageModel.fromJson(error.response!.data));

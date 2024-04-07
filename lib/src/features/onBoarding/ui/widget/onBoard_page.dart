@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pharmacy_hub/src/core/hepler.dart';
+import 'package:pharmacy_hub/src/core/helper.dart';
 
 class onBoardPage extends StatelessWidget {
   String image;

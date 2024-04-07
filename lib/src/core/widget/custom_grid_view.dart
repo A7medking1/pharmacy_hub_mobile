@@ -1,32 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:pharmacy_hub/src/core/helper.dart';
 
-class CustomGridView extends StatelessWidget {
-  final Widget? Function(BuildContext, int) itemBuilder;
+class GridViewPagination extends StatefulWidget {
   final int itemCount;
-  final ScrollPhysics? physics;
-  final bool shrinkWrap;
+  final Widget Function(BuildContext context, int index) itemBuilder;
+  final void Function() addEvent;
+  final SliverGridDelegate? gridDelegate;
 
-  const CustomGridView({
+  const GridViewPagination({
     super.key,
-    required this.itemBuilder,
     required this.itemCount,
-    this.physics,
-    this.shrinkWrap = false,
+    required this.itemBuilder,
+    required this.addEvent,
+    this.gridDelegate,
   });
 
   @override
+  State<GridViewPagination> createState() => _GridViewPaginationState();
+}
+
+class _GridViewPaginationState extends State<GridViewPagination> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        mainAxisSpacing: 10.0,
-        crossAxisSpacing: 10.0,
-        childAspectRatio: 1.1 / 1.4,
-        maxCrossAxisExtent: 300,
+    return FadeAnimation(
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: GridView.builder(
+          controller: _scrollController,
+          physics: const BouncingScrollPhysics(),
+          itemCount: widget.itemCount,
+          gridDelegate: widget.gridDelegate ??
+              const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 1,
+                childAspectRatio: 1 / 1.3,
+              ),
+          itemBuilder: widget.itemBuilder,
+        ),
       ),
-      shrinkWrap: shrinkWrap,
-      physics: physics,
-      itemCount: itemCount,
-      itemBuilder: itemBuilder,
     );
+  }
+
+  void _onScroll() {
+    double maxScroll = _scrollController.position.maxScrollExtent;
+    double currentScroll = _scrollController.position.pixels;
+    if (maxScroll == currentScroll) {
+      widget.addEvent();
+    }
   }
 }
