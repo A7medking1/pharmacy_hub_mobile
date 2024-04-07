@@ -9,6 +9,10 @@ ThemeData getAppTheme() {
     fontFamily: CustomFontFamily.vazirmatn,
     //scaffoldBackgroundColor: Color(0xFFFAFAFA),
     scaffoldBackgroundColor: Colors.white,
+    textSelectionTheme: TextSelectionThemeData(
+      selectionColor: AppColors.black.withOpacity(.09),
+        selectionHandleColor: AppColors.primary
+    ),
     appBarTheme: AppBarTheme(
       elevation: 0.0,
       backgroundColor: Colors.white,

@@ -96,6 +96,17 @@ class HomeRepository {
       ),
     );
   }
+
+  Future<List<ProductModel>> searchFor(
+      {required String page, required String text}) async {
+    final Response response = await _apiConsumer
+        .get('${ApiConstant.product}?&index=$page&pagesize=10&search=$text');
+    return List<ProductModel>.from(
+      (response.data['data']).map(
+            (e) => ProductModel.fromMap(e),
+      ),
+    );
+  }
 }
 /*print(
 '${ApiConstant.baseUrl}${ApiConstant.product}?categoryId=${params.categoryId}');*/

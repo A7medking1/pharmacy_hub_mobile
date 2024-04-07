@@ -7,12 +7,14 @@ class RequestStateWidget extends StatelessWidget {
     required this.reqState,
     required this.onLoading,
     required this.onSuccess,
+    this.onNothing
   });
 
   final ReqState reqState;
 
   final Widget onSuccess;
   final Widget onLoading;
+  final Widget? onNothing;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,8 @@ class RequestStateWidget extends StatelessWidget {
         return const Center(child: Text("An error occurred"));
       case ReqState.success:
         return onSuccess;
+      case ReqState.nothing:
+        return onNothing!;
     }
   }
 }
@@ -37,12 +41,14 @@ class RequestStateWidgetWithSlivers extends StatelessWidget {
     required this.reqState,
     required this.onLoading,
     required this.onSuccess,
+    this.onNothing
   });
 
   final ReqState reqState;
 
   final Widget onSuccess;
   final Widget onLoading;
+  final Widget? onNothing;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +61,8 @@ class RequestStateWidgetWithSlivers extends StatelessWidget {
         return const SliverToBoxAdapter(child: Center(child: Text("An error occurred")));
       case ReqState.success:
         return onSuccess;
+      case ReqState.nothing:
+        return onNothing!;
     }
   }
 }

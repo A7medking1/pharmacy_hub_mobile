@@ -6,6 +6,7 @@ import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
 import 'package:pharmacy_hub/src/core/resources/theme/app_light_theme.dart';
 import 'package:pharmacy_hub/src/core/services/index.dart';
 import 'package:pharmacy_hub/src/features/home/logic/home_bloc.dart';
+import 'package:pharmacy_hub/src/features/profile/logic/profile_bloc.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
                 ..add(GetEquipmentsEvent())
                 ..add(GetCaresEvent()),
             ),
+            BlocProvider(
+              create: (context) => sl<ProfileBloc>(),
+            )
           ],
           child: GestureDetector(
             onTap: () => FocusManager.instance.primaryFocus!.unfocus(),

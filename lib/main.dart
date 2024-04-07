@@ -10,13 +10,13 @@ import 'package:pharmacy_hub/src/core/services/index.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
+  // await dotenv.load(fileName: ".env");
 
   // Bloc.observer = MyBlocObserver();
 
-  Stripe.publishableKey = ApiConstant.STRIPE_PUBLISHABLE_KEY;
+  // Stripe.publishableKey = ApiConstant.STRIPE_PUBLISHABLE_KEY;
 
-  await Stripe.instance.applySettings();
+  // await Stripe.instance.applySettings();
 
   await ServicesLocator().init();
 
