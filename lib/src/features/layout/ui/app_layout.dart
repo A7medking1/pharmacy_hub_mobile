@@ -41,10 +41,7 @@ class _AppLayOutState extends State<AppLayOut> {
       const HomeScreen(),
       const Center(child: Text('second')),
       // const Center(child: Text('third')),
-      BlocProvider(
-        create: (context) => sl<ProfileBloc>(),
-        child: const ProfileScreen(),
-      )
+    const ProfileScreen()
     ];
     super.initState();
   }
@@ -54,7 +51,7 @@ class _AppLayOutState extends State<AppLayOut> {
     return Scaffold(
       body: NestedScrollView(
         controller: nestedScrollController,
-      //  scrollBehavior: ScrollBehavior(),
+        //  scrollBehavior: ScrollBehavior(),
         headerSliverBuilder: (_, b) {
           return [
             SliverAppBar(

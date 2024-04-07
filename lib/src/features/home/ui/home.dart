@@ -40,35 +40,41 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16.r),
-                    color: AppColors.primary.withOpacity(.05),
-                    border:
-                        Border.all(color: AppColors.primary.withOpacity(.1)),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        AppSvg.search,
-                        width: 25.w,
-                        color: AppColors.palePrimary,
+                Hero(
+                  tag: "home-search",
+                  child: GestureDetector(
+                    onTap: ()=> context.pushNamed(Routes.search),
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16.r),
+                        color: AppColors.primary.withOpacity(.05),
+                        border:
+                            Border.all(color: AppColors.primary.withOpacity(.1)),
                       ),
-                      5.horizontalSpace,
-                      Text(
-                        "Search for medicine & wellness products",
-                        style: context.titleMedium.copyWith(
-                          fontSize: 12.sp,
-                          color: AppColors.palePrimary,
-                          height: .7,
-                          letterSpacing: .6,
-                        ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            AppSvg.search,
+                            width: 25.w,
+                            color: AppColors.palePrimary,
+                          ),
+                          5.horizontalSpace,
+                          Text(
+                            "Search for medicine & wellness products",
+                            style: context.titleMedium.copyWith(
+                              fontSize: 12.sp,
+                              color: AppColors.palePrimary,
+                              height: .7,
+                              letterSpacing: .6,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
                 18.verticalSpace,

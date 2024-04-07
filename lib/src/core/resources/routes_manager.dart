@@ -22,6 +22,8 @@ import 'package:pharmacy_hub/src/features/onBoarding/ui/onBoarding_screen.dart';
 import 'package:pharmacy_hub/src/features/profile/ui/about_screen.dart';
 import 'package:pharmacy_hub/src/features/profile/ui/contact_us_screen.dart';
 
+import '../../features/home/logic/search_bloc/search_bloc.dart';
+import '../../features/home/ui/search_screen.dart';
 import '../../features/profile/logic/profile_bloc.dart';
 import '../../features/profile/ui/account_screen.dart';
 
@@ -41,6 +43,7 @@ class Routes {
   static const productDetails = 'productDetails';
   static const allProduct = 'allProduct';
   static const favScreen = 'favScreen';
+  static const search = 'search';
 }
 
 class _RouterPath {
@@ -59,6 +62,7 @@ class _RouterPath {
   static const allProduct = '/allProduct';
   static const productDetails = '/productDetails';
   static const favScreen = '/favScreen';
+  static const search = '/search';
 }
 
 class AppRouter {
@@ -141,10 +145,7 @@ class AppRouter {
       GoRoute(
         name: Routes.contactUs,
         path: _RouterPath.contactUs,
-        builder: (context, state) => BlocProvider(
-          create: (context) => sl<ProfileBloc>(),
-          child: const ContactUsScreen(),
-        ),
+        builder: (context, state) => const ContactUsScreen(),
       ),
       GoRoute(
         name: Routes.map,
@@ -185,6 +186,20 @@ class AppRouter {
         path: _RouterPath.favScreen,
         builder: (context, state) => FavoritesScreen(),
       ),
+
+      GoRoute(
+        name: Routes.search,
+        path: _RouterPath.search,
+        builder: (context, state) => BlocProvider(
+          create: (context) => sl<SearchBloc>(),
+          child: const SearchScreen(),
+        ),
+      ),
+
+      //   name: Routes.search,
+      //   path: _RouterPath.search,
+      //   builder: (context, state) => BlocProvider(create: (context)=> sl<SearchBloc>(), child: const SearchScreen(),),
+      // ),
     ],
   );
 }

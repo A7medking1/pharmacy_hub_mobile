@@ -1,6 +1,6 @@
 import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
 
-enum ReqState { loading, empty, error, success }
+enum ReqState { loading, empty, error, success, nothing }
 
 enum ProductType { medicine, vitamins, equipment, cares }
 
@@ -34,3 +34,4 @@ extension ProductTypeExtension on ProductType {
     }
   }
 }
+

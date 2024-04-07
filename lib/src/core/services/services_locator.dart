@@ -31,5 +31,7 @@ class ServicesLocator {
     sl.registerFactory(() => HomeBloc(sl()));
     sl.registerFactory(() => ProfileBloc());
     //sl.registerFactory(() => PaginationBloc(sl()));
+    sl.registerFactory(() => PaginationBloc(sl()));
+    sl.registerFactory(() => SearchBloc(sl()));
   }
 }
