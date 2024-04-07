@@ -8,16 +8,15 @@ import 'package:pharmacy_hub/src/core/enums.dart';
 import 'package:pharmacy_hub/src/core/helper.dart';
 import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
-import 'package:pharmacy_hub/src/core/resources/font_manager.dart';
 import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
 import 'package:pharmacy_hub/src/core/services/index.dart';
 import 'package:pharmacy_hub/src/core/widget/RequestWidget.dart';
 import 'package:pharmacy_hub/src/core/widget/cached_image_network.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
 import 'package:pharmacy_hub/src/core/widget/list_view_horizontal.dart';
-import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
 import 'package:pharmacy_hub/src/features/home/data/repository/repository.dart';
 import 'package:pharmacy_hub/src/features/home/logic/home_bloc.dart';
+import 'package:pharmacy_hub/src/features/home/ui/widget/favorite_icon_widget.dart';
 import 'package:pharmacy_hub/src/features/home/ui/widget/product_card.dart';
 import 'package:pharmacy_hub/src/features/home/ui/widget/shimmer_widget.dart';
 
@@ -76,9 +75,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
 
   @override
   Widget build(BuildContext context) {
-
-    print('${widget.params.uniqueKey} widget.params.uniqueKey.toString()');
-
+    print(widget.params.uniqueKey);
     return Stack(
       alignment: AlignmentDirectional.bottomCenter,
       children: [
@@ -95,12 +92,24 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                   height: 22,
                   fit: BoxFit.scaleDown,
                 ),
+/*
                 Padding(
                   padding:
                       const EdgeInsetsDirectional.symmetric(horizontal: 15),
                   child: SvgPicture.asset(
                     AppSvg.fav,
                     fit: BoxFit.scaleDown,
+                  ),
+                ),
+*/
+                Padding(
+                  padding:
+                      const EdgeInsetsDirectional.symmetric(horizontal: 15),
+                  child: FavoriteIconWidget(
+                    model: widget.params.productModel,
+                    size: 30.h,
+                    unFavoriteColor: Colors.black,
+                    index: widget.params.itemIndex,
                   ),
                 ),
               ],
@@ -262,7 +271,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                             20.verticalSpace,
                             ListViewHorizontal(
                               count: state.alternativeMedicine.length,
-                              height: 160.h,
+                              height: 220.h,
                               tag: 7,
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 0),
@@ -294,7 +303,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                                       ),
                                     );
                                   },
-                                  child: MedicineSimilarItem(
+                                  child: ProductItemWidget(
                                     model: state.alternativeMedicine[index],
                                   ),
                                 );
@@ -333,7 +342,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                             ListViewHorizontal(
                               count: state.similarMedicine.length,
                               tag: 6,
-                              height: 160.h,
+                              height: 220.h,
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 0),
                               onTapViewAll: () {
@@ -367,7 +376,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                                         ),
                                       );
                                     },
-                                    child: MedicineSimilarItem(
+                                    child: ProductItemWidget(
                                       model: state.similarMedicine[index],
                                     ),
                                   ),
@@ -420,7 +429,6 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                             tag: _key.toString(),
                             child: GestureDetector(
                               onTap: () {
-
                                 print('_key.toString() ${_key.toString()}');
 
                                 context.pushNamed(
@@ -485,105 +493,4 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
   Color get stockColor => isProductInStock ? AppColors.primary : AppColors.red;
 
   String get stockTitle => isProductInStock ? 'in stock' : 'out of stock';
-}
-
-class MedicineSimilarItem extends StatelessWidget {
-  const MedicineSimilarItem({
-    super.key,
-    required this.model,
-  });
-
-  final ProductModel model;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      // height: 250.h,
-      width: 180.w,
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.r),
-        color: AppColors.primary.withOpacity(.03),
-        border: Border.all(color: AppColors.primary.withOpacity(.1)),
-      ),
-      child: Stack(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: 10.h,
-              horizontal: 10.w,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: AlignmentDirectional.center,
-                  child: CachedImages(
-                    imageUrl: model.pictureUrl,
-                    width: 80.w,
-                    height: 80.h,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                10.verticalSpace,
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    model.name,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: context.titleSmall.copyWith(
-                        height: 1.15, fontSize: 14.sp, color: AppColors.black),
-                  ),
-                ),
-                5.verticalSpace,
-                Text(
-                  'EGP ${model.price}',
-                  style: context.titleSmall.copyWith(
-                      fontSize: 14.sp,
-                      color: AppColors.primary,
-                      fontWeight: FontWeightManager.regular),
-                ),
-                5.verticalSpace,
-              ],
-            ),
-          ),
-          PositionedDirectional(
-            top: 2,
-            end: 3,
-            child: Column(
-              children: [
-                CustomButton(
-                  onTap: () {},
-                  width: 40.h,
-                  height: 40.h,
-                  borderRadius: 999,
-                  padding: EdgeInsets.zero,
-                  color: AppColors.transparent,
-                  icon: Icon(
-                    Icons.favorite_outline_rounded,
-                    color: AppColors.primary,
-                    size: 20.h,
-                  ),
-                ),
-                CustomButton(
-                  onTap: () {},
-                  width: 40.h,
-                  height: 40.h,
-                  borderRadius: 999,
-                  padding: EdgeInsets.zero,
-                  color: AppColors.transparent,
-                  icon: Icon(
-                    Icons.add_shopping_cart_rounded,
-                    color: AppColors.primary,
-                    size: 20.h,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

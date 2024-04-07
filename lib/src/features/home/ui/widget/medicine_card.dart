@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -12,6 +13,8 @@ import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
 import 'package:pharmacy_hub/src/core/widget/list_view_horizontal.dart';
 import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
 import 'package:pharmacy_hub/src/features/home/ui/all_product_screen.dart';
+import 'package:pharmacy_hub/src/features/home/ui/widget/favorite_icon_widget.dart';
+import 'package:pharmacy_hub/src/features/home/ui/widget/product_card.dart';
 
 class MedicineCard extends StatelessWidget {
   const MedicineCard({super.key, required this.product});
@@ -48,7 +51,7 @@ class MedicineCard extends StatelessWidget {
                 ),
               );
             },
-            height: 185,
+            height: 220.h,
             itemBuilder: (context, index) {
               UniqueKey _key = UniqueKey();
               final ProductModel model = product[index];
@@ -192,6 +195,28 @@ class MedicineItem extends StatelessWidget {
           ),
           Column(
             children: [
+              FavoriteIconWidget(
+                model: model,
+              ),
+              CustomButton(
+                onTap: () {},
+                width: 40.h,
+                height: 40.h,
+                padding: EdgeInsets.zero,
+                color: AppColors.transparent,
+                icon: Icon(
+                  Icons.add_shopping_cart_rounded,
+                  color: AppColors.primary,
+                  size: 20.h,
+                ),
+              ),
+            ],
+          ),
+
+
+          */
+/* Column(
+            children: [
               CustomButton(
                 onTap: () {},
                 width: 40.h,
@@ -220,7 +245,8 @@ class MedicineItem extends StatelessWidget {
                   ),
                 ),
             ],
-          ),
+          ),*//*
+
         ],
       ),
     );
@@ -270,3 +296,4 @@ List<String> phramacies = [
   'Egy phar.',
   'Egy phar.',
 ];
+*/

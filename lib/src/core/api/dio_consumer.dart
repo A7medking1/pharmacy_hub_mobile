@@ -29,14 +29,15 @@ class DioConsumer implements ApiConsumer {
 
   @override
   Future get(String path, {Map<String, dynamic>? queryParameters}) async {
-    final token = sl<AppPreferences>().getUserToken() ;
-    print(token) ;
+    final token = sl<AppPreferences>().getUserToken();
     try {
       final response = await client.get(
         path,
-        options: Options(headers: {
-          'Authorization': 'Bearer $token',
-        }),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
         queryParameters: queryParameters,
       );
       if (response.statusCode == 200) {
@@ -130,11 +131,11 @@ class DioConsumer implements ApiConsumer {
             throw UnauthorizedException(
                 ErrorMessageModel.fromJson(error.response!.data));
           case StatusCode.notFound:
-            throw NotFoundException(
-                ErrorMessageModel.fromJson(
-                  const {
-                    'message': 'Not Found !!',
-                  },));
+            throw NotFoundException(ErrorMessageModel.fromJson(
+              const {
+                'message': 'Not Found !!',
+              },
+            ));
           case StatusCode.conflict:
             throw ConflictException(
                 ErrorMessageModel.fromJson(error.response!.data));

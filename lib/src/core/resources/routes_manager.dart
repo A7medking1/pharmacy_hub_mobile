@@ -12,6 +12,7 @@ import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/cart_screen.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/map_screen.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/success_payment.dart';
+import 'package:pharmacy_hub/src/features/favorites/ui/favorites_screen.dart';
 import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
 import 'package:pharmacy_hub/src/features/home/ui/all_product_screen.dart';
 import 'package:pharmacy_hub/src/features/home/ui/product_details_screen.dart';
@@ -39,6 +40,7 @@ class Routes {
   static const successPayment = 'successPayment';
   static const productDetails = 'productDetails';
   static const allProduct = 'allProduct';
+  static const favScreen = 'favScreen';
 }
 
 class _RouterPath {
@@ -56,6 +58,7 @@ class _RouterPath {
   static const successPayment = '/successPayment';
   static const allProduct = '/allProduct';
   static const productDetails = '/productDetails';
+  static const favScreen = '/favScreen';
 }
 
 class AppRouter {
@@ -177,6 +180,11 @@ class AppRouter {
           params: state.extra as AllProductScreenParams,
         ),
       ),
+      GoRoute(
+        name: Routes.favScreen,
+        path: _RouterPath.favScreen,
+        builder: (context, state) => FavoritesScreen(),
+      ),
     ],
   );
 }
@@ -187,6 +195,7 @@ class ProductDetailsParams extends Equatable {
   final UniqueKey uniqueKey;
 
   final ProductType productType;
+  final int itemIndex;
 
   // this for vitamins , equipment and cares  only because does not have similar or alternative ;
   final List<ProductModel> similar;
@@ -196,8 +205,10 @@ class ProductDetailsParams extends Equatable {
     required this.productModel,
     required this.uniqueKey,
     required this.similar,
+    this.itemIndex = -1,
   });
 
   @override
-  List<Object> get props => [productModel, uniqueKey, productType, similar];
+  List<Object> get props =>
+      [productModel, uniqueKey, productType, similar, itemIndex];
 }

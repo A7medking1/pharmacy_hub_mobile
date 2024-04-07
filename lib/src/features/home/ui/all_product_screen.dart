@@ -88,7 +88,7 @@ class PaginationScreenContent extends StatelessWidget {
                 if (index >= state.medicine.length && bloc.page > 1) {
                   return const SingleShimmerWidget();
                 }
-                if (isProductMedicine) {
+               /* if (isProductMedicine) {
                   return GestureDetector(
                     onTap: () {
                       context.pushNamed(Routes.productDetails,
@@ -103,7 +103,7 @@ class PaginationScreenContent extends StatelessWidget {
                       model: state.medicine[index],
                     ),
                   );
-                }
+                }*/
                 return GestureDetector(
                   onTap: () {
                     buildPushNamed(context, state, index);

@@ -102,8 +102,22 @@ class _HomeScreenState extends State<HomeScreen> {
               return RequestStateWidget(
                 reqState: state.getMedicineReqState,
                 onLoading: const MedicineCardShimmer(),
-                onSuccess: MedicineCard(
+                onSuccess: ProductCard(
                   product: state.medicine,
+                  title: 'Popular medicine',
+                  tag: 'Popular medicine',
+                  similar: const [],
+                  productType: ProductType.medicine,
+                  onTapViewAll: () {
+                    context.pushNamed(
+                      Routes.allProduct,
+                      extra: const AllProductScreenParams(
+                        categoryId: '1',
+                        productType: ProductType.medicine,
+                        tag: 'Popular medicine',
+                      ),
+                    );
+                  },
                 ),
               );
             },
@@ -145,7 +159,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 onLoading: const MedicineCardShimmer(),
                 onSuccess: ProductCard(
                   similar: state.equipments,
-
                   productType: ProductType.equipment,
                   product: state.equipments,
                   title: 'Popular Equipments',
