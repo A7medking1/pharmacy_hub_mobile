@@ -42,6 +42,7 @@ class _GridViewPaginationState extends State<GridViewPagination> {
       child: Padding(
         padding: const EdgeInsets.all(5.0),
         child: GridView.builder(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           controller: _scrollController,
           physics: const BouncingScrollPhysics(),
           itemCount: widget.itemCount,

@@ -16,12 +16,6 @@ class FavoritesScreen extends StatefulWidget {
 }
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
-/*
-  final GlobalKey<AnimatedGridState> _gridKey = GlobalKey<AnimatedGridState>();
-
-  AnimatedGridState? get _animatedGrid => _gridKey.currentState;
-*/
-
   @override
   Widget build(BuildContext context) {
     final HomeState homeBloc = context.read<HomeBloc>().state;
@@ -35,7 +29,6 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       ),
       body: BlocBuilder<FavoriteBloc, FavoriteState>(
         builder: (context, state) {
-          //final List<ProductModel> products = state.favoritesItems;
           if (state.favoritesItems.isEmpty) {
             return Center(
               child: Text(
@@ -57,31 +50,16 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                   childAspectRatio: 1 / 1.3,
                 ),
                 itemBuilder: (context, index, animation) {
-                  return GestureDetector(
-                    onTap: () => onTapItem(context, state, index, homeBloc),
-                    child: ProductItemWidget(
-                      model: state.favoritesItems[index],
-                      itemIndex: index,
-                      /*   onTapFavoriteIcon: () {
-                        _animatedGrid?.removeItem(
-                          index,
-                          duration: const Duration(milliseconds: 500),
-                          (context, animation) => ScaleTransition(
-                            scale: CurvedAnimation(
-                              parent: animation,
-                              curve: Curves.easeInOut,
-                            ),
-                            child: ProductItemWidget(
-                              model: state.favoritesItems[index],
-                            ),
-                          ),
-                        );
-                        context.read<FavoriteBloc>().add(
-                              RemoveProductFromFavorite(
-                                state.favoritesItems[index].id,
-                              ),
-                            );
-                      },*/
+                  return ScaleTransition(
+                    scale: CurvedAnimation(
+                      parent: animation,
+                      curve: Curves.easeInOut,
+                    ),
+                    child: GestureDetector(
+                      onTap: () => onTapItem(context, state, index, homeBloc),
+                      child: ProductItemWidget(
+                        model: state.favoritesItems[index],
+                      ),
                     ),
                   );
                 },

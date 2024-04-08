@@ -109,7 +109,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                     model: widget.params.productModel,
                     size: 30.h,
                     unFavoriteColor: Colors.black,
-                    index: widget.params.itemIndex,
+                    //    index: widget.params.itemIndex,
                   ),
                 ),
               ],

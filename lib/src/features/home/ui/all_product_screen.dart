@@ -78,9 +78,9 @@ class PaginationScreenContent extends StatelessWidget {
               itemCount: bloc.hasReachedMax
                   ? state.medicine.length
                   : state.medicine.length + 1,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisSpacing: isProductMedicine ? 15 : 10,
+                mainAxisSpacing: 15,
                 crossAxisSpacing: 10,
                 childAspectRatio: 1 / 1.3,
               ),
@@ -88,7 +88,7 @@ class PaginationScreenContent extends StatelessWidget {
                 if (index >= state.medicine.length && bloc.page > 1) {
                   return const SingleShimmerWidget();
                 }
-               /* if (isProductMedicine) {
+                /* if (isProductMedicine) {
                   return GestureDetector(
                     onTap: () {
                       context.pushNamed(Routes.productDetails,

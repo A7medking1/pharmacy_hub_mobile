@@ -7,14 +7,19 @@ class RequestStateWidget extends StatelessWidget {
     required this.reqState,
     required this.onLoading,
     required this.onSuccess,
-    this.onNothing
+    this.onEmpty,
+    //this.onNothing
+    this.onError,
   });
 
   final ReqState reqState;
 
   final Widget onSuccess;
   final Widget onLoading;
-  final Widget? onNothing;
+  final Widget? onEmpty;
+  final Widget? onError;
+
+  //final Widget? onNothing;
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +27,14 @@ class RequestStateWidget extends StatelessWidget {
       case ReqState.loading:
         return onLoading;
       case ReqState.empty:
-        return const Center(child: Text("No data found"));
+        return onEmpty ?? const Center(child: Text("No data found"));
       case ReqState.error:
-        return const Center(child: Text("An error occurred"));
+        return onError ?? const Center(child: Text("An error occurred"));
       case ReqState.success:
         return onSuccess;
-      case ReqState.nothing:
-        return onNothing!;
     }
   }
 }
-
-
 
 class RequestStateWidgetWithSlivers extends StatelessWidget {
   const RequestStateWidgetWithSlivers({
@@ -41,7 +42,7 @@ class RequestStateWidgetWithSlivers extends StatelessWidget {
     required this.reqState,
     required this.onLoading,
     required this.onSuccess,
-    this.onNothing
+    this.onNothing,
   });
 
   final ReqState reqState;
@@ -56,13 +57,13 @@ class RequestStateWidgetWithSlivers extends StatelessWidget {
       case ReqState.loading:
         return onLoading;
       case ReqState.empty:
-        return const SliverToBoxAdapter(child: Center(child: Text("No data found")));
+        return const SliverToBoxAdapter(
+            child: Center(child: Text("No data found")));
       case ReqState.error:
-        return const SliverToBoxAdapter(child: Center(child: Text("An error occurred")));
+        return const SliverToBoxAdapter(
+            child: Center(child: Text("An error occurred")));
       case ReqState.success:
         return onSuccess;
-      case ReqState.nothing:
-        return onNothing!;
     }
   }
 }

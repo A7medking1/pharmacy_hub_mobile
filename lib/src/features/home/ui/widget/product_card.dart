@@ -88,12 +88,10 @@ class ProductItemWidget extends StatelessWidget {
     super.key,
     required this.model,
     this.onTapFavoriteIcon,
-    this.itemIndex = -1,
   });
 
   final ProductModel model;
   final void Function()? onTapFavoriteIcon;
-  final int itemIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -152,12 +150,20 @@ class ProductItemWidget extends StatelessWidget {
                       children: model.pharmacies
                           .map((e) => Container(
                                 padding: EdgeInsets.symmetric(
-                                    vertical: 5.h, horizontal: 3.w),
-                                margin:
-                                    EdgeInsets.only(right: 2.w, bottom: 2.h),
+                                  vertical: 5.h,
+                                  horizontal: 3.w,
+                                ),
+                                margin: EdgeInsets.only(
+                                  right: 2.w,
+                                  bottom: 2.h,
+                                ),
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.r),
-                                  color: AppColors.primary.withOpacity(.03),
+                                  borderRadius: BorderRadius.circular(
+                                    5.r,
+                                  ),
+                                  color: AppColors.primary.withOpacity(
+                                    .03,
+                                  ),
                                   border: Border.all(
                                       color: AppColors.primary.withOpacity(.1)),
                                 ),
@@ -201,7 +207,7 @@ class ProductItemWidget extends StatelessWidget {
                 FavoriteIconWidget(
                   model: model,
                   onTapFavoriteIcon: onTapFavoriteIcon,
-                  index: itemIndex,
+                  //index: itemIndex,
                 ),
                 if (isProductInStock)
                   CustomButton(

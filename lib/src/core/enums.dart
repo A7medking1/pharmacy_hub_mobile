@@ -1,6 +1,6 @@
 import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
 
-enum ReqState { loading, empty, error, success, nothing }
+enum ReqState { loading, empty, error, success }
 
 enum ProductType { medicine, vitamins, equipment, cares }
 

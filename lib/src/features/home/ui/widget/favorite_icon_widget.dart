@@ -15,12 +15,13 @@ class FavoriteIconWidget extends StatefulWidget {
     this.size,
     this.unFavoriteColor,
     this.onTapFavoriteIcon,
-    this.index = -1,
+    //  this.index = -1,
   });
 
   final ProductModel model;
   final void Function()? onTapFavoriteIcon;
-  final int index;
+
+  // final int index;
 
   /// TODO  this two params using only in Product Details Screen (  size,  unFavoriteColor )
   final double? size;
@@ -33,7 +34,10 @@ class FavoriteIconWidget extends StatefulWidget {
 class _FavoriteIconWidgetState extends State<FavoriteIconWidget>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
-      duration: const Duration(milliseconds: 200), vsync: this, value: 1.0);
+    duration: const Duration(milliseconds: 200),
+    vsync: this,
+    value: 1.0,
+  );
 
   @override
   void initState() {
@@ -53,17 +57,16 @@ class _FavoriteIconWidgetState extends State<FavoriteIconWidget>
       builder: (context, state) {
         final FavoriteBloc bloc = context.read<FavoriteBloc>();
         return CustomButton(
-          onTap: widget.onTapFavoriteIcon ??
-              () {
-                _controller.reverse().then((value) => _controller.forward());
+          onTap: () {
+            _controller.reverse().then((value) => _controller.forward());
 
-                final bool isFav = bloc.favorites[widget.model.id] ?? false;
+            final bool isFav = bloc.favorites[widget.model.id] ?? false;
 
-                if (isFav) {
-                  /// TODO that's mean the product if not equal -1 the tapped icon favorite not in favorites screen
-                  if (widget.index != -1) {
-                    /// TODO when remove product from favorites do some animation
-                    context.read<FavoriteBloc>().animatedGrid?.removeItem(
+            if (isFav) {
+              /* /// TODO that's mean the product if not equal -1 the tapped icon favorite not in favorites screen
+              if (widget.index != -1) {
+                /// TODO when remove product from favorites do some animation
+                */ /* context.read<FavoriteBloc>().animatedGrid?.removeItem(
                           widget.index,
                           duration: const Duration(milliseconds: 500),
                           (context, animation) => ScaleTransition(
@@ -75,24 +78,24 @@ class _FavoriteIconWidgetState extends State<FavoriteIconWidget>
                               model: state.favoritesItems[widget.index],
                             ),
                           ),
-                        );
-                  }
-
-                  context.read<FavoriteBloc>().add(
-                        RemoveProductFromFavorite(
-                          widget.model.id,
-                        ),
-                      );
-                } else {
-                  context.read<FavoriteBloc>().add(
-                        AddProductToFavoriteEvent(
-                          FavoriteItem.fromEntity(
-                            widget.model,
-                          ),
-                        ),
-                      );
-                }
-              },
+                        );*/ /*
+              }*/
+              context.read<FavoriteBloc>().add(
+                    RemoveProductFromFavorite(
+                      widget.model.id,
+                    ),
+                  );
+            } else {
+              context.read<FavoriteBloc>().add(
+                    AddProductToFavoriteEvent(
+                      FavoriteItem.fromEntity(
+                        widget.model,
+                      ),
+                    ),
+                  );
+              // context.read<FavoriteBloc>().animatedGrid?.insertItem();
+            }
+          },
           width: widget.size ?? 40.h,
           height: widget.size ?? 40.h,
           splashColor: AppColors.transparent,
