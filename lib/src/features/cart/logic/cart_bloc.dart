@@ -65,11 +65,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   FutureOr<void> _changeStepper(
       ChangeStepperEvent event, Emitter<CartState> emit) async {
     print(state.selectedStepper);
-
     if (state.selectedStepper > 2) {
       return;
     }
-
     emit(state.copyWith(selectedStepper: state.selectedStepper + 1));
   }
 }

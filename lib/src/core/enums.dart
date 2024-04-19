@@ -4,7 +4,8 @@ enum ReqState { loading, empty, error, success }
 
 enum ProductType { medicine, vitamins, equipment, cares }
 
-List<ProductModel> getCurrentList(ProductType type,final vitamins , final equipment , final cares ) {
+List<ProductModel> getCurrentList(
+    ProductType type, final vitamins, final equipment, final cares) {
   switch (type) {
     case ProductType.vitamins:
       return vitamins;
@@ -34,4 +35,3 @@ extension ProductTypeExtension on ProductType {
     }
   }
 }
-

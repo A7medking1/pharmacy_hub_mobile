@@ -116,7 +116,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     onLoading: Padding(
                       padding:
                           EdgeInsetsDirectional.symmetric(horizontal: 20.w),
-                      child: LinearProgressIndicator(),
+                      child: const LinearProgressIndicator(),
                     ),
                     onEmpty: Padding(
                       padding: const EdgeInsets.symmetric(

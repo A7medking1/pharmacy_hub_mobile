@@ -21,6 +21,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<GetCaresEvent>(_getCares);
     on<GetMedicineSimilarEvent>(_getMedicineSimilar);
     on<GetMedicineAlternativeEvent>(_getAlternativeMedicine);
+    on<RefreshHomeEvent>(_refreshHome);
   }
 
   final HomeRepository _homeRepository;
@@ -182,5 +183,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ),
       );
     }
+  }
+
+  FutureOr<void> _refreshHome(
+      RefreshHomeEvent event, Emitter<HomeState> emit) async {
+    emit(state.copyWith(
+      getMedicineReqState: ReqState.loading,
+      getCategoriesReqState: ReqState.loading,
+      getVitaminsReqState: ReqState.loading,
+      getEquipmentsReqState: ReqState.loading,
+      getCaresReqState: ReqState.loading,
+    ));
+
+    add(GetCategoriesEvent());
+    add(GetVitaminsEvent());
+    add(GetEquipmentsEvent());
+    add(GetCaresEvent());
+    add(GetMedicineEvent());
   }
 }

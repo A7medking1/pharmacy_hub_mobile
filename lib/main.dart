@@ -28,8 +28,6 @@ void main() async {
 
   await ServicesLocator().init();
 
-
-
   FlutterNativeSplash.remove();
 
   SystemChrome.setPreferredOrientations([

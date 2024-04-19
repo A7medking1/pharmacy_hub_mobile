@@ -28,3 +28,5 @@ class GetMedicineAlternativeEvent extends HomeEvent {
 
   const GetMedicineAlternativeEvent(this.params);
 }
+
+class RefreshHomeEvent extends HomeEvent {}
