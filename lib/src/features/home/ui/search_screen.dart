@@ -106,6 +106,19 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
               ),
+              BlocBuilder<SearchBloc, SearchState>(
+                  builder: (context, state) =>
+                      state.getSearchReqState == ReqState.loading
+                          ? Padding(
+                            padding: EdgeInsets.symmetric(horizontal: (AppSize.pagePadding + 20).w),
+                            child: LinearProgressIndicator(
+                              backgroundColor: AppColors.primary.withOpacity(.2),
+                              color: AppColors.primary,
+                              minHeight: 2,
+                              borderRadius: const BorderRadius.vertical(bottom: Radius.circular(999)),
+                            ),
+                          )
+                          : const SizedBox.shrink()),
               // body
               15.verticalSpace,
               BlocBuilder<SearchBloc, SearchState>(
@@ -113,11 +126,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   //   print(state.getSearchReqState);
                   return RequestStateWidget(
                     reqState: state.getSearchReqState,
-                    onLoading: Padding(
-                      padding:
-                          EdgeInsetsDirectional.symmetric(horizontal: 20.w),
-                      child: const LinearProgressIndicator(),
-                    ),
+                    onLoading:const SizedBox.shrink(),
                     onEmpty: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: AppSize.pagePadding),
