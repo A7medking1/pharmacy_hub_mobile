@@ -18,7 +18,7 @@ class ServicesLocator {
     sl.registerLazySingleton(
       () => PrettyDioLogger(
         request: false,
-        responseBody: false,
+        responseBody: true,
       ),
     );
     sl.registerLazySingleton(() => AppInterceptors());
@@ -27,11 +27,13 @@ class ServicesLocator {
     sl.registerFactory(() => AuthBloc());
 
     sl.registerLazySingleton(() => HomeRepository(sl()));
+    sl.registerLazySingleton(() => CartRepository(sl()));
 
     sl.registerFactory(() => HomeBloc(sl()));
     sl.registerFactory(() => ProfileBloc());
     //sl.registerFactory(() => PaginationBloc(sl()));
     sl.registerFactory(() => PaginationBloc(sl()));
     sl.registerFactory(() => SearchBloc(sl()));
+    sl.registerFactory(() => CartBloc(sl()));
   }
 }

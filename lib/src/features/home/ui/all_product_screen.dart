@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +10,6 @@ import 'package:pharmacy_hub/src/core/services/index.dart';
 import 'package:pharmacy_hub/src/core/widget/RequestWidget.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_grid_view.dart';
 import 'package:pharmacy_hub/src/features/home/logic/pagination_bloc/pagination_bloc.dart';
-import 'package:pharmacy_hub/src/features/home/ui/widget/medicine_card.dart';
 import 'package:pharmacy_hub/src/features/home/ui/widget/product_card.dart';
 import 'package:shimmer/shimmer.dart';
 

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
 import 'package:pharmacy_hub/src/core/resources/theme/app_light_theme.dart';
 import 'package:pharmacy_hub/src/core/services/index.dart';
+import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 import 'package:pharmacy_hub/src/features/favorites/logic/favorite_bloc.dart';
 import 'package:pharmacy_hub/src/features/home/logic/home_bloc.dart';
 import 'package:pharmacy_hub/src/features/profile/logic/profile_bloc.dart';
@@ -35,6 +36,9 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) => sl<ProfileBloc>(),
+            ),
+            BlocProvider(
+              create: (context) => sl<CartBloc>(),
             ),
           ],
           child: GestureDetector(

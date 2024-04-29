@@ -7,6 +7,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pharmacy_hub/my_app.dart';
 import 'package:pharmacy_hub/src/core/api/api_constant.dart';
 import 'package:pharmacy_hub/src/core/services/index.dart';
+import 'package:pharmacy_hub/src/features/cart/data/models/cart_model.dart';
+import 'package:pharmacy_hub/src/features/cart/data/repository/cart_repository_local.dart';
 import 'package:pharmacy_hub/src/features/favorites/data/local_repository/local_repository.dart';
 import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
 
@@ -21,13 +23,17 @@ void main() async {
   await Stripe.instance.applySettings();
 
   await Hive.initFlutter();
-  Hive.registerAdapter(ProductModelAdapter());
-  await Hive.openBox(favoriteBoxName);
+
+  registerAdapter();
+
+  await Future.wait([
+    Hive.openBox(favoriteBoxName),
+    Hive.openBox(cartBoxName),
+  ]);
 
   await ServicesLocator().init();
 
   FlutterNativeSplash.remove();
-
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
@@ -37,4 +43,9 @@ void main() async {
   /*runApp(DevicePreview(
     builder: (BuildContext context) => const MyApp(),
   ));*/
+}
+
+void registerAdapter() {
+  Hive.registerAdapter(ProductModelAdapter());
+  Hive.registerAdapter(CartItemAdapter());
 }

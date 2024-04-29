@@ -129,10 +129,7 @@ class AppRouter {
       GoRoute(
         name: Routes.cart,
         path: _RouterPath.cart,
-        builder: (_, state) => BlocProvider(
-          create: (context) => CartBloc(),
-          child: const CartScreen(),
-        ),
+        builder: (_, state) => const CartScreen(),
       ),
       GoRoute(
         name: Routes.about,

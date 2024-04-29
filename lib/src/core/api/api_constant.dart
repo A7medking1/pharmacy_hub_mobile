@@ -5,10 +5,12 @@ class ApiConstant {
   static const String baseUrl = 'http://e-pharmacy.runasp.net/';
 
   static const String product = 'api/product';
-  static const String medicine = 'api/product?CategoryId=1';
-  static const String vitamins = 'api/product?CategoryId=2';
-  static const String equipments = 'api/product?CategoryId=3';
-  static const String cares = 'api/product?CategoryId=4';
+
+  static String cart = 'api/Basket';
+
+  static String productsByCategory(int categoryId) =>
+      'api/product?CategoryId=${categoryId.toString()}';
+
   static const String categories = 'api/product/Categories';
 
   static String medicineAlternative({

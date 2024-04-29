@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pharmacy_hub/src/core/enums.dart';
@@ -10,6 +11,8 @@ import 'package:pharmacy_hub/src/core/resources/size_manager.dart';
 import 'package:pharmacy_hub/src/core/widget/cached_image_network.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
 import 'package:pharmacy_hub/src/core/widget/list_view_horizontal.dart';
+import 'package:pharmacy_hub/src/features/cart/data/models/cart_model.dart';
+import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
 import 'package:pharmacy_hub/src/features/home/ui/widget/favorite_icon_widget.dart';
 
@@ -211,7 +214,28 @@ class ProductItemWidget extends StatelessWidget {
                 ),
                 if (isProductInStock)
                   CustomButton(
-                    onTap: () {},
+                    onTap: () {
+                      context.read<CartBloc>().add(
+                            AddProductToCartLocal(
+                              CartItem.fromProduct(model),
+                            ),
+                          );
+                      /*  context.read<CartBloc>().add(UpdateCartItemLocalEvent(
+                            CartItem(
+                              id: 53,
+                              name: 'Oxifree cc',
+                              pictureUrl: 'http://e-pharmacy.runasp.net/Product/Images/med33.png',
+                              category: 'Vitamin',
+                              price: 135,
+                              quantity: 1,
+                            ),
+                          ));*/
+                      /*  context.read<CartBloc>().add(
+                            const RemoveCartItemLocalEvent(6),
+                          );*/
+
+                      //context.read<CartBloc>().add(ClearAllCartLocalEvent());
+                    },
                     width: 40.h,
                     height: 40.h,
                     padding: EdgeInsets.zero,

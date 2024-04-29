@@ -21,8 +21,8 @@ class HomeRepository {
   }
 
   Future<List<ProductModel>> getMedicine({int page = 1}) async {
-    final Response response =
-        await _apiConsumer.get('${ApiConstant.medicine}&index=$page');
+    final Response response = await _apiConsumer
+        .get('${ApiConstant.productsByCategory(1)}&index=$page');
 
     return List<ProductModel>.from(
       (response.data['data']).map(
@@ -32,8 +32,8 @@ class HomeRepository {
   }
 
   Future<List<ProductModel>> getVitamins({int page = 1}) async {
-    final Response response =
-        await _apiConsumer.get('${ApiConstant.vitamins}&index=$page');
+    final Response response = await _apiConsumer
+        .get('${ApiConstant.productsByCategory(2)}&index=$page');
 
     return List<ProductModel>.from(
       (response.data['data']).map(
@@ -43,8 +43,8 @@ class HomeRepository {
   }
 
   Future<List<ProductModel>> getEquipments({int page = 1}) async {
-    final Response response =
-        await _apiConsumer.get('${ApiConstant.equipments}&index=$page');
+    final Response response = await _apiConsumer
+        .get('${ApiConstant.productsByCategory(3)}&index=$page');
 
     return List<ProductModel>.from(
       (response.data['data']).map(
@@ -54,8 +54,8 @@ class HomeRepository {
   }
 
   Future<List<ProductModel>> getCares({int page = 1}) async {
-    final Response response =
-        await _apiConsumer.get('${ApiConstant.cares}&index=$page');
+    final Response response = await _apiConsumer
+        .get('${ApiConstant.productsByCategory(4)}&index=$page');
 
     return List<ProductModel>.from(
       (response.data['data']).map(
@@ -103,7 +103,7 @@ class HomeRepository {
         .get('${ApiConstant.product}?&index=$page&pagesize=10&search=$text');
     return List<ProductModel>.from(
       (response.data['data']).map(
-            (e) => ProductModel.fromMap(e),
+        (e) => ProductModel.fromMap(e),
       ),
     );
   }
