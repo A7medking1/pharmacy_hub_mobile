@@ -6,6 +6,7 @@ import 'package:pharmacy_hub/src/core/api/api_consumer.dart';
 import 'package:pharmacy_hub/src/core/api/app_interceptors.dart';
 import 'package:pharmacy_hub/src/core/api/dio_consumer.dart';
 import 'package:pharmacy_hub/src/core/app_prefs/app_prefs.dart';
+import 'package:pharmacy_hub/src/features/auth/data/repository/repository.dart';
 import 'package:pharmacy_hub/src/features/auth/logic/auth_bloc.dart';
 import 'package:pharmacy_hub/src/features/cart/data/repository/cart_repository_local.dart';
 import 'package:pharmacy_hub/src/features/cart/data/repository/cart_repository.dart';

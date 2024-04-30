@@ -2,9 +2,11 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacy_hub/src/core/app_prefs/app_prefs.dart';
 import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
 import 'package:pharmacy_hub/src/core/resources/theme/app_light_theme.dart';
 import 'package:pharmacy_hub/src/core/services/index.dart';
+import 'package:pharmacy_hub/src/features/auth/data/models/userModel.dart';
 import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 import 'package:pharmacy_hub/src/features/favorites/logic/favorite_bloc.dart';
 import 'package:pharmacy_hub/src/features/home/logic/home_bloc.dart';
@@ -13,8 +15,18 @@ import 'package:pharmacy_hub/src/features/profile/logic/profile_bloc.dart';
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  void aaa() async {
+    /*UserModel userModel = sl<AppPreferences>().getUser();
+    if(userModel != null){
+      print(userModel);
+
+    }*/
+  }
+
   @override
   Widget build(context) {
+    aaa();
+
     return ScreenUtilInit(
       designSize: const Size(414, 896),
       minTextAdapt: true,
@@ -24,11 +36,11 @@ class MyApp extends StatelessWidget {
           providers: [
             BlocProvider(
               create: (context) => sl<HomeBloc>()
-                ..add(GetCategoriesEvent())
+               // ..add(GetCategoriesEvent())
                 ..add(GetMedicineEvent())
-                ..add(GetVitaminsEvent())
-                ..add(GetEquipmentsEvent())
-                ..add(GetCaresEvent()),
+              //  ..add(GetVitaminsEvent())
+              ///  ..add(GetEquipmentsEvent())
+               // ..add(GetCaresEvent()),
             ),
             BlocProvider(
               create: (context) =>

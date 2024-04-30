@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pharmacy_hub/src/core/app_prefs/app_prefs.dart';
 import 'package:pharmacy_hub/src/core/enums.dart';
 import 'package:pharmacy_hub/src/core/services/index.dart';
+import 'package:pharmacy_hub/src/features/auth/data/models/userModel.dart';
 import 'package:pharmacy_hub/src/features/auth/logic/auth_bloc.dart';
 import 'package:pharmacy_hub/src/features/auth/ui/screen/login/login_screen.dart';
 import 'package:pharmacy_hub/src/features/auth/ui/screen/signup/sign_up_screen.dart';
@@ -92,6 +93,19 @@ class AppRouter {
       GoRoute(
         name: Routes.login,
         path: _RouterPath.login,
+        redirect: (context, state) {
+          final UserModel user = _preferences.getUser();
+
+          // if user.id == 0 means user is not logged in
+
+          // if user is already logged in, redirect to app layout
+          if (user.id != '0') {
+            return _RouterPath.appLayOut;
+          }
+
+          // No redirect needed
+          return _RouterPath.login;
+        },
         builder: (_, state) => BlocProvider(
           create: (context) => sl<AuthBloc>(),
           child: const LogInScreen(),

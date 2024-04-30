@@ -21,24 +21,23 @@ class CustomTextFormField extends StatelessWidget {
   final TextStyle? hintStyle;
   final TextStyle? textStyle;
 
-  const CustomTextFormField({
-    super.key,
-    this.obscureText = false,
-    required this.title,
-    this.suffixIcon,
-    this.textInputType,
-    this.prefixIcon,
-    this.readOnly = false,
-    this.validator,
-    this.controller,
-    this.hintText,
-    this.maxLines = 1,
-    this.onTap,
-    this.onChanged,
-    this.borderColor = Colors.white,
-    this.hintStyle,
-    this.textStyle
-  });
+  const CustomTextFormField(
+      {super.key,
+      this.obscureText = false,
+      required this.title,
+      this.suffixIcon,
+      this.textInputType,
+      this.prefixIcon,
+      this.readOnly = false,
+      this.validator,
+      this.controller,
+      this.hintText,
+      this.maxLines = 1,
+      this.onTap,
+      this.onChanged,
+      this.borderColor = Colors.white,
+      this.hintStyle,
+      this.textStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +72,17 @@ class CustomTextFormField extends StatelessWidget {
           maxLines: maxLines,
           decoration: InputDecoration(
             isDense: true,
+            hintText: hintText,
+            filled: true,
+            prefixIconConstraints:
+                const BoxConstraints(minHeight: 30, minWidth: 40),
+            fillColor: AppColors.backGroundColor,
+            hintStyle:
+                hintStyle ?? TextStyle(color: AppColors.grey, fontSize: 14.sp),
+            errorStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  color: Colors.red,
+                  fontSize: 14.sp,
+                ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
                 16,
@@ -81,17 +91,23 @@ class CustomTextFormField extends StatelessWidget {
                 color: borderColor,
               ),
             ),
-            hintText: hintText,
-            filled: true,
-            prefixIconConstraints:
-                const BoxConstraints(minHeight: 30, minWidth: 40),
-            fillColor: AppColors.backGroundColor,
-            hintStyle: hintStyle ?? TextStyle(color: AppColors.grey, fontSize: 14.sp),
-            errorStyle: Theme.of(context)
-                .textTheme
-                .titleSmall!
-                .copyWith(color: Colors.red, fontSize: 14.sp),
             focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(
+                15,
+              ),
+              borderSide: const BorderSide(
+                color: AppColors.primary,
+              ),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(
+                15,
+              ),
+              borderSide: const BorderSide(
+                color: AppColors.red,
+              ),
+            ),
+            border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
                 15,
               ),

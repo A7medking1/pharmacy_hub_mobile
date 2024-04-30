@@ -20,9 +20,10 @@ class LoginFormField extends StatelessWidget {
             controller: bloc.email,
             title: 'email',
             hintText: 'enter your email',
+            textInputType: TextInputType.emailAddress,
             prefixIcon: const Icon(Icons.email_outlined),
             validator: (value) {
-              if (!emailValid(value!)) {
+              if (!isEmailValid(value!)) {
                 return 'Please enter a valid email';
               }
               return null;
@@ -34,9 +35,10 @@ class LoginFormField extends StatelessWidget {
             title: 'password',
             hintText: 'enter your password',
             obscureText: true,
+            textInputType: TextInputType.visiblePassword,
             prefixIcon: const Icon(Icons.visibility),
             validator: (value) {
-              if (value!.isEmpty || value.length < 9) {
+              if (value!.isEmpty || value.length < 8) {
                 return 'Please enter a valid password';
               }
               return null;
@@ -48,6 +50,3 @@ class LoginFormField extends StatelessWidget {
   }
 }
 
-bool emailValid(String email) => RegExp(
-        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-    .hasMatch(email);

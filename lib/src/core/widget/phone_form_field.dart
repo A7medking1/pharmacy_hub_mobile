@@ -44,7 +44,12 @@ class PhoneFormField extends StatelessWidget {
           controller: controller,
           countries: countriesField,
           invalidNumberMessage: 'Please enter a valid Number',
-          validator: (value) {},
+          validator: (value) {
+            if (value!.number.isEmpty) {
+              return 'Please enter a valid Number';
+            }
+            return null;
+          },
           pickerDialogStyle: PickerDialogStyle(
             backgroundColor: Colors.white,
             countryNameStyle: context.titleSmall,
@@ -67,7 +72,7 @@ class PhoneFormField extends StatelessWidget {
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
             // LengthLimitingTextInputFormatter(10)
-            ],
+          ],
           dropdownTextStyle: context.titleSmall,
           decoration: InputDecoration(
             counterStyle: context.titleSmall.copyWith(fontSize: 12.sp),
@@ -86,6 +91,14 @@ class PhoneFormField extends StatelessWidget {
                 .textTheme
                 .titleSmall!
                 .copyWith(color: Colors.red, fontSize: 10.sp),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(
+                16,
+              ),
+              borderSide: const BorderSide(
+                color: Colors.white,
+              ),
+            ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
                 15,
@@ -94,12 +107,20 @@ class PhoneFormField extends StatelessWidget {
                 color: AppColors.primary,
               ),
             ),
-            enabledBorder: OutlineInputBorder(
+            errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
-                16,
+                15,
               ),
               borderSide: const BorderSide(
-                color: AppColors.white,
+                color: AppColors.red,
+              ),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(
+                15,
+              ),
+              borderSide: const BorderSide(
+                color: AppColors.primary,
               ),
             ),
           ),

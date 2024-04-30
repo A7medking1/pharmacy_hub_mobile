@@ -29,13 +29,13 @@ class DioConsumer implements ApiConsumer {
 
   @override
   Future get(String path, {Map<String, dynamic>? queryParameters}) async {
-    final token = sl<AppPreferences>().getUserToken();
+   // final token = sl<AppPreferences>().getUser();
     try {
       final response = await client.get(
         path,
         options: Options(
           headers: {
-            'Authorization': 'Bearer $token',
+            // 'Authorization': 'Bearer $token',
           },
         ),
         queryParameters: queryParameters,
@@ -54,14 +54,14 @@ class DioConsumer implements ApiConsumer {
     Map<String, dynamic>? body,
     Map<String, dynamic>? queryParameters,
   }) async {
-    final token = sl<AppPreferences>().getUserToken();
+ //   final token = sl<AppPreferences>().getUser();
     try {
       final response = await client.post(
         path,
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'Bearer $token',
+          //     'Authorization': 'Bearer $token',
         }),
         queryParameters: queryParameters,
         data: body,
@@ -80,14 +80,14 @@ class DioConsumer implements ApiConsumer {
     Map<String, dynamic>? body,
     Map<String, dynamic>? queryParameters,
   }) async {
-    final token = sl<AppPreferences>().getUserToken();
+  //  final token = sl<AppPreferences>().getUser();
     try {
       final response = await client.delete(
         path,
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'Bearer $token',
+          //'Authorization': 'Bearer $token',
         }),
         queryParameters: queryParameters,
         data: body,
@@ -127,6 +127,11 @@ class DioConsumer implements ApiConsumer {
             throw BadRequestException(
                 ErrorMessageModel.fromJson(error.response!.data));
           case StatusCode.unauthorized:
+            throw NotFoundException(ErrorMessageModel.fromJson(
+              const {
+                'message': 'unauthorized',
+              },
+            ));
           case StatusCode.forbidden:
             throw UnauthorizedException(
                 ErrorMessageModel.fromJson(error.response!.data));

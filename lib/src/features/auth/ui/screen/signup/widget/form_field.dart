@@ -1,10 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_text_formField.dart';
 import 'package:pharmacy_hub/src/core/widget/phone_form_field.dart';
 import 'package:pharmacy_hub/src/features/auth/logic/auth_bloc.dart';
-import 'package:pharmacy_hub/src/features/auth/ui/screen/login/widget/login_form_field.dart';
 
 class SignUpFormField extends StatelessWidget {
   const SignUpFormField({
@@ -32,9 +33,12 @@ class SignUpFormField extends StatelessWidget {
           ),
           20.verticalSpace,
           PhoneFormField(
-            controller: context.read<AuthBloc>().phone,
+            controller: context.read<AuthBloc>().phoneController,
             onChanged: (phone) {
-              print(phone.countryCode + phone.number);
+              context.read<AuthBloc>().phoneNumber =
+                  phone.countryCode + phone.number;
+
+              log('phone ${context.read<AuthBloc>().phoneNumber}');
             },
           ),
           5.verticalSpace,
@@ -44,7 +48,7 @@ class SignUpFormField extends StatelessWidget {
             hintText: 'enter your email',
             prefixIcon: const Icon(Icons.email_outlined),
             validator: (value) {
-              if (!emailValid(value!)) {
+              if (!isEmailValid(value!)) {
                 return 'Please enter a valid email';
               }
               return null;
@@ -57,8 +61,8 @@ class SignUpFormField extends StatelessWidget {
             hintText: 'enter your password',
             prefixIcon: const Icon(Icons.visibility),
             validator: (value) {
-              if (value!.isEmpty || value.length < 9) {
-                return 'Please enter a valid password';
+              if (!isPasswordValid(value!)) {
+                return 'Password too weak';
               }
               return null;
             },

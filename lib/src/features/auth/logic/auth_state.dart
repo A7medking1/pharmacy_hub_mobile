@@ -3,23 +3,32 @@ part of 'auth_bloc.dart';
 class AuthState extends Equatable {
   final String errorMessage;
 
-  final ReqState reqState;
+  final ReqState loginReqState;
+
+  final ReqState registerReqState;
 
   const AuthState({
     this.errorMessage = '',
-    this.reqState = ReqState.empty,
+    this.loginReqState = ReqState.empty,
+    this.registerReqState = ReqState.empty,
   });
 
   AuthState copyWith({
     String? errorMessage,
-    ReqState? reqState,
+    ReqState? loginReqState,
+    ReqState? registerReqState,
   }) {
     return AuthState(
       errorMessage: errorMessage ?? this.errorMessage,
-      reqState: reqState ?? this.reqState,
+      loginReqState: loginReqState ?? this.loginReqState,
+      registerReqState: registerReqState ?? this.registerReqState,
     );
   }
 
   @override
-  List<Object> get props => [errorMessage, reqState];
+  List<Object> get props => [
+        errorMessage,
+        loginReqState,
+        registerReqState,
+      ];
 }

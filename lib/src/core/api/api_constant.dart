@@ -4,6 +4,9 @@ import 'package:pharmacy_hub/src/features/home/data/repository/repository.dart';
 class ApiConstant {
   static const String baseUrl = 'http://e-pharmacy.runasp.net/';
 
+  static const String login = 'api/Account/Login';
+  static const String register = 'api/Account/Register';
+
   static const String product = 'api/product';
 
   static String cart = 'api/Basket';

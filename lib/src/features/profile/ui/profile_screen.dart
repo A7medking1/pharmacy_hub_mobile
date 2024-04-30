@@ -4,11 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pharmacy_hub/src/core/app_prefs/app_prefs.dart';
 import 'package:pharmacy_hub/src/core/helper.dart';
 import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
 import 'package:pharmacy_hub/src/core/resources/font_manager.dart';
 import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
+import 'package:pharmacy_hub/src/core/services/index.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
 import 'package:pharmacy_hub/src/features/profile/logic/profile_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -77,9 +79,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       Expanded(
                         child: CustomButton(
-                          onTap: () {
+                          onTap: () async {
                             dialogContext.pop();
                             // TODO: navigate to login screen
+
+                            await sl<AppPreferences>()
+                                .removeUser()
+                                .then((value) {
+                              context.goNamed(Routes.login);
+                            });
                           },
                           text: "Log out",
                           textStyle: context.titleSmall.copyWith(
@@ -143,7 +151,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           icon: Icons.error_outline,
           text: "About",
           onTap: () => context.pushNamed(Routes.about)),
-      ProfileItem(icon: Icons.logout, text: "Log out", onTap: logout)
+      ProfileItem(
+        icon: Icons.logout,
+        text: "Log out",
+        onTap: logout,
+      )
     ];
 
     context.read<ProfileBloc>().add(GetUserInfoEvent());
