@@ -13,6 +13,7 @@ import 'package:pharmacy_hub/src/core/widget/RequestWidget.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
 import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/cart_bottom_nav_bar.dart';
+import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/cart_shimmer_loading.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/easy_stepper_widget.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/first_step_widget.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/second_step_widget.dart';
@@ -50,7 +51,7 @@ class _CartScreenState extends State<CartScreen> {
                   builder: (context, state) {
                     return RequestStateWidget(
                       reqState: state.getCartReqState,
-                      onLoading: const Center(child: CircularProgressIndicator()),
+                      onLoading: const CartShimmerWidget(),
                       onEmpty: const EmptyCartWidget(),
                       onSuccess: Expanded(
                         child: Column(

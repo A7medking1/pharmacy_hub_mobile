@@ -88,7 +88,7 @@ bool isEmailValid(String password) {
 }
 
 bool isPasswordValid(String password) {
-  String passwordPattern =
+  String passwordValid =
       r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{9,}$';
-  return RegExp(passwordPattern).hasMatch(password);
+  return RegExp(passwordValid).hasMatch(password);
 }

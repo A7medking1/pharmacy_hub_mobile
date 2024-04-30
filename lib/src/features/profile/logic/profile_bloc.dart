@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 part 'profile_event.dart';
+
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
@@ -23,7 +24,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   // Of account page
   final TextEditingController newNameController = TextEditingController();
   final TextEditingController newEmailController = TextEditingController();
-  final TextEditingController newPhoneNumberController = TextEditingController();
+  final TextEditingController newPhoneNumberController =
+      TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
 
   // User information
@@ -33,20 +35,19 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   String? mobileNumber;
   String? password;
 
-  FutureOr<void> _getUserInfo(GetUserInfoEvent event, Emitter<ProfileState> emit) async {
+  FutureOr<void> _getUserInfo(
+      GetUserInfoEvent event, Emitter<ProfileState> emit) async {
     // Get User Information
     name = "Ahmed Jihad Attia";
     email = "ahmedjihad@gmail.com";
     imageUrl = "https:\\www.image.com";
-    emit(UserInfoState(
-      name,
-      email,
-      imageUrl
-    ));
+    emit(UserInfoState(name, email, imageUrl));
     // emit(UserInfoState(null, null, null));
   }
 
-    FutureOr<void> _updateUserInfo(UpdateUserInfo event, Emitter<ProfileState> emit) async {}
-    FutureOr<void> _changeImage(ChangeImage event, Emitter<ProfileState> emit) async {}
+  FutureOr<void> _updateUserInfo(
+      UpdateUserInfo event, Emitter<ProfileState> emit) async {}
 
+  FutureOr<void> _changeImage(
+      ChangeImage event, Emitter<ProfileState> emit) async {}
 }

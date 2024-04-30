@@ -8,7 +8,7 @@ class CartRepository {
 
   const CartRepository(this._apiConsumer);
 
-  Future<CartModel> getCart({required int cartId}) async {
+  Future<CartModel> getCart({required String cartId}) async {
     final Response response = await _apiConsumer.get(
       '${ApiConstant.cart}?id=${cartId.toString()}',
     );
@@ -23,7 +23,7 @@ class CartRepository {
     return CartModel.fromMap(response.data);
   }
 
-  Future<void> deleteCart({required int cartId}) async {
+  Future<void> deleteCart({required String cartId}) async {
     await _apiConsumer.delete(
       '${ApiConstant.cart}?${cartId.toString()}',
     );

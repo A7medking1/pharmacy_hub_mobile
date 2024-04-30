@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pharmacy_hub/src/core/enums.dart';
 import 'package:pharmacy_hub/src/core/helper.dart';
+import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
 import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
 import 'package:pharmacy_hub/src/features/favorites/logic/favorite_bloc.dart';
 import 'package:pharmacy_hub/src/features/home/logic/home_bloc.dart';
 import 'package:pharmacy_hub/src/features/home/ui/widget/product_card.dart';
+import 'package:shimmer/shimmer.dart';
 
 class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({super.key});
@@ -23,17 +27,33 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       appBar: AppBar(
         forceMaterialTransparency: true,
         title: Text(
-          'Favorites Product',
+          'Favorites',
           style: context.titleSmall,
         ),
       ),
       body: BlocBuilder<FavoriteBloc, FavoriteState>(
         builder: (context, state) {
           if (state.favoritesItems.isEmpty) {
-            return Center(
-              child: Text(
-                'Empty',
-                style: context.titleMedium,
+           // return const CartShimmerWidget();
+
+              return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    AppSvg.heart,
+                    height: 120.h,
+                  ),
+                  15.verticalSpace,
+                  Align(
+                    alignment: AlignmentDirectional.center,
+                    child: Text(
+                      ' \t No favorites yet. \n \t\t\t\t\t Browse products to find \n your favorites and add them to your list!!',
+                      textAlign: TextAlign.center,
+                      style: context.titleSmall,
+                    ),
+                  ),
+                ],
               ),
             );
           }
@@ -94,3 +114,4 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     );
   }
 }
+

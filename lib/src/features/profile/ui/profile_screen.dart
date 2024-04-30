@@ -12,6 +12,8 @@ import 'package:pharmacy_hub/src/core/resources/font_manager.dart';
 import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
 import 'package:pharmacy_hub/src/core/services/index.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
+import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
+import 'package:pharmacy_hub/src/features/favorites/logic/favorite_bloc.dart';
 import 'package:pharmacy_hub/src/features/profile/logic/profile_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -83,9 +85,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             dialogContext.pop();
                             // TODO: navigate to login screen
 
+                            // TODO remove favorites and cart from hive database
+
+                            /// TODO: remove user from shared preferences
+
+                            /// then
+
+                            // navigate to login screen
+
+                            // then log out
+
                             await sl<AppPreferences>()
                                 .removeUser()
                                 .then((value) {
+                              context
+                                  .read<CartBloc>()
+                                  .add(ClearAllCartLocalEvent());
+                              context
+                                  .read<FavoriteBloc>()
+                                  .add(RemoveAllProductFromFavorites());
+
                               context.goNamed(Routes.login);
                             });
                           },

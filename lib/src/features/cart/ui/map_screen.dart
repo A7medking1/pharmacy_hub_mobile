@@ -139,7 +139,7 @@ class _MapContentState extends State<MapContent> {
               Align(
                 alignment: Alignment.center,
                 child: Image.asset(
-                  AppImages.pick_marker,
+                  AppImages.pickMarker,
                   height: 40.h,
                   width: 40.w,
                 ),

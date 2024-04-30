@@ -12,6 +12,7 @@ import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
 import 'package:pharmacy_hub/src/features/auth/logic/auth_bloc.dart';
 import 'package:pharmacy_hub/src/features/auth/ui/screen/login/widget/login_form_field.dart';
 import 'package:pharmacy_hub/src/features/auth/ui/screen/login/widget/text_logo.dart';
+import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 
 class LogInScreen extends StatelessWidget {
   const LogInScreen({super.key});
@@ -38,6 +39,7 @@ class LogInScreen extends StatelessWidget {
                     log('empty');
                     break;
                   case ReqState.success:
+                    context.read<CartBloc>().add(const GetCartDataEvent());
                     context.goNamed(Routes.appLayOut);
                     break;
                   case ReqState.error:
@@ -105,9 +107,8 @@ class LogInScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }
+
 void showError(String s) {
   Fluttertoast.showToast(
     msg: s,

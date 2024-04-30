@@ -6,10 +6,13 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:pharmacy_hub/src/core/app_prefs/app_prefs.dart';
 import 'package:pharmacy_hub/src/core/enums.dart';
 import 'package:pharmacy_hub/src/core/error/exceptions.dart';
 import 'package:pharmacy_hub/src/core/location_services.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
+import 'package:pharmacy_hub/src/core/services/index.dart';
+import 'package:pharmacy_hub/src/features/auth/data/models/userModel.dart';
 import 'package:pharmacy_hub/src/features/cart/data/models/cart_model.dart';
 import 'package:pharmacy_hub/src/features/cart/data/repository/cart_repository.dart';
 import 'package:pharmacy_hub/src/features/cart/data/repository/cart_repository_local.dart';
@@ -37,23 +40,19 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   FutureOr<void> _getCartEvent(
       GetCartDataEvent event, Emitter<CartState> emit) async {
+    final UserModel user = sl<AppPreferences>().getUser();
+
     if (event.isLoading) {
       emit(state.copyWith(getCartReqState: ReqState.loading));
     }
     try {
       final CartModel result = await _cartRepository.getCart(
-        cartId: 1,
+        cartId: user.id,
       );
 
       await _localRepository.removeAllCart();
       await _localRepository.addAllCart(result.items);
-      log("from APi ${result.toString()}");
-      /*   emit(
-        state.copyWith(
-          getCartReqState:
-              result.items.isEmpty ? ReqState.empty : ReqState.success,
-        ),
-      );*/
+      log("from Api ${result.toString()}");
       add(GetCartItemsFromLocal());
     } on ServerException catch (e) {
       emit(
@@ -67,40 +66,34 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   FutureOr<void> _getCartItemsFromLocal(
       GetCartItemsFromLocal event, Emitter<CartState> emit) async {
+    final UserModel user = sl<AppPreferences>().getUser();
+
     final List<CartItem> result = await getCartLocal();
 
     double totalPrice = await _localRepository.getTotalPrice();
 
     emit(
       state.copyWith(
-        cart: CartModel(id: '1', items: result),
+        cart: CartModel(id: user.id, items: result),
         getCartReqState: result.isEmpty ? ReqState.empty : ReqState.success,
         addToCartReqState: result.isEmpty ? ReqState.empty : ReqState.success,
         totalPrice: totalPrice,
       ),
     );
-
-    // add(AddToCartEvent(result));
   }
 
   FutureOr<void> _addToCartEvent(
       AddToCartEvent event, Emitter<CartState> emit) async {
     emit(state.copyWith(addToCartReqState: ReqState.loading));
 
-    final CartModel cartModel = CartModel(id: '1', items: event.cartModel);
+    final UserModel user = sl<AppPreferences>().getUser();
+
+    final CartModel cartModel = CartModel(id: user.id, items: event.cartModel);
 
     try {
       await _cartRepository.addToCart(
         cartModel: cartModel,
       );
-      /*  emit(
-        state.copyWith(
-          cart: cartModel,
-          addToCartReqState: ReqState.success,
-          getCartReqState:
-              cartModel.items.isEmpty ? ReqState.empty : ReqState.success,
-        ),
-      );*/
       add(GetCartItemsFromLocal());
     } on ServerException catch (e) {
       emit(
@@ -137,12 +130,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   FutureOr<void> _removeCartItemLocal(
       RemoveCartItemLocalEvent event, Emitter<CartState> emit) async {
+    final UserModel user = sl<AppPreferences>().getUser();
+
     await _localRepository.removeCartItem(event.cartItemId);
     List<CartItem> carts = await getCartLocal();
 
     emit(
       state.copyWith(
-        cart: CartModel(id: '1', items: carts),
+        cart: CartModel(id: user.id, items: carts),
         addToCartReqState: carts.isEmpty ? ReqState.empty : ReqState.success,
         getCartReqState: carts.isEmpty ? ReqState.empty : ReqState.success,
       ),
@@ -152,6 +147,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   FutureOr<void> _updateCartItemLocal(
       UpdateCartItemLocalEvent event, Emitter<CartState> emit) async {
+    final UserModel user = sl<AppPreferences>().getUser();
+
     await _localRepository.updateCartItem(event.cartItem);
 
     List<CartItem> carts = await getCartLocal();
@@ -164,7 +161,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
     emit(
       state.copyWith(
-        cart: CartModel(id: '1', items: carts),
+        cart: CartModel(id: user.id, items: carts),
         totalPrice: totalPrice,
       ),
     );
@@ -265,14 +262,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   void onEvent(CartEvent event) {
     // TODO: implement onEvent
     super.onEvent(event);
-    print("current event => $event");
+    log("current event => $event");
   }
 }
-/*  Future<void> addToCartLocal({required CartItem cartItems}) async {
-    if (!await isItemAddedInLocalCart(cartItems.id)) {
-      await _localRepository.addCart(cartItems);
-      showToast('Item added to cart');
-    } else {
-      showToast('Item already added to cart');
-    }
-  }*/

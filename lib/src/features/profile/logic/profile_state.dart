@@ -9,9 +9,10 @@ sealed class ProfileState extends Equatable {
 
 final class ProfileInitial extends ProfileState {}
 
-class UserInfoState extends ProfileState{
+class UserInfoState extends ProfileState {
   String? name;
   String? email;
   String? imageUrl;
+
   UserInfoState(this.name, this.email, this.imageUrl);
 }

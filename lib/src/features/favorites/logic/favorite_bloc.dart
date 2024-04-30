@@ -10,7 +10,6 @@ import 'package:pharmacy_hub/src/features/favorites/data/model/favorites_model.d
 import 'package:pharmacy_hub/src/features/home/ui/all_product_screen.dart';
 
 part 'favorite_event.dart';
-
 part 'favorite_state.dart';
 
 class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
@@ -18,6 +17,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     on<GetFavoritesItemsEvent>(_getFavorites);
     on<AddProductToFavoriteEvent>(_addProductToFavorites);
     on<RemoveProductFromFavorite>(_removeProductFromFavorite);
+    on<RemoveAllProductFromFavorites>(_removeAllProductFromFavorites);
   }
 
   final FavoriteLocalRepository _repository = FavoriteLocalRepositoryImpl();
@@ -76,5 +76,11 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     print(index);
 
     add(GetFavoritesItemsEvent());
+  }
+
+  FutureOr<void> _removeAllProductFromFavorites(
+      RemoveAllProductFromFavorites event, Emitter<FavoriteState> emit) async {
+    favorites.clear();
+    await _repository.removeAllFavorite();
   }
 }
