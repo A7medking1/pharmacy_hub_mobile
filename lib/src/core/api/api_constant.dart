@@ -8,6 +8,8 @@ class ApiConstant {
   static const String register = 'api/Account/Register';
 
   static const String product = 'api/product';
+  static const String editAccount = 'api/Account/EditAccount';
+  static const String changePassword = 'api/Account/ChangePassword';
 
   static String cart = 'api/Basket';
 

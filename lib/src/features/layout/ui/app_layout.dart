@@ -159,10 +159,7 @@ class _AppLayOutState extends State<AppLayOut> {
               items: [
                 const HomeScreen(),
                 const Center(child: Text('second')),
-                BlocProvider(
-                  create: (context) => ProfileBloc(),
-                  child: const ProfileScreen(),
-                ),
+                const ProfileScreen(),
               ],
               carouselController:
                   context.read<AppLayoutBloc>().carouselController,

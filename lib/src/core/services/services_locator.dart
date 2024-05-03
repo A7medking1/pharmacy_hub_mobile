@@ -28,11 +28,12 @@ class ServicesLocator {
     sl.registerLazySingleton(() => HomeRepository(sl()));
     sl.registerLazySingleton(() => CartRepository(sl()));
     sl.registerLazySingleton(() => AuthRepository(sl()));
+    sl.registerLazySingleton(() => ProfileRepository(sl()));
 
 
     sl.registerFactory(() => AuthBloc(sl()));
     sl.registerFactory(() => HomeBloc(sl()));
-    sl.registerFactory(() => ProfileBloc());
+    sl.registerFactory(() => ProfileBloc(sl()));
     //sl.registerFactory(() => PaginationBloc(sl()));
     sl.registerFactory(() => PaginationBloc(sl()));
     sl.registerFactory(() => SearchBloc(sl()));

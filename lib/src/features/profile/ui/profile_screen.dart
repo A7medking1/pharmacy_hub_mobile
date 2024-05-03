@@ -142,8 +142,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         });
   }
 
+
   @override
   void initState() {
+
     profileItemsGroupPartOne = [
       ProfileItem(
           icon: Icons.account_circle_outlined,
@@ -198,6 +200,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               buildWhen: (previous, current) {
             return current is UserInfoState ? true : false;
           }, builder: (context, state) {
+
             if (state is UserInfoState && state.email != null) {
               return SizedBox(
                 child: Column(

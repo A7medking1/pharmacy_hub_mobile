@@ -8,5 +8,5 @@ sealed class ProfileEvent extends Equatable {
 }
 
 class GetUserInfoEvent extends ProfileEvent {}
-class UpdateUserInfo extends ProfileEvent {}
-class ChangeImage extends ProfileEvent {}
+class UpdateUserInfoEvent extends ProfileEvent {}
+class ChangeImageEvent extends ProfileEvent {}

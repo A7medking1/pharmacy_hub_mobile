@@ -12,6 +12,7 @@ import '../../../core/resources/size_manager.dart';
 import '../../../core/widget/custom_button.dart';
 import '../../../core/widget/custom_text_formField.dart';
 import '../../../core/widget/phone_form_field.dart';
+import '../../auth/logic/auth_bloc.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -24,7 +25,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+      body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(vertical: AppSize.pagePadding.h, horizontal: AppSize.pagePadding.w),
         child: SafeArea(
           child: Column(
@@ -52,7 +53,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 splashColor: AppColors.white.withOpacity(.4),
                 text: "Change image",
                 textStyle: context.titleSmall.copyWith(fontWeight: FontWeight.normal, color: AppColors.white, fontSize: 14.sp),
-                onTap: ()=> context.read<ProfileBloc>().add(ChangeImage()),
+                onTap: ()=> context.read<ProfileBloc>().add(ChangeImageEvent()),
               ),
               20.verticalSpace,
               CustomTextFormField(
@@ -76,12 +77,30 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
               10.verticalSpace,
               CustomTextFormField(
+                controller: context.read<ProfileBloc>().oldPasswordController,
+                title: "",
+                hintText: "Old Passowrd",
+                validator: (str){
+                  if((str!.isEmpty || str.trim() == '') && context.read<ProfileBloc>().newPasswordController.text.trim() != '') return "This field is empty, add the old password";
+                  else return null;
+                },
+                textInputType: TextInputType.visiblePassword,
+              ),
+              10.verticalSpace,
+              CustomTextFormField(
                 controller: context.read<ProfileBloc>().newPasswordController,
                 title: "",
-                hintText: "Passowrd",
-                textInputType: TextInputType.emailAddress,
+                hintText: "New Passowrd",
+                validator: (str){
+                  if (!isPasswordValid(str!)&& context.read<ProfileBloc>().oldPasswordController.text.trim() != '') {
+                    return 'Password too weak';
+                  }
+                  if((str!.isEmpty || str.trim() == '') && context.read<ProfileBloc>().oldPasswordController.text.trim() != '') return "This field is empty, add the new password";
+                  else return null;
+                },
+                textInputType: TextInputType.visiblePassword,
               ),
-              const Spacer(),
+              10.verticalSpace,
               CustomButton(
                 color: AppColors.primary,
                 padding: EdgeInsets.zero,
@@ -90,7 +109,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 splashColor: AppColors.white.withOpacity(.4),
                 text: "Save changes",
                 textStyle: context.titleSmall.copyWith(fontWeight: FontWeight.normal, color: AppColors.white, fontSize: 14.sp),
-                onTap: () => null,
+                onTap: () => context.read<ProfileBloc>().add(UpdateUserInfoEvent()),
               ),
             ],
           ),

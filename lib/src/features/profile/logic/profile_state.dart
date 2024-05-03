@@ -10,9 +10,13 @@ sealed class ProfileState extends Equatable {
 final class ProfileInitial extends ProfileState {}
 
 class UserInfoState extends ProfileState {
-  String? name;
-  String? email;
-  String? imageUrl;
+  String name;
+  String email;
+  String imageUrl;
 
   UserInfoState(this.name, this.email, this.imageUrl);
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [name, email, imageUrl];
 }

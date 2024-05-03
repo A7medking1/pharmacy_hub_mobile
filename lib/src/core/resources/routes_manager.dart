@@ -195,7 +195,7 @@ class AppRouter {
       GoRoute(
         name: Routes.favScreen,
         path: _RouterPath.favScreen,
-        builder: (context, state) => FavoritesScreen(),
+        builder: (context, state) => const FavoritesScreen(),
       ),
 
       GoRoute(
