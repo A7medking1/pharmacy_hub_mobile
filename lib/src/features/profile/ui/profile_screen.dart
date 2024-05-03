@@ -431,7 +431,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                   );
-                })
+                }),
+                // Delete Account Button
+                CustomButton(
+                  onTap: (){},
+                  height: 60.h,
+                  padding: EdgeInsets.symmetric(
+                      vertical: 0.h, horizontal: (AppSize.pagePadding * 2).w),
+                  color: AppColors.transparent,
+                  borderRadius: 0,
+                  widget: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                             Icon(
+                            Icons.delete_outline_rounded,
+                            color: AppColors.red,
+                            size: 25.w,
+                          ),
+                          10.horizontalSpace,
+                          Text(
+                            "Delete my acount",
+                            style: context.titleSmall.copyWith(
+                                fontSize: 16.sp,
+                                color: AppColors.red,
+                                height: 0),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
