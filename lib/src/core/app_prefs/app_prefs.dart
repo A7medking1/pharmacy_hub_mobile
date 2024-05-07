@@ -60,4 +60,6 @@ Map<String, dynamic> noneUser = {
   'userName': 'None',
   'phoneNumber': 'None',
   'token': 'None',
+  'street': 'None',
+  'city': 'None',
 };

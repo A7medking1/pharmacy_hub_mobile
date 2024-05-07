@@ -21,6 +21,7 @@ import 'package:pharmacy_hub/src/features/layout/logic/app_layout_bloc.dart';
 import 'package:pharmacy_hub/src/features/layout/ui/app_layout.dart';
 import 'package:pharmacy_hub/src/features/onBoarding/ui/onBoarding_screen.dart';
 import 'package:pharmacy_hub/src/features/profile/ui/about_screen.dart';
+import 'package:pharmacy_hub/src/features/profile/ui/change_password_screen.dart';
 import 'package:pharmacy_hub/src/features/profile/ui/contact_us_screen.dart';
 
 import '../../features/home/logic/search_bloc/search_bloc.dart';
@@ -45,6 +46,7 @@ class Routes {
   static const allProduct = 'allProduct';
   static const favScreen = 'favScreen';
   static const search = 'search';
+  static const changePassword = 'changePassword';
 }
 
 class _RouterPath {
@@ -64,6 +66,7 @@ class _RouterPath {
   static const productDetails = '/productDetails';
   static const favScreen = '/favScreen';
   static const search = '/search';
+  static const changePassword = '/changePassword';
 }
 
 class AppRouter {
@@ -168,10 +171,7 @@ class AppRouter {
       GoRoute(
         name: Routes.account,
         path: _RouterPath.account,
-        builder: (context, state) => BlocProvider(
-          create: (context) => sl<ProfileBloc>(),
-          child: const AccountScreen(),
-        ),
+        builder: (context, state) => const AccountScreen(),
       ),
       GoRoute(
         name: Routes.successPayment,
@@ -197,7 +197,6 @@ class AppRouter {
         path: _RouterPath.favScreen,
         builder: (context, state) => const FavoritesScreen(),
       ),
-
       GoRoute(
         name: Routes.search,
         path: _RouterPath.search,
@@ -206,11 +205,11 @@ class AppRouter {
           child: const SearchScreen(),
         ),
       ),
-
-      //   name: Routes.search,
-      //   path: _RouterPath.search,
-      //   builder: (context, state) => BlocProvider(create: (context)=> sl<SearchBloc>(), child: const SearchScreen(),),
-      // ),
+      GoRoute(
+        name: Routes.changePassword,
+        path: _RouterPath.changePassword,
+        builder: (context, state) => const ChangePasswordScreen(),
+      ),
     ],
   );
 }

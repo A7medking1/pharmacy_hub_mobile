@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -29,13 +30,16 @@ class DioConsumer implements ApiConsumer {
 
   @override
   Future get(String path, {Map<String, dynamic>? queryParameters}) async {
-   // final token = sl<AppPreferences>().getUser();
+    final userToken = sl<AppPreferences>().getUser().token;
+
+    log('user token: $userToken');
+
     try {
       final response = await client.get(
         path,
         options: Options(
           headers: {
-            // 'Authorization': 'Bearer $token',
+            'Authorization': 'Bearer $userToken',
           },
         ),
         queryParameters: queryParameters,
@@ -54,14 +58,14 @@ class DioConsumer implements ApiConsumer {
     Map<String, dynamic>? body,
     Map<String, dynamic>? queryParameters,
   }) async {
- //   final token = sl<AppPreferences>().getUser();
+    final userToken = sl<AppPreferences>().getUser().token;
     try {
       final response = await client.post(
         path,
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          //     'Authorization': 'Bearer $token',
+          'Authorization': 'Bearer $userToken',
         }),
         queryParameters: queryParameters,
         data: body,
@@ -80,14 +84,14 @@ class DioConsumer implements ApiConsumer {
     Map<String, dynamic>? body,
     Map<String, dynamic>? queryParameters,
   }) async {
-  //  final token = sl<AppPreferences>().getUser();
+    final userToken = sl<AppPreferences>().getUser().token;
     try {
       final response = await client.delete(
         path,
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          //'Authorization': 'Bearer $token',
+          'Authorization': 'Bearer $userToken',
         }),
         queryParameters: queryParameters,
         data: body,
@@ -104,9 +108,19 @@ class DioConsumer implements ApiConsumer {
   Future put(String path,
       {Map<String, dynamic>? body,
       Map<String, dynamic>? queryParameters}) async {
+    final userToken = sl<AppPreferences>().getUser().token;
+
     try {
-      final response =
-          await client.put(path, queryParameters: queryParameters, data: body);
+      final response = await client.put(
+        path,
+        queryParameters: queryParameters,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $userToken',
+        }),
+        data: body,
+      );
       return response;
     } on DioException catch (error) {
       return _handleDioError(error);

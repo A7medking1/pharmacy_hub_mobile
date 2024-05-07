@@ -1,22 +1,48 @@
 part of 'profile_bloc.dart';
 
-sealed class ProfileState extends Equatable {
-  const ProfileState();
+class ProfileState extends Equatable {
+  final UserModel? user;
+  final String errorMessage;
 
-  @override
-  List<Object> get props => [];
-}
+  final ReqState updateProfileReqState;
 
-final class ProfileInitial extends ProfileState {}
+  final ReqState changePasswordReqState;
+  final ReqState deleteAccountReqState;
 
-class UserInfoState extends ProfileState {
-  String name;
-  String email;
-  String imageUrl;
+  const ProfileState({
+    this.user,
+    this.errorMessage = '',
+    this.updateProfileReqState = ReqState.empty,
+    this.changePasswordReqState = ReqState.empty,
+    this.deleteAccountReqState = ReqState.empty,
+  });
 
-  UserInfoState(this.name, this.email, this.imageUrl);
+  ProfileState copyWith({
+    UserModel? user,
+    String? errorMessage,
+    ReqState? updateProfileReqState,
+    ReqState? changePasswordReqState,
+    ReqState? deleteAccountReqState,
+  }) {
+    return ProfileState(
+      user: user ?? this.user,
+      errorMessage: errorMessage ?? this.errorMessage,
+      updateProfileReqState:
+          updateProfileReqState ?? this.updateProfileReqState,
+      changePasswordReqState:
+          changePasswordReqState ?? this.changePasswordReqState,
+      deleteAccountReqState:
+          deleteAccountReqState ?? this.deleteAccountReqState,
+    );
+  }
 
   @override
   // TODO: implement props
-  List<Object> get props => [name, email, imageUrl];
+  List<Object?> get props => [
+        user,
+        errorMessage,
+        updateProfileReqState,
+        changePasswordReqState,
+        deleteAccountReqState,
+      ];
 }

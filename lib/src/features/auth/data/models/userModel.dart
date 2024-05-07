@@ -7,6 +7,8 @@ class UserModel extends Equatable {
   final String userName;
   final String phoneNumber;
   final String token;
+  final String street;
+  final String city;
 
   const UserModel({
     required this.id,
@@ -15,6 +17,8 @@ class UserModel extends Equatable {
     required this.userName,
     required this.phoneNumber,
     required this.token,
+    required this.street,
+    required this.city,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
@@ -24,6 +28,8 @@ class UserModel extends Equatable {
         userName: json["userName"],
         phoneNumber: json["phoneNumber"],
         token: json["token"],
+        street: json["street"],
+        city: json["city"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -33,6 +39,8 @@ class UserModel extends Equatable {
         "userName": userName,
         "phoneNumber": phoneNumber,
         "token": token,
+        "street": street,
+        "city": city,
       };
 
   @override
@@ -43,9 +51,11 @@ class UserModel extends Equatable {
         userName,
         phoneNumber,
         token,
+        street,
+        city,
       ];
 
   @override
   String toString() =>
-      'UserModel(id: $id, name: $name, email: $email, userName: $userName, phoneNumber: $phoneNumber, token: $token)';
+      'UserModel(id: $id, name: $name, email: $email, userName: $userName, phoneNumber: $phoneNumber, token: $token, street: $street, city: $city)';
 }

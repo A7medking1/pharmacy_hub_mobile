@@ -247,16 +247,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     emit(state.copyWith(selectedStepper: state.selectedStepper + 1));
   }
 
-  void showToast(String s) {
-    Fluttertoast.showToast(
-      msg: s,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 1,
-      backgroundColor: AppColors.primary,
-      textColor: Colors.white,
-    );
-  }
+
 
   @override
   void onEvent(CartEvent event) {
@@ -264,4 +255,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     super.onEvent(event);
     log("current event => $event");
   }
+}
+void showToast(String s) {
+  Fluttertoast.showToast(
+    msg: s,
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.TOP,
+    timeInSecForIosWeb: 1,
+    backgroundColor: AppColors.primary,
+    textColor: Colors.white,
+  );
 }

@@ -55,6 +55,40 @@ class SignUpFormField extends StatelessWidget {
             },
           ),
           20.verticalSpace,
+          Row(
+            children: [
+              Expanded(
+                child: CustomTextFormField(
+                  controller: context.read<AuthBloc>().city,
+                  title: 'city',
+                  hintText: 'enter your city',
+                  prefixIcon: const Icon(Icons.location_on_outlined),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter a valid city';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              10.horizontalSpace,
+              Expanded(
+                child: CustomTextFormField(
+                  controller: context.read<AuthBloc>().street,
+                  title: 'street',
+                  hintText: 'enter your street',
+                  prefixIcon: const Icon(Icons.location_on_outlined),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter a valid city';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+            ],
+          ),
+          20.verticalSpace,
           CustomTextFormField(
             controller: context.read<AuthBloc>().password,
             title: 'password',

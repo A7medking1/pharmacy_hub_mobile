@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
                   FavoriteBloc()..add(GetFavoritesItemsEvent()),
             ),
             BlocProvider(
-              create: (context) => sl<ProfileBloc>(),
+              create: (context) => sl<ProfileBloc>()..add(GetUserInfoEvent()),
             ),
             BlocProvider(
               create: (context) => sl<CartBloc>(),

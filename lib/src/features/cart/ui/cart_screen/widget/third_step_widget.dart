@@ -148,7 +148,7 @@ class ThirdStepPaymentWidget extends StatelessWidget {
                   StripServices().makePayment(
                     const PaymentIntentRequestModel(
                       amount: '1000',
-                      currency: 'USD',
+                      currency: 'EGP',
                     ),
                   );
                 },

@@ -89,11 +89,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                             /// TODO: remove user from shared preferences
 
-                            /// then
-
-                            // navigate to login screen
-
                             // then log out
+
+                            /// TODO: handle this to profile bloc to logout
 
                             await sl<AppPreferences>()
                                 .removeUser()
@@ -142,10 +140,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         });
   }
 
-
   @override
   void initState() {
-
     profileItemsGroupPartOne = [
       ProfileItem(
           icon: Icons.account_circle_outlined,
@@ -197,99 +193,60 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Column(
         children: [
           BlocBuilder<ProfileBloc, ProfileState>(
-              buildWhen: (previous, current) {
-            return current is UserInfoState ? true : false;
-          }, builder: (context, state) {
-
-            if (state is UserInfoState && state.email != null) {
-              return SizedBox(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // User image
-                    CachedNetworkImage(
-                      imageUrl: state.imageUrl!,
-                      width: 100.w,
-                      height: 100.h,
-                      fit: BoxFit.cover,
-                      errorWidget: (context, url, error) => Container(
-                        decoration: BoxDecoration(
-                            color: AppColors.black.withOpacity(.05),
-                            shape: BoxShape.circle),
-                        child: Icon(
-                          Icons.person,
-                          color: AppColors.black.withOpacity(.3),
-                          size: 35.sp,
-                        ),
-                      ),
-                    ),
-                    15.verticalSpace,
-                    // User name and email
-                    Text(
-                      state.name!,
-                      softWrap: false,
-                      style: context.titleMedium.copyWith(
-                        color: AppColors.black,
-                        fontSize: 18.sp,
-                        height: 1,
-                        overflow: TextOverflow.fade,
-                      ),
-                    ),
-                    2.verticalSpace,
-                    Text(
-                      state.email!,
-                      softWrap: false,
-                      style: context.titleMedium.copyWith(
-                        color: AppColors.black.withOpacity(.5),
-                        fontSize: 12.sp,
-                        fontWeight: FontWeightManager.regular,
-                        overflow: TextOverflow.fade,
+            builder: (context, state) {
+              return state.user != null
+                  ? SizedBox(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // User image
+                          CachedNetworkImage(
+                            imageUrl: '',
+                            width: 100.w,
+                            height: 100.h,
+                            fit: BoxFit.cover,
+                            errorWidget: (context, url, error) => Container(
+                              decoration: BoxDecoration(
+                                  color: AppColors.black.withOpacity(.05),
+                                  shape: BoxShape.circle),
+                              child: Icon(
+                                Icons.person,
+                                color: AppColors.black.withOpacity(.3),
+                                size: 35.sp,
+                              ),
+                            ),
+                          ),
+                          15.verticalSpace,
+                          // User name and email
+                          Text(
+                            state.user!.name,
+                            softWrap: false,
+                            style: context.titleMedium.copyWith(
+                              color: AppColors.black,
+                              fontSize: 18.sp,
+                              height: 1,
+                              overflow: TextOverflow.fade,
+                            ),
+                          ),
+                          2.verticalSpace,
+                          Text(
+                            state.user!.email,
+                            softWrap: false,
+                            style: context.titleMedium.copyWith(
+                              color: AppColors.black.withOpacity(.5),
+                              fontSize: 12.sp,
+                              fontWeight: FontWeightManager.regular,
+                              overflow: TextOverflow.fade,
+                            ),
+                          )
+                        ],
                       ),
                     )
-                  ],
-                ),
-              );
-            } else {
-              return Shimmer(
-                  gradient: AppColors.shimmerColor,
-                  period: const Duration(seconds: 3),
-                  child: SizedBox(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 100.w,
-                          height: 100.h,
-                          decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(.2),
-                              shape: BoxShape.circle),
-                        ),
-                        15.verticalSpace,
-                        Container(
-                          height: 18.h,
-                          width: 120.w,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: Colors.black.withOpacity(.2)),
-                        ),
-                        5.verticalSpace,
-                        Container(
-                          height: 12.h,
-                          width: 85.w,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: Colors.black.withOpacity(.2)),
-                        ),
-                      ],
-                    ),
-                  ));
-            }
-          }),
-          // MediaQuery.paddingOf(context).top  ->  get the status bar height it like [SafeArea Widget]
+                  : const UserShimmer();
+            },
+          ),
           MediaQuery.paddingOf(context).top.verticalSpace,
-          // 20.verticalSpace,
           Row(
             children: [
               Padding(
@@ -434,7 +391,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 }),
                 // Delete Account Button
                 CustomButton(
-                  onTap: (){},
+                  onTap: () {},
                   height: 60.h,
                   padding: EdgeInsets.symmetric(
                       vertical: 0.h, horizontal: (AppSize.pagePadding * 2).w),
@@ -447,7 +404,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                             Icon(
+                          Icon(
                             Icons.delete_outline_rounded,
                             color: AppColors.red,
                             size: 25.w,
@@ -482,4 +439,46 @@ class ProfileItem {
   Function()? onTap;
 
   ProfileItem({this.icon, this.imageIcon, this.text = "", this.onTap});
+}
+
+class UserShimmer extends StatelessWidget {
+  const UserShimmer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer(
+        gradient: AppColors.shimmerColor,
+        period: const Duration(seconds: 3),
+        child: SizedBox(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 100.w,
+                height: 100.h,
+                decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(.2),
+                    shape: BoxShape.circle),
+              ),
+              15.verticalSpace,
+              Container(
+                height: 18.h,
+                width: 120.w,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.black.withOpacity(.2)),
+              ),
+              5.verticalSpace,
+              Container(
+                height: 12.h,
+                width: 85.w,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.black.withOpacity(.2)),
+              ),
+            ],
+          ),
+        ));
+  }
 }

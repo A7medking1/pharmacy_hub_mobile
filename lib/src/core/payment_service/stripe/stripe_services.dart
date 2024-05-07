@@ -33,7 +33,11 @@ class StripServices {
   }
 
   Future<void> makePayment(PaymentIntentRequestModel model) async {
-    final String paymentIntent = await createPaymentIntent(model);
+    //final String paymentIntent = await createPaymentIntent(model);
+
+    /// TODO - add your own payment intent
+
+    const String paymentIntent = "pi_3PDs8PCUzw0yD3H30dIglov2_secret_yBugrw3EcMbm1ImYAfJjn17aP";
 
     await initPaymentSheet(paymentIntent);
 

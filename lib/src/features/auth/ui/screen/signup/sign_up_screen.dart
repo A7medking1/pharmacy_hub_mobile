@@ -18,7 +18,9 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        forceMaterialTransparency: true,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -37,7 +39,7 @@ class SignUpScreen extends StatelessWidget {
                     context.goNamed(Routes.appLayOut);
                     break;
                   case ReqState.error:
-                    showError('please check your email and password');
+                    showError('Something went wrong');
                     break;
                   // TODO: Handle this case.
                 }

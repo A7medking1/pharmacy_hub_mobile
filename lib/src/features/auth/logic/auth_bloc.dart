@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -12,6 +13,7 @@ import 'package:pharmacy_hub/src/features/auth/data/models/userModel.dart';
 import 'package:pharmacy_hub/src/features/auth/data/repository/repository.dart';
 
 part 'auth_event.dart';
+
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -26,6 +28,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final TextEditingController password = TextEditingController();
   final TextEditingController name = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+  final TextEditingController street = TextEditingController();
+  final TextEditingController city = TextEditingController();
   String phoneNumber = '';
 
   final formKey = GlobalKey<FormState>();
@@ -65,6 +69,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           phoneNumber: phoneNumber,
           password: password.text,
           repeatPassword: password.text,
+          city: city.text,
+          street: street.text,
         ),
       );
 
@@ -74,6 +80,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         registerReqState: ReqState.success,
       ));
     } catch (e) {
+      log(e.toString());
+
       emit(state.copyWith(
         registerReqState: ReqState.error,
       ));

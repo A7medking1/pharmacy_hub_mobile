@@ -2,12 +2,13 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pharmacy_hub/src/features/home/data/repository/repository.dart';
 
 class ApiConstant {
-  static const String baseUrl = 'http://e-pharmacy.runasp.net/';
+  static const String baseUrl = 'https://e-pharmacy.runasp.net/';
 
   static const String login = 'api/Account/Login';
   static const String register = 'api/Account/Register';
 
   static const String product = 'api/product';
+  static const String account = 'api/Account';
   static const String editAccount = 'api/Account/EditAccount';
   static const String changePassword = 'api/Account/ChangePassword';
 

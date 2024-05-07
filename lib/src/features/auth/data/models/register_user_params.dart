@@ -6,6 +6,9 @@ class RegisterUserParams extends Equatable {
   final String phoneNumber;
   final String password;
   final String repeatPassword;
+  final String city;
+
+  final String street;
 
   const RegisterUserParams({
     required this.name,
@@ -13,6 +16,8 @@ class RegisterUserParams extends Equatable {
     required this.phoneNumber,
     required this.password,
     required this.repeatPassword,
+    required this.city,
+    required this.street,
   });
 
   Map<String, dynamic> toMap() => {
@@ -21,7 +26,10 @@ class RegisterUserParams extends Equatable {
         "phoneNumber": phoneNumber,
         "password": password,
         "repeatPassword": repeatPassword,
+        "city": city,
+        "street": street
       };
+
 
   @override
   List<Object?> get props => [
@@ -30,5 +38,7 @@ class RegisterUserParams extends Equatable {
         phoneNumber,
         password,
         repeatPassword,
+        city,
+        street,
       ];
 }
