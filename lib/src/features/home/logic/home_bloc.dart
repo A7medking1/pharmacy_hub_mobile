@@ -6,6 +6,7 @@ import 'package:pharmacy_hub/src/core/enums.dart';
 import 'package:pharmacy_hub/src/core/error/exceptions.dart';
 import 'package:pharmacy_hub/src/features/home/data/models/category_model.dart';
 import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
+import 'package:pharmacy_hub/src/features/home/data/models/request_params.dart';
 import 'package:pharmacy_hub/src/features/home/data/repository/repository.dart';
 
 part 'home_event.dart';

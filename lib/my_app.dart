@@ -13,18 +13,8 @@ import 'package:pharmacy_hub/src/features/profile/logic/profile_bloc.dart';
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  void aaa() async {
-    /*UserModel userModel = sl<AppPreferences>().getUser();
-    if(userModel != null){
-      print(userModel);
-
-    }*/
-  }
-
   @override
   Widget build(context) {
-    aaa();
-
     return ScreenUtilInit(
       designSize: const Size(414, 896),
       minTextAdapt: true,

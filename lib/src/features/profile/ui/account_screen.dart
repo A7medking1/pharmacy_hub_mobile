@@ -106,12 +106,6 @@ class _AccountScreenState extends State<AccountScreen> {
                     textInputType: TextInputType.emailAddress,
                   ),
                   20.verticalSpace,
-                  /*       PhoneFormField(
-                    controller: phoneNumberController,
-                    title: '',
-                    hintText: state.user?.phoneNumber ?? "",
-                  ),
-                  20.verticalSpace,*/
                   Row(
                     children: [
                       Expanded(

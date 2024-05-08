@@ -9,9 +9,10 @@ class CartRepository {
   const CartRepository(this._apiConsumer);
 
   Future<CartModel> getCart({required String cartId}) async {
-    final Response response = await _apiConsumer.get(
-      '${ApiConstant.cart}?id=${cartId.toString()}',
-    );
+    final Response response =
+        await _apiConsumer.get(ApiConstant.cart, queryParameters: {
+      'id': cartId,
+    });
     return CartModel.fromMap(response.data);
   }
 
@@ -24,8 +25,8 @@ class CartRepository {
   }
 
   Future<void> deleteCart({required String cartId}) async {
-    await _apiConsumer.delete(
-      '${ApiConstant.cart}?${cartId.toString()}',
-    );
+    await _apiConsumer.delete(ApiConstant.cart, queryParameters: {
+      'id': cartId,
+    });
   }
 }

@@ -14,7 +14,7 @@ import 'package:pharmacy_hub/src/core/widget/RequestWidget.dart';
 import 'package:pharmacy_hub/src/core/widget/cached_image_network.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
 import 'package:pharmacy_hub/src/core/widget/list_view_horizontal.dart';
-import 'package:pharmacy_hub/src/features/home/data/repository/repository.dart';
+import 'package:pharmacy_hub/src/features/home/data/models/request_params.dart';
 import 'package:pharmacy_hub/src/features/home/logic/home_bloc.dart';
 import 'package:pharmacy_hub/src/features/home/ui/widget/favorite_icon_widget.dart';
 import 'package:pharmacy_hub/src/features/home/ui/widget/product_card.dart';

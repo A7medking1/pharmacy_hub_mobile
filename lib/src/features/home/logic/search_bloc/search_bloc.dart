@@ -49,7 +49,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       return;
     }
     try {
-      final List<ProductModel> data = await _homeRepository.searchFor(
+      final List<ProductModel> data = await _homeRepository.search(
         page: '1',
         text: event.text,
       );
@@ -86,7 +86,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     }
 
     try {
-      final List<ProductModel> data = await _homeRepository.searchFor(
+      final List<ProductModel> data = await _homeRepository.search(
         page: (++page).toString(),
         text: event.text,
       );

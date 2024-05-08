@@ -201,7 +201,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           // User image
-                          CachedNetworkImage(
+                          Container(
+                            width: 100.w,
+                            height: 100.h,
+                            decoration: BoxDecoration(
+                                color: AppColors.black.withOpacity(.05),
+                                shape: BoxShape.circle),
+                            child: Icon(
+                              Icons.person,
+                              color: AppColors.black.withOpacity(.3),
+                              size: 35.sp,
+                            ),
+                          ),
+                         /* CachedNetworkImage(
                             imageUrl: '',
                             width: 100.w,
                             height: 100.h,
@@ -216,7 +228,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 size: 35.sp,
                               ),
                             ),
-                          ),
+                          ),*/
                           15.verticalSpace,
                           // User name and email
                           Text(
