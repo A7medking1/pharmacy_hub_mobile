@@ -12,6 +12,10 @@ class ApiConstant {
   static const String categories = 'api/product/Categories';
   static const String cart = 'api/Basket';
 
+  static const String orders = 'api/Orders';
+  static const String delivery = 'api/Orders/DeliveryMethods';
+  static const String payment = 'api/Payment';
+
   /// TODO  payment keys
   static String STRIPE_SECRET_KEY = dotenv.env['STRIPE_SECRET_KEY']!;
   static String STRIPE_PUBLISHABLE_KEY = dotenv.env['STRIPE_PUBLISHABLE_KEY']!;

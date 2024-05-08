@@ -6,6 +6,7 @@ import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
 import 'package:pharmacy_hub/src/core/widget/RequestWidget.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
 import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
+import 'package:pharmacy_hub/src/features/order/logic/order_bloc.dart';
 
 class CartBottomNavBar extends StatelessWidget {
   const CartBottomNavBar({
@@ -20,7 +21,7 @@ class CartBottomNavBar extends StatelessWidget {
           reqState: state.getCartReqState,
           onError: const SizedBox.shrink(),
           onLoading: const SizedBox.shrink(),
-          onSuccess: state.selectedStepper == 2
+          onSuccess: state.selectedStepper == 3
               ? const SizedBox.shrink()
               : Container(
                   color: AppColors.backGroundColor,
@@ -45,7 +46,7 @@ class CartBottomNavBar extends StatelessWidget {
                             ),
                           ],
                         ),
-                        15.verticalSpace,
+                        /*  15.verticalSpace,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -60,7 +61,7 @@ class CartBottomNavBar extends StatelessWidget {
                               ),
                             ),
                           ],
-                        ),
+                        ),*/
                         10.verticalSpace,
                         const Divider(
                           thickness: 1.5,
@@ -86,14 +87,25 @@ class CartBottomNavBar extends StatelessWidget {
                         ),
                         15.verticalSpace,
                       ],
-                      CustomButton(
-                        onTap: () {
-                          context.read<CartBloc>().add(ChangeStepperEvent());
+                      BlocBuilder<OrderBloc, OrderState>(
+                        builder: (context, orderState) {
+                          return CustomButton(
+                            onTap: () {
+                              if (state.selectedStepper == 1) {
+                                context
+                                    .read<OrderBloc>()
+                                    .add(const AddDeliveryMethodEvent());
+                              }
+                              context
+                                  .read<CartBloc>()
+                                  .add(ChangeStepperEvent());
+                            },
+                            text: state.selectedStepper == 0
+                                ? 'Proceed order'
+                                : 'Continue',
+                            //   text: 'Continue',
+                          );
                         },
-                        text: state.selectedStepper == 0
-                            ? 'Proceed order'
-                            : 'Continue',
-                        //   text: 'Continue',
                       ),
                     ],
                   ),

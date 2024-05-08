@@ -1,7 +1,8 @@
 part of 'cart_bloc.dart';
 
 class CartState extends Equatable {
-  int selectedStepper = 0;
+  final int selectedStepper;
+
   String currentAddress;
 
   /// cart

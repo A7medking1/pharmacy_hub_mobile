@@ -4,17 +4,35 @@ import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
 
 part 'cart_model.g.dart';
 
+/*"deliveryMethodId": null,
+"shippingPrice": 0,
+"paymentIntetId": null,
+"clientSecret": null
+*/
+
 class CartModel extends Equatable {
   final String id;
   final List<CartItem> items;
+  final num? deliveryMethodId;
+  final num? shippingPrice;
+  final String? paymentIntetId;
+  final String? clientSecret;
 
   const CartModel({
     required this.id,
     required this.items,
+    this.clientSecret,
+    this.deliveryMethodId,
+    this.paymentIntetId,
+    this.shippingPrice,
   });
 
   factory CartModel.fromMap(Map<String, dynamic> json) => CartModel(
         id: json["id"],
+        clientSecret: json["clientSecret"] ?? '',
+        deliveryMethodId: json["deliveryMethodId"] ?? 0,
+        paymentIntetId: json["paymentIntetId"] ?? '',
+        shippingPrice: json["shippingPrice"],
         items:
             List<CartItem>.from(json["items"].map((x) => CartItem.fromMap(x))),
       );
@@ -22,7 +40,29 @@ class CartModel extends Equatable {
   Map<String, dynamic> toMap() => {
         "id": id,
         "items": List<dynamic>.from(items.map((x) => x.toMap())),
+        "clientSecret": clientSecret ?? '',
+        "deliveryMethodId": deliveryMethodId ?? 0,
+        "paymentIntetId": paymentIntetId ?? '',
+        "shippingPrice": shippingPrice ?? 0,
       };
+
+  CartModel copyWith({
+    String? id,
+    List<CartItem>? items,
+    num? deliveryMethodId,
+    num? shippingPrice,
+    String? paymentIntetId,
+    String? clientSecret,
+  }) {
+    return CartModel(
+      id: id ?? this.id,
+      items: items ?? this.items,
+      clientSecret: clientSecret ?? this.clientSecret,
+      deliveryMethodId: deliveryMethodId ?? this.deliveryMethodId,
+      paymentIntetId: paymentIntetId ?? this.paymentIntetId,
+      shippingPrice: shippingPrice ?? this.shippingPrice,
+    );
+  }
 
   @override
   List<Object> get props => [id, items];

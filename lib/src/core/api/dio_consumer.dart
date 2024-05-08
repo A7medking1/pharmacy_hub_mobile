@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -32,7 +31,7 @@ class DioConsumer implements ApiConsumer {
   Future get(String path, {Map<String, dynamic>? queryParameters}) async {
     final userToken = sl<AppPreferences>().getUser().token;
 
-    log('user token: $userToken');
+    //  log('user token: $userToken');
 
     try {
       final response = await client.get(
@@ -139,7 +138,9 @@ class DioConsumer implements ApiConsumer {
           case StatusCode.badRequest:
           case StatusCode.tooManyRequests:
             throw BadRequestException(
-                ErrorMessageModel.fromJson(error.response!.data));
+                ErrorMessageModel.fromJson(const {
+                  'message': 'something went wrong !!',
+                },));
           case StatusCode.unauthorized:
             throw NotFoundException(ErrorMessageModel.fromJson(
               const {

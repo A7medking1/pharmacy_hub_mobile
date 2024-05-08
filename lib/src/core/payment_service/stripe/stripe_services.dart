@@ -37,7 +37,8 @@ class StripServices {
 
     /// TODO - add your own payment intent
 
-    const String paymentIntent = "pi_3PDs8PCUzw0yD3H30dIglov2_secret_yBugrw3EcMbm1ImYAfJjn17aP";
+    const String paymentIntent =
+        "pi_3PEBX2CUzw0yD3H30dFYZM1w_secret_2BmCOL6fNdN7LuNCtoa70ilsc";
 
     await initPaymentSheet(paymentIntent);
 

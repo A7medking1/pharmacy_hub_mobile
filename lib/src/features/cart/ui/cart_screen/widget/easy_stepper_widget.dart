@@ -30,7 +30,7 @@ class CustomEasyStepper extends StatelessWidget {
           ),
           finishedStepBackgroundColor: AppColors.primaryWithOp,
           finishedStepIconColor: AppColors.white,
-          internalPadding: 50.w,
+          internalPadding: 20.w,
           fitWidth: true,
           disableScroll: false,
           showLoadingAnimation: true,
@@ -41,26 +41,34 @@ class CustomEasyStepper extends StatelessWidget {
             buildEasyStep(
               title: 'Cart',
               context: context,
+              icon: Icons.shopping_cart,
+            ),
+            buildEasyStep(
+              title: 'delivery',
+              context: context,
+              icon: Icons.delivery_dining_sharp,
             ),
             buildEasyStep(
               title: 'Address',
               context: context,
+              icon: Icons.location_on_outlined,
             ),
             buildEasyStep(
               title: 'payment',
               context: context,
+              icon: Icons.payment,
             ),
           ],
-          //  onStepReached: (index) => setState(() => activeStep = index),
         );
       },
     );
   }
 }
 
-EasyStep buildEasyStep({required String title, required BuildContext context}) {
+EasyStep buildEasyStep(
+    {required String title, required BuildContext context, IconData? icon}) {
   return EasyStep(
-    icon: const Icon(Icons.delivery_dining),
+    icon: Icon(icon),
     finishIcon: Icon(
       Icons.done,
       color: AppColors.black,

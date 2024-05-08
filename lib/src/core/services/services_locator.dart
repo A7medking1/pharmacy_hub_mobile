@@ -29,7 +29,7 @@ class ServicesLocator {
     sl.registerLazySingleton(() => CartRepository(sl()));
     sl.registerLazySingleton(() => AuthRepository(sl()));
     sl.registerLazySingleton(() => ProfileRepository(sl()));
-
+    sl.registerLazySingleton(() => OrderRepository(sl()));
 
     sl.registerFactory(() => AuthBloc(sl()));
     sl.registerFactory(() => HomeBloc(sl()));
@@ -38,5 +38,6 @@ class ServicesLocator {
     sl.registerFactory(() => PaginationBloc(sl()));
     sl.registerFactory(() => SearchBloc(sl()));
     sl.registerFactory(() => CartBloc(sl()));
+    sl.registerFactory(() => OrderBloc(sl()));
   }
 }

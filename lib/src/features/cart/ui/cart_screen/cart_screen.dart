@@ -18,6 +18,7 @@ import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/easy_steppe
 import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/first_step_widget.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/second_step_widget.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/third_step_widget.dart';
+import 'package:pharmacy_hub/src/features/order/logic/order_bloc.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -36,8 +37,15 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<CartBloc>()..add(const GetCartDataEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => sl<CartBloc>()..add(const GetCartDataEvent()),
+        ),
+        BlocProvider(
+          create: (context) => sl<OrderBloc>()..add(GetDeliveryMethodsEvent()),
+        ),
+      ],
       child: Scaffold(
         body: PopScope(
           canPop: true,
@@ -62,8 +70,10 @@ class _CartScreenState extends State<CartScreen> {
                             if (state.selectedStepper == 0)
                               const FirstStepCartWidget(),
                             if (state.selectedStepper == 1)
-                              const SecondStepAddressWidget(),
+                              const ChooseDeliverMethodStepWidget(),
                             if (state.selectedStepper == 2)
+                              const SecondStepAddressWidget(),
+                            if (state.selectedStepper == 3)
                               const ThirdStepPaymentWidget(),
                           ],
                         ),
@@ -77,6 +87,126 @@ class _CartScreenState extends State<CartScreen> {
         ),
         bottomNavigationBar: const CartBottomNavBar(),
       ),
+    );
+  }
+}
+
+class ChooseDeliverMethodStepWidget extends StatelessWidget {
+  const ChooseDeliverMethodStepWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<OrderBloc, OrderState>(
+      builder: (context, orderState) {
+        return Expanded(
+          child: Padding(
+            padding: const EdgeInsetsDirectional.all(20),
+            child: Column(
+              children: [
+                Text(
+                  'Please select a shipping option that best suits your needs. We offer a range of choices varying in speed and cost.',
+                  style: context.titleSmall.copyWith(
+                    fontSize: 15.sp,
+                  ),
+                ),
+                25.h.verticalSpace,
+                RequestStateWidget(
+                  reqState: orderState.getDeliveryReqState,
+                  onLoading: const CircularProgressIndicator(),
+                  onSuccess: Expanded(
+                    child: GridView.builder(
+                      itemCount: orderState.deliveryMethods.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        childAspectRatio: 1 / 1.1,
+                      ),
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () {
+                            context
+                                .read<OrderBloc>()
+                                .add(ChangeDeliveryMethodEvent(index: index));
+                          },
+                          child: Opacity(
+                            opacity: orderState.selectedDeliveryMethod == index
+                                ? 1
+                                : 0.8,
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              padding: EdgeInsets.all(10.h),
+                              decoration: BoxDecoration(
+                                color: AppColors.backGroundColor,
+                                borderRadius:
+                                    BorderRadiusDirectional.circular(15.r),
+                                border:
+                                    orderState.selectedDeliveryMethod == index
+                                        ? Border.all(
+                                            color: AppColors.primary,
+                                            width: 3.w,
+                                          )
+                                        : null,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional.topCenter,
+                                        child: Text(
+                                          orderState
+                                              .deliveryMethods[index].name,
+                                          style: context.titleSmall,
+                                        ),
+                                      ),
+                                      15.verticalSpace,
+                                      Text(
+                                        orderState
+                                            .deliveryMethods[index].description,
+                                        style: context.titleSmall.copyWith(
+                                          color: AppColors.black,
+                                        ),
+                                      ),
+                                      10.verticalSpace,
+                                      Text(
+                                          'Delivery Time: ${orderState.deliveryMethods[index].deliveryTime}',
+                                          style: context.titleSmall.copyWith(
+                                            color: AppColors.grey,
+                                            fontSize: 13.sp,
+                                          )),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  //10.verticalSpace,
+                                  Text(
+                                    'EGP ${orderState.deliveryMethods[index].cost}',
+                                    style: context.titleSmall.copyWith(
+                                      color: AppColors.primary,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

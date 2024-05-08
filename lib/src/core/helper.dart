@@ -11,6 +11,23 @@ extension ThemeText on BuildContext {
   TextStyle get titleLarge => style.titleLarge!;
 }
 
+extension DeliveryMethod on int {
+  int get getMethodId {
+    switch (this) {
+      case 0:
+        return 1;
+      case 1:
+        return 2;
+      case 2:
+        return 3;
+      case 3:
+        return 4;
+      default:
+        return 1;
+    }
+  }
+}
+
 /*
 
 extension UrlLauncherExtension on String {
@@ -36,7 +53,6 @@ class FadeAnimation extends StatelessWidget {
   }
 }
 
-
 extension CapitalizeFirstLast on String {
   String capitalizedFirst() =>
       substring(0, 1).toUpperCase() + substring(1).toLowerCase();
@@ -51,5 +67,3 @@ extension CapitalizeFirstLast on String {
     }
   }
 }
-
-
