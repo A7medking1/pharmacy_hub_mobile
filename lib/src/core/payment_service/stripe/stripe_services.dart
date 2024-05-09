@@ -1,8 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:pharmacy_hub/src/core/api/api_constant.dart';
-import 'package:pharmacy_hub/src/core/payment_service/stripe/payment_intent_request_model.dart';
 
 // 1- create payment intent (amount , currency ) ;
 // 2- init payment sheet
@@ -23,22 +20,27 @@ class StripServices {
     }
   }
 
+/*
   Future<String> createPaymentIntent(PaymentIntentRequestModel model) async {
     final response = await _getPaymentIntent(model.toJson());
     return response.data['client_secret'];
   }
+*/
 
   Future<void> displayPaymentSheet() async {
-    await Stripe.instance.presentPaymentSheet();
+   // try {
+      await Stripe.instance.presentPaymentSheet();
+  //  } on Exception catch (e) {
+  //    rethrow;
+  //  }
   }
 
-  Future<void> makePayment(PaymentIntentRequestModel model) async {
+  Future<void> makePayment(String clientSecret) async {
     //final String paymentIntent = await createPaymentIntent(model);
 
     /// TODO - add your own payment intent
 
-    const String paymentIntent =
-        "pi_3PEBX2CUzw0yD3H30dFYZM1w_secret_2BmCOL6fNdN7LuNCtoa70ilsc";
+    String paymentIntent = clientSecret;
 
     await initPaymentSheet(paymentIntent);
 
@@ -46,6 +48,7 @@ class StripServices {
   }
 }
 
+/*
 Future<Response> _getPaymentIntent(Map<String, dynamic> body) async {
   Response response = await Dio().post(
     'https://api.stripe.com/v1/payment_intents',
@@ -61,3 +64,4 @@ Future<Response> _getPaymentIntent(Map<String, dynamic> body) async {
   print(response);
   return response;
 }
+*/

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:pharmacy_hub/src/features/order/data/models/address_model.dart';
 
 class LocationServices {
   static Future<LatLng> getCurrentLatLong() async {
@@ -32,7 +33,7 @@ class LocationServices {
     return LatLng(value.latitude, value.longitude);
   }
 
-  static Future<String> getAddressFromLatLang(LatLng latLng) async {
+  static Future<AddressModel> getAddressFromLatLang(LatLng latLng) async {
     List<Placemark> placeMark =
         await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
 
@@ -45,7 +46,12 @@ class LocationServices {
 
     print(place);
 
-    return '${place.name}, ${place.locality}, ${place.administrativeArea}, ${place.isoCountryCode}';
+    return AddressModel(
+      street: '${place.name}, ${place.street}, ${place.locality},',
+      city: '${place.administrativeArea}, ${place.isoCountryCode}',
+    );
+
+    //  return '${place.name}, ${place.locality}, ${place.administrativeArea}, ${place.isoCountryCode}';
   }
 
   static Future<String> getAddressFromCurrentLatLong() async {

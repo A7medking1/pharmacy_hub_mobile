@@ -135,7 +135,7 @@ class ChooseDeliverMethodStepWidget extends StatelessWidget {
                                 ? 1
                                 : 0.8,
                             child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 200),
+                              duration: const Duration(milliseconds: 100),
                               padding: EdgeInsets.all(10.h),
                               decoration: BoxDecoration(
                                 color: AppColors.backGroundColor,
@@ -173,7 +173,7 @@ class ChooseDeliverMethodStepWidget extends StatelessWidget {
                                         orderState
                                             .deliveryMethods[index].description,
                                         style: context.titleSmall.copyWith(
-                                          color: AppColors.black,
+                                          color: AppColors.grey,
                                         ),
                                       ),
                                       10.verticalSpace,

@@ -4,11 +4,7 @@ import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
 
 part 'cart_model.g.dart';
 
-/*"deliveryMethodId": null,
-"shippingPrice": 0,
-"paymentIntetId": null,
-"clientSecret": null
-*/
+
 
 class CartModel extends Equatable {
   final String id;

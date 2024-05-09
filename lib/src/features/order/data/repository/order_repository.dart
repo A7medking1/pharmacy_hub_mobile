@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:pharmacy_hub/src/core/api/api_constant.dart';
 import 'package:pharmacy_hub/src/core/api/api_consumer.dart';
 import 'package:pharmacy_hub/src/features/cart/data/models/cart_model.dart';
+import 'package:pharmacy_hub/src/features/order/data/models/address_model.dart';
 import 'package:pharmacy_hub/src/features/order/data/models/delivery_method_model.dart';
+import 'package:pharmacy_hub/src/features/order/data/models/order_params.dart';
 
 class OrderRepository {
   final ApiConsumer _apiConsumer;
@@ -20,6 +22,28 @@ class OrderRepository {
     await _apiConsumer.post(
       ApiConstant.cart,
       body: cartModel.toMap(),
+    );
+  }
+
+  Future<AddressModel> updateAddress({required AddressModel model}) async {
+    final Response response = await _apiConsumer.put(
+      ApiConstant.address,
+      body: model.toMap(),
+    );
+    return AddressModel.fromMap(response.data);
+  }
+
+  Future<String> createPaymentIntent({required String cartId}) async {
+    final Response response = await _apiConsumer.post(
+      '${ApiConstant.payment}/$cartId',
+    );
+    return response.data['clientSecret'];
+  }
+
+  Future<void> createOrder({required OrderParamsBody body}) async {
+    await _apiConsumer.post(
+      ApiConstant.orders,
+      body: body.toMap(),
     );
   }
 }

@@ -16,6 +16,13 @@ class ChangeDeliveryMethodEvent extends OrderEvent {
 }
 
 class AddDeliveryMethodEvent extends OrderEvent {
-
   const AddDeliveryMethodEvent();
 }
+
+class UpdateAddressEvent extends OrderEvent {
+  final AddressModel addressModel;
+
+  const UpdateAddressEvent({required this.addressModel});
+}
+
+class GetPaymentIntentEvent extends OrderEvent {}

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacy_hub/src/core/app_prefs/app_prefs.dart';
 import 'package:pharmacy_hub/src/core/helper.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
+import 'package:pharmacy_hub/src/core/services/index.dart';
 import 'package:pharmacy_hub/src/core/widget/RequestWidget.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
 import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
+import 'package:pharmacy_hub/src/features/order/data/models/address_model.dart';
 import 'package:pharmacy_hub/src/features/order/logic/order_bloc.dart';
 
 class CartBottomNavBar extends StatelessWidget {
@@ -96,6 +99,15 @@ class CartBottomNavBar extends StatelessWidget {
                                     .read<OrderBloc>()
                                     .add(const AddDeliveryMethodEvent());
                               }
+
+                              if (state.selectedStepper == 2) {
+                                context.read<OrderBloc>().add(
+                                      UpdateAddressEvent(
+                                        addressModel: state.addressModel ?? AddressModel(street: sl <AppPreferences>().getUser().street, city: sl <AppPreferences>().getUser().city),
+                                      ),
+                                    );
+                              }
+
                               context
                                   .read<CartBloc>()
                                   .add(ChangeStepperEvent());

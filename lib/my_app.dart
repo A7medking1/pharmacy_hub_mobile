@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacy_hub/src/core/app_prefs/app_prefs.dart';
 import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
 import 'package:pharmacy_hub/src/core/resources/theme/app_light_theme.dart';
 import 'package:pharmacy_hub/src/core/services/index.dart';
@@ -15,6 +18,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(context) {
+    log(sl<AppPreferences>().getUser().token);
     return ScreenUtilInit(
       designSize: const Size(414, 896),
       minTextAdapt: true,

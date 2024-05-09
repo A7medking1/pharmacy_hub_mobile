@@ -4,10 +4,10 @@ class OrderState extends Equatable {
   final ReqState getDeliveryReqState;
   final String errorMessage;
   final List<DeliveryMethodsModel> deliveryMethods;
-
   final int selectedDeliveryMethod;
-
   final ReqState addDeliveryMethodReqState;
+  final ReqState updateAddressReqState;
+  final ReqState getPaymentIntentReqState;
 
   const OrderState({
     this.getDeliveryReqState = ReqState.empty,
@@ -15,6 +15,8 @@ class OrderState extends Equatable {
     this.deliveryMethods = const [],
     this.selectedDeliveryMethod = 0,
     this.addDeliveryMethodReqState = ReqState.empty,
+    this.updateAddressReqState = ReqState.empty,
+    this.getPaymentIntentReqState = ReqState.empty,
   });
 
   OrderState copyWith({
@@ -23,6 +25,8 @@ class OrderState extends Equatable {
     List<DeliveryMethodsModel>? deliveryMethods,
     int? selectedDeliveryMethod,
     ReqState? addDeliveryMethodReqState,
+    ReqState? updateAddressReqState,
+    ReqState? getPaymentIntentReqState,
   }) {
     return OrderState(
       getDeliveryReqState: getDeliveryReqState ?? this.getDeliveryReqState,
@@ -32,6 +36,9 @@ class OrderState extends Equatable {
           selectedDeliveryMethod ?? this.selectedDeliveryMethod,
       addDeliveryMethodReqState:
           addDeliveryMethodReqState ?? this.addDeliveryMethodReqState,
+      updateAddressReqState:
+          updateAddressReqState ?? this.updateAddressReqState,
+      getPaymentIntentReqState: getPaymentIntentReqState ?? this.getPaymentIntentReqState,
     );
   }
 
@@ -41,6 +48,8 @@ class OrderState extends Equatable {
         errorMessage,
         deliveryMethods,
         selectedDeliveryMethod,
-        addDeliveryMethodReqState
+        addDeliveryMethodReqState,
+        updateAddressReqState,
+        getPaymentIntentReqState,
       ];
 }

@@ -21,21 +21,6 @@ class _SuccessPaymentScreenState extends State<SuccessPaymentScreen>
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this);
-    _controller.duration = const Duration(seconds: 0);
-
-    _controller.addStatusListener((status) async {
-      print(status);
-      if (AnimationStatus.completed == status) {
-        await Future.delayed(const Duration(seconds: 2));
-        _startAnimationCycle();
-      }
-    });
-  }
-
-  void _startAnimationCycle() {
-    _controller
-      ..reset()
-      ..forward();
   }
 
   @override

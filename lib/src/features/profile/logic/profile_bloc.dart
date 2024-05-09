@@ -113,13 +113,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 }
 
-void showToastProfile(String s) {
+void showToastProfile(String s, [Color color = AppColors.primary]) {
   Fluttertoast.showToast(
     msg: s,
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.BOTTOM,
     timeInSecForIosWeb: 1,
-    backgroundColor: AppColors.primary,
+    backgroundColor: color,
     textColor: Colors.white,
   );
 }

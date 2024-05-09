@@ -16,6 +16,7 @@ import 'package:pharmacy_hub/src/features/auth/data/models/userModel.dart';
 import 'package:pharmacy_hub/src/features/cart/data/models/cart_model.dart';
 import 'package:pharmacy_hub/src/features/cart/data/repository/cart_repository.dart';
 import 'package:pharmacy_hub/src/features/cart/data/repository/cart_repository_local.dart';
+import 'package:pharmacy_hub/src/features/order/data/models/address_model.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
@@ -33,6 +34,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<GetCartItemsFromLocal>(_getCartItemsFromLocal);
     on<IncreaseItemQuantityEvent>(_increaseQuantity);
     on<DecreaseItemQuantityEvent>(_decreaseQuantity);
+    on<ClearCartItemsEvent>(_clearCartItems);
   }
 
   final CartRepository _cartRepository;
@@ -193,6 +195,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     add(UpdateCartItemLocalEvent(cartItem));
   }
 
+  FutureOr<void> _clearCartItems(
+      ClearCartItemsEvent event, Emitter<CartState> emit) async {
+    final String cartId = sl<AppPreferences>().getUser().id;
+    await _cartRepository.deleteCart(cartId: cartId);
+  }
+
   ///  section location
   CameraPosition? cameraPosition;
 
@@ -201,7 +209,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   void onCameraMove(CameraPosition position) {
     mapCenter = position.target;
-    print(mapCenter);
+    log(mapCenter.toString());
   }
 
   Future<void> initCameraPositionMap() async {
@@ -230,12 +238,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   FutureOr<void> _getCurrentAddressEvent(
       GetCurrentAddressEvent event, Emitter<CartState> emit) async {
-    final String currentAddress =
+    final AddressModel currentAddress =
         await LocationServices.getAddressFromLatLang(mapCenter);
 
-    print("currentAddress $mapCenter");
+    log("currentAddress $mapCenter");
 
-    emit(state.copyWith(currentAddress: currentAddress));
+    emit(state.copyWith(
+      currentAddress: '${currentAddress.street} ${currentAddress.city}',
+      addressModel: currentAddress,
+    ));
   }
 
   FutureOr<void> _changeStepper(
@@ -247,8 +258,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     emit(state.copyWith(selectedStepper: state.selectedStepper + 1));
   }
 
-
-
   @override
   void onEvent(CartEvent event) {
     // TODO: implement onEvent
@@ -256,6 +265,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     log("current event => $event");
   }
 }
+
 void showToast(String s) {
   Fluttertoast.showToast(
     msg: s,

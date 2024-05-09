@@ -11,6 +11,8 @@ class ChangeStepperEvent extends CartEvent {}
 
 class GetCurrentAddressEvent extends CartEvent {}
 
+class ClearCartItemsEvent extends CartEvent {}
+
 class GetCartDataEvent extends CartEvent {
   final bool isLoading;
 

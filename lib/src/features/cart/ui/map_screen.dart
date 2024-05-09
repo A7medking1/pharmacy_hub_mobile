@@ -11,6 +11,7 @@ import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
 import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
+import 'package:pharmacy_hub/src/features/order/logic/order_bloc.dart';
 
 class MapScreen extends StatelessWidget {
   final CartBloc cartBloc;
@@ -152,7 +153,10 @@ class _MapContentState extends State<MapContent> {
                   ),
                   child: CustomButton(
                     width: 170.w,
-                    onTap: () => context.pop(),
+                    onTap: () {
+
+                      context.pop();
+                    },
                     text: 'Save Address',
                   ),
                 ),

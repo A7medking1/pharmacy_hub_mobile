@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pharmacy_hub/src/core/app_prefs/app_prefs.dart';
 import 'package:pharmacy_hub/src/core/helper.dart';
 import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
 import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
+import 'package:pharmacy_hub/src/core/services/index.dart';
 import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 
 class SecondStepAddressWidget extends StatelessWidget {
@@ -134,7 +136,39 @@ class SecondStepAddressWidget extends StatelessWidget {
                               ],
                             ),
                           )
-                        : const SizedBox.shrink();
+                        : Container(
+                            width: MediaQuery.sizeOf(context).width,
+                            height: 60.h,
+                            padding: const EdgeInsetsDirectional.all(8),
+                            decoration: BoxDecoration(
+                              color: AppColors.backGroundColor,
+                              borderRadius:
+                                  BorderRadiusDirectional.circular(15.r),
+                            ),
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  AppSvg.location,
+                                  height: 32.h,
+                                  colorFilter: const ColorFilter.mode(
+                                    AppColors.primary,
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
+                                15.horizontalSpace,
+                                Flexible(
+                                  child: Text(
+                                    '${sl<AppPreferences>().getUser().city} ${sl<AppPreferences>().getUser().street}',
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: context.titleSmall.copyWith(
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
                   },
                 ),
                 /*20.verticalSpace,

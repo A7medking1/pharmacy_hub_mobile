@@ -6,15 +6,15 @@ class ApiConstant {
   static const String login = 'api/Account/Login';
   static const String register = 'api/Account/Register';
   static const String account = 'api/Account';
+  static const String address = 'api/Account/Address';
   static const String editAccount = 'api/Account/EditAccount';
   static const String changePassword = 'api/Account/ChangePassword';
   static const String product = 'api/product';
   static const String categories = 'api/product/Categories';
   static const String cart = 'api/Basket';
-
   static const String orders = 'api/Orders';
   static const String delivery = 'api/Orders/DeliveryMethods';
-  static const String payment = 'api/Payment';
+  static const String payment = 'api/Payments';
 
   /// TODO  payment keys
   static String STRIPE_SECRET_KEY = dotenv.env['STRIPE_SECRET_KEY']!;

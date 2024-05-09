@@ -4,6 +4,7 @@ class CartState extends Equatable {
   final int selectedStepper;
 
   String currentAddress;
+  final AddressModel? addressModel;
 
   /// cart
 
@@ -26,6 +27,7 @@ class CartState extends Equatable {
     this.addToCartReqState = ReqState.empty,
     this.id = 0,
     this.totalPrice = 0.0,
+    this.addressModel,
   });
 
   CartState copyWith({
@@ -40,6 +42,9 @@ class CartState extends Equatable {
     ReqState? addToCartReqState,
     int? id,
     double? totalPrice,
+
+    /// address
+    AddressModel? addressModel,
   }) {
     return CartState(
       selectedStepper: selectedStepper ?? this.selectedStepper,
@@ -51,6 +56,7 @@ class CartState extends Equatable {
       addToCartReqState: addToCartReqState ?? this.addToCartReqState,
       id: id ?? this.id,
       totalPrice: totalPrice ?? this.totalPrice,
+      addressModel: addressModel ?? this.addressModel,
     );
   }
 
@@ -65,5 +71,6 @@ class CartState extends Equatable {
         addToCartReqState,
         id,
         totalPrice,
+        addressModel,
       ];
 }
