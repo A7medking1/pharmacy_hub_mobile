@@ -14,6 +14,7 @@ import 'package:pharmacy_hub/src/core/widget/list_view_horizontal.dart';
 import 'package:pharmacy_hub/src/features/cart/data/models/cart_model.dart';
 import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
+import 'package:pharmacy_hub/src/features/home/data/models/request_params.dart';
 import 'package:pharmacy_hub/src/features/home/ui/widget/favorite_icon_widget.dart';
 
 class ProductCard extends StatelessWidget {
@@ -192,12 +193,33 @@ class ProductItemWidget extends StatelessWidget {
                       children: [
                         SimilarAndExpandedButton(
                           title: 'similar',
-                          onTap: () {},
+                          onTap: () {
+                            context.pushNamed(
+                              Routes.similar,
+                              extra: SimilarProductParams(
+                                productId: model.id.toString(),
+                                categoryId: model.categoryId.toString(),
+                                diseaseId: model.diseaseId.toString(),
+                                page: '1',
+                              ),
+                            );
+                          },
                         ),
                         3.horizontalSpace,
                         SimilarAndExpandedButton(
                           title: 'alternative',
-                          onTap: () {},
+                          onTap: () {
+                            context.pushNamed(
+                              Routes.alternative,
+                              extra: AlternativeProductParams(
+                                productId: model.id.toString(),
+                                categoryId: model.categoryId.toString(),
+                                activeIngredientId:
+                                    model.activeIngredientId.toString(),
+                                page: '1',
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),

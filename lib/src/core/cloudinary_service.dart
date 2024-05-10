@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CloudinaryService {
-//  static const String cloudName = 'your_cloud_name';
   static const String uploadPreset = 'xboh7dxo';
   final Dio dio = Dio();
 

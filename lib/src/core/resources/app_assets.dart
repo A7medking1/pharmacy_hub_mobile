@@ -38,4 +38,5 @@ class AppSvg {
   static const String paypal = '$_svg/paypal.svg';
   static const String stripe = '$_svg/stripe.svg';
   static const String share = '$_svg/share.svg';
+  static const String roshta = '$_svg/roshta.svg';
 }

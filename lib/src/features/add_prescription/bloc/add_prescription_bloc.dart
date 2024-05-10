@@ -12,7 +12,6 @@ import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
 
 part 'add_prescription_event.dart';
-
 part 'add_prescription_state.dart';
 
 class AddPrescriptionBloc
@@ -28,6 +27,12 @@ class AddPrescriptionBloc
     try {
       final String url = await CloudinaryService().uploadImage();
 
+      if (url.isEmpty) {
+        emit(state.copyWith(
+          uploadReqState: ReqState.success,
+        ));
+        return;
+      }
       log(url);
       int randomNumber = math.Random().nextInt(10000);
       log(randomNumber.toString());
@@ -55,3 +60,5 @@ class AddPrescriptionBloc
     }
   }
 }
+
+

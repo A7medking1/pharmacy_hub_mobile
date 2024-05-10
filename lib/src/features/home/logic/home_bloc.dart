@@ -10,7 +10,6 @@ import 'package:pharmacy_hub/src/features/home/data/models/request_params.dart';
 import 'package:pharmacy_hub/src/features/home/data/repository/repository.dart';
 
 part 'home_event.dart';
-
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
@@ -138,7 +137,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   FutureOr<void> _getMedicineSimilar(
       GetMedicineSimilarEvent event, Emitter<HomeState> emit) async {
     emit(state.copyWith(
-        getSimilarMedicineReqState: ReqState.loading, similarMedicine: []));
+      getSimilarMedicineReqState: ReqState.loading,
+      similarMedicine: [],
+    ));
 
     try {
       final List<ProductModel> cares =
@@ -163,8 +164,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   FutureOr<void> _getAlternativeMedicine(
       GetMedicineAlternativeEvent event, Emitter<HomeState> emit) async {
     emit(state.copyWith(
-        getAlternativeMedicineReqState: ReqState.loading,
-        alternativeMedicine: []));
+      getAlternativeMedicineReqState: ReqState.loading,
+      alternativeMedicine: [],
+    ));
 
     try {
       final List<ProductModel> cares =

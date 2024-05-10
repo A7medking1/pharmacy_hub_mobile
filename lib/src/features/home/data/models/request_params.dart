@@ -17,14 +17,19 @@ class AlternativeProductParams extends Equatable {
   });
 
   Map<String, dynamic> toJson() => {
-    "categoryId": categoryId,
-    "activeIngredientId": activeIngredientId,
-    "productId": productId,
-    "index": page,
-  };
+        "categoryId": categoryId,
+        "activeIngredientId": activeIngredientId,
+        "productId": productId,
+        "index": page,
+      };
 
   @override
-  List<Object> get props => [categoryId, activeIngredientId, page, productId];
+  List<Object> get props => [
+        categoryId,
+        activeIngredientId,
+        page,
+        productId,
+      ];
 }
 
 class SimilarProductParams extends Equatable {
@@ -32,6 +37,7 @@ class SimilarProductParams extends Equatable {
   final String diseaseId;
   final String page;
   final String productId;
+
 
   const SimilarProductParams({
     required this.categoryId,
@@ -41,12 +47,17 @@ class SimilarProductParams extends Equatable {
   });
 
   Map<String, dynamic> toJson() => {
-    "categoryId": categoryId,
-    "diseaseId": diseaseId,
-    "productId": productId,
-    "index": page,
-  };
+        "categoryId": categoryId,
+        "diseaseId": diseaseId,
+        "productId": productId,
+        "index": page,
+      };
 
   @override
-  List<Object> get props => [categoryId, diseaseId, page, productId];
+  List<Object> get props => [
+        categoryId,
+        diseaseId,
+        page,
+        productId,
+      ];
 }

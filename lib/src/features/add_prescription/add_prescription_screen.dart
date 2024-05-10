@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy_hub/src/core/enums.dart';
 import 'package:pharmacy_hub/src/core/helper.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
-import 'package:pharmacy_hub/src/features/add_prescription/add_prescription_bloc.dart';
+import 'package:pharmacy_hub/src/features/add_prescription/bloc/add_prescription_bloc.dart';
 
 class AddPrescriptionScreen extends StatelessWidget {
   const AddPrescriptionScreen({super.key});

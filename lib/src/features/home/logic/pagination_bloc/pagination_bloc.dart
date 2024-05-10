@@ -8,7 +8,6 @@ import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
 import 'package:pharmacy_hub/src/features/home/data/repository/repository.dart';
 
 part 'pagination_event.dart';
-
 part 'pagination_state.dart';
 
 class PaginationBloc extends Bloc<PaginationEvent, PaginationState> {

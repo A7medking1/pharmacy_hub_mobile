@@ -11,8 +11,8 @@ import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
 import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
 import 'package:pharmacy_hub/src/core/resources/size_manager.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
-import 'package:pharmacy_hub/src/features/add_prescription/add_prescription_bloc.dart';
 import 'package:pharmacy_hub/src/features/add_prescription/add_prescription_screen.dart';
+import 'package:pharmacy_hub/src/features/add_prescription/bloc/add_prescription_bloc.dart';
 import 'package:pharmacy_hub/src/features/home/ui/home.dart';
 import 'package:pharmacy_hub/src/features/layout/logic/app_layout_bloc.dart';
 import 'package:pharmacy_hub/src/features/profile/ui/profile_screen.dart';
@@ -202,46 +202,34 @@ class _AppLayOutState extends State<AppLayOut> {
                     children: [
                       Expanded(
                         child: buttomTap(
-                            title: 'Home',
-                            index: 0,
-                            selectedIcon: AppSvg.home,
-                            onTap: () {
-                              context
-                                  .read<AppLayoutBloc>()
-                                  .add(AnimatePageTo(0));
-                            }),
+                          title: 'Home',
+                          index: 0,
+                          selectedIcon: AppSvg.home,
+                          onTap: () {
+                            context.read<AppLayoutBloc>().add(AnimatePageTo(0));
+                          },
+                        ),
                       ),
                       Expanded(
                         child: buttomTap(
-                            index: 1,
-                            title: 'favorites',
-                            selectedIcon: AppSvg.fav,
-                            onTap: () {
-                              context
-                                  .read<AppLayoutBloc>()
-                                  .add(AnimatePageTo(1));
-                            }),
+                          index: 1,
+                          title: 'prescription',
+                          selectedIcon: AppSvg.roshta,
+                          onTap: () {
+                            context.read<AppLayoutBloc>().add(AnimatePageTo(1));
+                          },
+                        ),
                       ),
-                      // Expanded(
-                      //   child: buttomTap(
-                      //       title: 'Cart',
-                      //       index: 2,
-                      //       selectedIcon: AppSvg.cart,
-                      //       onTap: () {
-                      //         context.read<AppLayoutBloc>().add(AnimatePageTo(2));
-                      //       }),
-                      // ),
                       Expanded(
                         child: buttomTap(
-                            title: 'Profile',
-                            index: 2,
-                            selectedIcon: AppSvg.profile,
-                            onTap: () {
-                              hideAppBar();
-                              context
-                                  .read<AppLayoutBloc>()
-                                  .add(AnimatePageTo(2));
-                            }),
+                          title: 'Profile',
+                          index: 2,
+                          selectedIcon: AppSvg.profile,
+                          onTap: () {
+                            hideAppBar();
+                            context.read<AppLayoutBloc>().add(AnimatePageTo(2));
+                          },
+                        ),
                       ),
                     ],
                   );
@@ -281,13 +269,16 @@ class _AppLayOutState extends State<AppLayOut> {
                 ? 3.verticalSpace
                 : const SizedBox.shrink(),
             context.read<AppLayoutBloc>().currentTap == index
-                ? Text(
-                    title,
-                    style: context.titleSmall.copyWith(
-                      color: context.read<AppLayoutBloc>().currentTap == index
-                          ? AppColors.white
-                          : AppColors.white.withOpacity(.6),
-                      fontSize: 12.sp,
+                ? FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      title,
+                      style: context.titleSmall.copyWith(
+                        color: context.read<AppLayoutBloc>().currentTap == index
+                            ? AppColors.white
+                            : AppColors.white.withOpacity(.6),
+                        fontSize: 12.sp,
+                      ),
                     ),
                   )
                 : const SizedBox.shrink(),
