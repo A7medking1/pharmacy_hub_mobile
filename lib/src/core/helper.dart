@@ -11,22 +11,7 @@ extension ThemeText on BuildContext {
   TextStyle get titleLarge => style.titleLarge!;
 }
 
-extension DeliveryMethod on int {
-  int get getMethodId {
-    switch (this) {
-      case 0:
-        return 1;
-      case 1:
-        return 2;
-      case 2:
-        return 3;
-      case 3:
-        return 4;
-      default:
-        return 1;
-    }
-  }
-}
+
 
 /*
 

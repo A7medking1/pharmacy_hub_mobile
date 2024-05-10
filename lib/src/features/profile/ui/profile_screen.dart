@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -156,6 +155,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         text: "Favorite",
         onTap: () => context.pushNamed(Routes.favScreen),
       ),
+      ProfileItem(
+        icon: Icons.shopping_basket_outlined,
+        text: "My Orders",
+        onTap: () => context.pushNamed(Routes.myOrder),
+      ),
       // ProfileItem(icon:Icons.wallet, text:"Wallet",onTap:  () => null),
       // ProfileItem(icon:Icons.settings, text:"Settings",onTap:  () => null),
     ];
@@ -213,7 +217,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               size: 35.sp,
                             ),
                           ),
-                         /* CachedNetworkImage(
+                          /* CachedNetworkImage(
                             imageUrl: '',
                             width: 100.w,
                             height: 100.h,

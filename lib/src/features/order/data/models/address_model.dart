@@ -9,7 +9,7 @@ class AddressModel extends Equatable {
   final String street;
   final String city;
 
-  AddressModel({
+  const AddressModel({
     required this.street,
     required this.city,
   });

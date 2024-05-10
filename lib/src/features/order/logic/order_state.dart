@@ -52,4 +52,11 @@ class OrderState extends Equatable {
         updateAddressReqState,
         getPaymentIntentReqState,
       ];
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return super.toString();
+  }
+
 }

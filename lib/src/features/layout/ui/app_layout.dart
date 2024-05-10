@@ -11,12 +11,11 @@ import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
 import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
 import 'package:pharmacy_hub/src/core/resources/size_manager.dart';
 import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
+import 'package:pharmacy_hub/src/features/add_prescription/add_prescription_bloc.dart';
+import 'package:pharmacy_hub/src/features/add_prescription/add_prescription_screen.dart';
 import 'package:pharmacy_hub/src/features/home/ui/home.dart';
 import 'package:pharmacy_hub/src/features/layout/logic/app_layout_bloc.dart';
-import 'package:pharmacy_hub/src/features/profile/logic/profile_bloc.dart';
 import 'package:pharmacy_hub/src/features/profile/ui/profile_screen.dart';
-
-import '../../../core/services/index.dart';
 
 class AppLayOut extends StatefulWidget {
   const AppLayOut({super.key});
@@ -39,9 +38,11 @@ class _AppLayOutState extends State<AppLayOut> {
     // I init the screens in initstate so the BlocProvider it work fine
     screens = [
       const HomeScreen(),
-      const Center(child: Text('second')),
-      // const Center(child: Text('third')),
-    const ProfileScreen()
+      BlocProvider(
+        create: (context) => AddPrescriptionBloc(),
+        child: const AddPrescriptionScreen(),
+      ),
+      const ProfileScreen()
     ];
     super.initState();
   }
@@ -156,11 +157,7 @@ class _AppLayOutState extends State<AppLayOut> {
           alignment: Alignment.bottomCenter,
           children: [
             CarouselSlider(
-              items: [
-                const HomeScreen(),
-                const Center(child: Text('second')),
-                const ProfileScreen(),
-              ],
+              items: screens,
               carouselController:
                   context.read<AppLayoutBloc>().carouselController,
               options: CarouselOptions(

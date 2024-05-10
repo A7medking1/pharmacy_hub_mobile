@@ -15,19 +15,19 @@ import 'package:pharmacy_hub/src/features/cart/ui/map_screen.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/success_payment.dart';
 import 'package:pharmacy_hub/src/features/favorites/ui/favorites_screen.dart';
 import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
+import 'package:pharmacy_hub/src/features/home/logic/search_bloc/search_bloc.dart';
 import 'package:pharmacy_hub/src/features/home/ui/all_product_screen.dart';
 import 'package:pharmacy_hub/src/features/home/ui/product_details_screen.dart';
+import 'package:pharmacy_hub/src/features/home/ui/search_screen.dart';
 import 'package:pharmacy_hub/src/features/layout/logic/app_layout_bloc.dart';
 import 'package:pharmacy_hub/src/features/layout/ui/app_layout.dart';
 import 'package:pharmacy_hub/src/features/onBoarding/ui/onBoarding_screen.dart';
+import 'package:pharmacy_hub/src/features/order/data/ui/my_orders_screen.dart';
+import 'package:pharmacy_hub/src/features/profile/logic/profile_bloc.dart';
 import 'package:pharmacy_hub/src/features/profile/ui/about_screen.dart';
+import 'package:pharmacy_hub/src/features/profile/ui/account_screen.dart';
 import 'package:pharmacy_hub/src/features/profile/ui/change_password_screen.dart';
 import 'package:pharmacy_hub/src/features/profile/ui/contact_us_screen.dart';
-
-import '../../features/home/logic/search_bloc/search_bloc.dart';
-import '../../features/home/ui/search_screen.dart';
-import '../../features/profile/logic/profile_bloc.dart';
-import '../../features/profile/ui/account_screen.dart';
 
 class Routes {
   Routes._();
@@ -47,6 +47,7 @@ class Routes {
   static const favScreen = 'favScreen';
   static const search = 'search';
   static const changePassword = 'changePassword';
+  static const myOrder = 'myOrder';
 }
 
 class _RouterPath {
@@ -67,6 +68,7 @@ class _RouterPath {
   static const favScreen = '/favScreen';
   static const search = '/search';
   static const changePassword = '/changePassword';
+  static const myOrder = '/myOrder';
 }
 
 class AppRouter {
@@ -209,6 +211,11 @@ class AppRouter {
         name: Routes.changePassword,
         path: _RouterPath.changePassword,
         builder: (context, state) => const ChangePasswordScreen(),
+      ),
+      GoRoute(
+        name: Routes.myOrder,
+        path: _RouterPath.myOrder,
+        builder: (context, state) => const MyOrderScreen(),
       ),
     ],
   );

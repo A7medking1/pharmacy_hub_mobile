@@ -4,10 +4,10 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:pharmacy_hub/src/core/app_prefs/app_prefs.dart';
 import 'package:pharmacy_hub/src/core/enums.dart';
 import 'package:pharmacy_hub/src/core/error/exceptions.dart';
-import 'package:pharmacy_hub/src/core/helper.dart';
 import 'package:pharmacy_hub/src/core/payment_service/stripe/stripe_services.dart';
 import 'package:pharmacy_hub/src/core/services/index.dart';
 import 'package:pharmacy_hub/src/features/auth/data/models/userModel.dart';
@@ -33,8 +33,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
   final OrderRepository _repository;
   final CartLocalRepository _cartLocalRepository = CartLocalRepositoryImpl();
-
-  //String clientSecret = '';
 
   FutureOr<void> _getDeliveryMethods(
       GetDeliveryMethodsEvent event, Emitter<OrderState> emit) async {
@@ -62,7 +60,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       ChangeDeliveryMethodEvent event, Emitter<OrderState> emit) async {
     emit(state.copyWith(selectedDeliveryMethod: event.index));
 
-    log(event.index.getMethodId.toString());
+    log('${state.deliveryMethods[event.index]}');
   }
 
   FutureOr<void> _addDeliveryMethod(
@@ -75,7 +73,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     CartModel cartModel = CartModel(
       id: userId,
       items: cartItems,
-      deliveryMethodId: state.selectedDeliveryMethod.getMethodId,
+      //     deliveryMethodId: state.selectedDeliveryMethod.getMethodId,
+      deliveryMethodId: state.deliveryMethods[state.selectedDeliveryMethod].id,
     );
 
     log('new cart model $cartModel');
@@ -139,7 +138,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     await _repository.createOrder(
       body: OrderParamsBody(
         basketId: user.id,
-        deliveryMethodId: state.selectedDeliveryMethod.getMethodId,
+        deliveryMethodId:
+            state.deliveryMethods[state.selectedDeliveryMethod].id,
         shippingAddress: ShippingAddress(
           street: user.street,
           city: user.city,
@@ -149,11 +149,17 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   }
 
   Future<void> makePayment(String clientSecret) async {
-    //  try {
-    await StripServices().makePayment(clientSecret);
-    //  } catch (e) {
-    // showToastProfile('Something went wrong!!', Colors.red);
-    // }
+    try {
+      await StripServices().makePayment(clientSecret);
+    } on StripeException catch (e) {
+      showToastProfile(e.error.localizedMessage.toString(), Colors.red);
+      log(e.error.localizedMessage.toString());
+      emit(
+        state.copyWith(
+          getPaymentIntentReqState: ReqState.error,
+        ),
+      );
+    }
   }
 
   FutureOr<void> _getPaymentIntent(
@@ -166,6 +172,10 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       );
 
       await makePayment(paymentIntentModel);
+      // check if payment is successful
+      if (state.getPaymentIntentReqState == ReqState.error) {
+        return;
+      }
       await createOrder();
 
       log('Payment successful');
@@ -175,11 +185,20 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           getPaymentIntentReqState: ReqState.success,
         ),
       );
-    } on ServerException catch (e) {
-      showToastProfile('Something went wrong!!', Colors.red);
-      emit(state.copyWith(
-        getPaymentIntentReqState: ReqState.error,
-      ));
+    } catch (e) {
+      if (e is ServerException) {
+        showToastProfile('Something went wrong!!', Colors.red);
+        emit(state.copyWith(
+          getPaymentIntentReqState: ReqState.error,
+        ));
+      }
+
+      if (e is StripeException) {
+        showToastProfile(e.error.localizedMessage.toString(), Colors.red);
+        emit(state.copyWith(
+          getPaymentIntentReqState: ReqState.error,
+        ));
+      }
     }
   }
 }

@@ -113,8 +113,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       await _localRepository.addCart(event.cartItem);
       showToast('Item added to cart');
       List<CartItem> carts = await getCartLocal();
+      print('here here ');
       add(AddToCartEvent(carts));
     } else {
+      print('here here ');
+
       showToast('Item already added to cart');
     }
   }

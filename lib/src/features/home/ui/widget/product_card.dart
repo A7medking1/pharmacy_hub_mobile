@@ -220,21 +220,6 @@ class ProductItemWidget extends StatelessWidget {
                               CartItem.fromProduct(model),
                             ),
                           );
-                      /*  context.read<CartBloc>().add(UpdateCartItemLocalEvent(
-                            CartItem(
-                              id: 53,
-                              name: 'Oxifree cc',
-                              pictureUrl: 'http://e-pharmacy.runasp.net/Product/Images/med33.png',
-                              category: 'Vitamin',
-                              price: 135,
-                              quantity: 1,
-                            ),
-                          ));*/
-                      /*  context.read<CartBloc>().add(
-                            const RemoveCartItemLocalEvent(6),
-                          );*/
-
-                      //context.read<CartBloc>().add(ClearAllCartLocalEvent());
                     },
                     width: 40.h,
                     height: 40.h,
