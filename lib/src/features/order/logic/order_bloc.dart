@@ -15,6 +15,7 @@ import 'package:pharmacy_hub/src/features/cart/data/models/cart_model.dart';
 import 'package:pharmacy_hub/src/features/cart/data/repository/cart_repository_local.dart';
 import 'package:pharmacy_hub/src/features/order/data/models/address_model.dart';
 import 'package:pharmacy_hub/src/features/order/data/models/delivery_method_model.dart';
+import 'package:pharmacy_hub/src/features/order/data/models/my_order_model.dart';
 import 'package:pharmacy_hub/src/features/order/data/models/order_params.dart';
 import 'package:pharmacy_hub/src/features/order/data/repository/order_repository.dart';
 import 'package:pharmacy_hub/src/features/profile/logic/profile_bloc.dart';
@@ -29,6 +30,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     on<AddDeliveryMethodEvent>(_addDeliveryMethod);
     on<UpdateAddressEvent>(_updateAddress);
     on<GetPaymentIntentEvent>(_getPaymentIntent);
+    on<GetMyOrdersEvent>(_getMyOrders);
   }
 
   final OrderRepository _repository;
@@ -199,6 +201,27 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           getPaymentIntentReqState: ReqState.error,
         ));
       }
+    }
+  }
+
+  FutureOr<void> _getMyOrders(
+      GetMyOrdersEvent event, Emitter<OrderState> emit) async {
+    try {
+      final List<MyOrdersModel> myOrders = await _repository.getMyOrders();
+
+      emit(
+        state.copyWith(
+          getMyOrdersReqState: ReqState.success,
+          myOrders: myOrders,
+        ),
+      );
+    } on ServerException catch (e) {
+      emit(
+        state.copyWith(
+          getMyOrdersReqState: ReqState.error,
+          errorMessage: e.errorMessageModel?.statusMessage ?? '',
+        ),
+      );
     }
   }
 }

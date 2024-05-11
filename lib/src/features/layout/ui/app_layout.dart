@@ -216,6 +216,7 @@ class _AppLayOutState extends State<AppLayOut> {
                           title: 'prescription',
                           selectedIcon: AppSvg.roshta,
                           onTap: () {
+                            hideAppBar();
                             context.read<AppLayoutBloc>().add(AnimatePageTo(1));
                           },
                         ),

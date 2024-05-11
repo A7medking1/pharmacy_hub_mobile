@@ -46,6 +46,7 @@ dependencies:
   hive_flutter: ^1.1.0
   rxdart: ^0.27.7
   image_picker: ^1.1.1
+  intl: ^0.18.1
 
 
 dev_dependencies:

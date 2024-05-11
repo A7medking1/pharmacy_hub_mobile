@@ -406,7 +406,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   );
                 }),
                 // Delete Account Button
-                CustomButton(
+                /*CustomButton(
                   onTap: () {},
                   height: 60.h,
                   padding: EdgeInsets.symmetric(
@@ -437,7 +437,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ],
                   ),
-                )
+                )*/
               ],
             ),
           ),

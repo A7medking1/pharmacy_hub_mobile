@@ -8,8 +8,8 @@ class MyOrdersModel extends Equatable {
   final String status;
   final AddressModel shippingAddress;
   final String deliveryMethod;
-  final int deliveryMethodCost;
-  final List<Item> items;
+  final num deliveryMethodCost;
+  final List<MyItem> items;
   final num subtotal;
   final num total;
   final String paymentIntentId;
@@ -36,7 +36,7 @@ class MyOrdersModel extends Equatable {
         shippingAddress: AddressModel.fromMap(json["shippingAddress"]),
         deliveryMethod: json["deliveryMethod"],
         deliveryMethodCost: json["deliveryMethodCost"],
-        items: List<Item>.from(json["items"].map((x) => Item.fromMap(x))),
+        items: List<MyItem>.from(json["items"].map((x) => MyItem.fromMap(x))),
         subtotal: json["subtotal"],
         total: json["total"],
         paymentIntentId: json["paymentIntentId"],
@@ -58,14 +58,14 @@ class MyOrdersModel extends Equatable {
       ];
 }
 
-class Item {
+class MyItem {
   final int productId;
   final String productName;
-  final int price;
+  final num price;
   final String pictureUrl;
   final int quantity;
 
-  Item({
+  MyItem({
     required this.productId,
     required this.productName,
     required this.price,
@@ -73,7 +73,7 @@ class Item {
     required this.quantity,
   });
 
-  factory Item.fromMap(Map<String, dynamic> json) => Item(
+  factory MyItem.fromMap(Map<String, dynamic> json) => MyItem(
         productId: json["productId"],
         productName: json["productName"],
         price: json["price"],

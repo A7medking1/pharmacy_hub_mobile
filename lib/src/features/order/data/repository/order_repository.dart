@@ -4,6 +4,7 @@ import 'package:pharmacy_hub/src/core/api/api_consumer.dart';
 import 'package:pharmacy_hub/src/features/cart/data/models/cart_model.dart';
 import 'package:pharmacy_hub/src/features/order/data/models/address_model.dart';
 import 'package:pharmacy_hub/src/features/order/data/models/delivery_method_model.dart';
+import 'package:pharmacy_hub/src/features/order/data/models/my_order_model.dart';
 import 'package:pharmacy_hub/src/features/order/data/models/order_params.dart';
 
 class OrderRepository {
@@ -44,6 +45,13 @@ class OrderRepository {
     await _apiConsumer.post(
       ApiConstant.orders,
       body: body.toMap(),
+    );
+  }
+
+  Future<List<MyOrdersModel>> getMyOrders() async {
+    final Response response = await _apiConsumer.get(ApiConstant.orders);
+    return List<MyOrdersModel>.from(
+      ((response.data).map((x) => MyOrdersModel.fromMap(x))),
     );
   }
 }

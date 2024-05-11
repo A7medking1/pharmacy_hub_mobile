@@ -26,3 +26,7 @@ class UpdateAddressEvent extends OrderEvent {
 }
 
 class GetPaymentIntentEvent extends OrderEvent {}
+
+
+
+class GetMyOrdersEvent extends OrderEvent {}

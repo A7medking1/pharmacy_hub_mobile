@@ -9,6 +9,11 @@ class OrderState extends Equatable {
   final ReqState updateAddressReqState;
   final ReqState getPaymentIntentReqState;
 
+  ////
+  final ReqState getMyOrdersReqState;
+
+  final List<MyOrdersModel> myOrders;
+
   const OrderState({
     this.getDeliveryReqState = ReqState.empty,
     this.errorMessage = '',
@@ -17,6 +22,8 @@ class OrderState extends Equatable {
     this.addDeliveryMethodReqState = ReqState.empty,
     this.updateAddressReqState = ReqState.empty,
     this.getPaymentIntentReqState = ReqState.empty,
+    this.myOrders = const [],
+    this.getMyOrdersReqState = ReqState.loading,
   });
 
   OrderState copyWith({
@@ -27,6 +34,8 @@ class OrderState extends Equatable {
     ReqState? addDeliveryMethodReqState,
     ReqState? updateAddressReqState,
     ReqState? getPaymentIntentReqState,
+    ReqState? getMyOrdersReqState,
+    List<MyOrdersModel>? myOrders,
   }) {
     return OrderState(
       getDeliveryReqState: getDeliveryReqState ?? this.getDeliveryReqState,
@@ -38,7 +47,10 @@ class OrderState extends Equatable {
           addDeliveryMethodReqState ?? this.addDeliveryMethodReqState,
       updateAddressReqState:
           updateAddressReqState ?? this.updateAddressReqState,
-      getPaymentIntentReqState: getPaymentIntentReqState ?? this.getPaymentIntentReqState,
+      getPaymentIntentReqState:
+          getPaymentIntentReqState ?? this.getPaymentIntentReqState,
+      getMyOrdersReqState: getMyOrdersReqState ?? this.getMyOrdersReqState,
+      myOrders: myOrders ?? this.myOrders,
     );
   }
 
@@ -51,6 +63,9 @@ class OrderState extends Equatable {
         addDeliveryMethodReqState,
         updateAddressReqState,
         getPaymentIntentReqState,
+        getMyOrdersReqState,
+        myOrders,
+
       ];
 
   @override
@@ -58,5 +73,4 @@ class OrderState extends Equatable {
     // TODO: implement toString
     return super.toString();
   }
-
 }
