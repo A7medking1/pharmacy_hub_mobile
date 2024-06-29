@@ -13,6 +13,7 @@ import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/cart_screen.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/map_screen.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/success_payment.dart';
+import 'package:pharmacy_hub/src/features/chat/ui/chat_screen.dart';
 import 'package:pharmacy_hub/src/features/favorites/ui/favorites_screen.dart';
 import 'package:pharmacy_hub/src/features/home/data/models/product_model.dart';
 import 'package:pharmacy_hub/src/features/home/data/models/request_params.dart';
@@ -53,6 +54,7 @@ class Routes {
   static const myOrder = 'myOrder';
   static const similar = 'similar';
   static const alternative = 'alternative';
+  static const chat = 'chat';
 }
 
 class _RouterPath {
@@ -75,6 +77,7 @@ class _RouterPath {
   static const changePassword = '/changePassword';
   static const myOrder = '/myOrder';
   static const similar = '/similar';
+  static const chat = '/chat';
   static const alternative = '/alternative';
 }
 
@@ -237,6 +240,11 @@ class AppRouter {
         builder: (context, state) => AlternativeScreen(
           params: state.extra as AlternativeProductParams,
         ),
+      ),
+      GoRoute(
+        name: Routes.chat,
+        path: _RouterPath.chat,
+        builder: (context, state) =>  ChatScreen(),
       ),
     ],
   );

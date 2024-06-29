@@ -44,7 +44,7 @@ class LocationServices {
     }
     Placemark place = placeMark[0];
 
-    print(place);
+    //print(place);
 
     return AddressModel(
       street: '${place.name}, ${place.street}, ${place.locality},',
@@ -64,21 +64,9 @@ class LocationServices {
 
     Placemark place = placeMark[0];
 
-    print(place);
+   // print(place);
 
     return '${place.name}, ${place.locality}, ${place.administrativeArea}, ${place.isoCountryCode}';
   }
 }
 
-/*
-Name: Kafr Ghanam,
-    Street: ,
-ISO Country Code: EG,
-Country: Egypt,
-Postal code: ,
-Administrative area: Dakahlia,
-Subadministrative area: El Senbellawein,
-    Locality: El Senbellawein,
-    Sublocality: Kafr Ghanam,
-    Thoroughfare: ,
-Subthoroughfare:*/

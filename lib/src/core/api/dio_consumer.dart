@@ -30,9 +30,7 @@ class DioConsumer implements ApiConsumer {
   @override
   Future get(String path, {Map<String, dynamic>? queryParameters}) async {
     final userToken = sl<AppPreferences>().getUser().token;
-
     //  log('user token: $userToken');
-
     try {
       final response = await client.get(
         path,
@@ -137,10 +135,11 @@ class DioConsumer implements ApiConsumer {
           case StatusCode.unprocessableEntity:
           case StatusCode.badRequest:
           case StatusCode.tooManyRequests:
-            throw BadRequestException(
-                ErrorMessageModel.fromJson(const {
-                  'message': 'something went wrong !!',
-                },));
+            throw BadRequestException(ErrorMessageModel.fromJson(
+              const {
+                'message': 'something went wrong !!',
+              },
+            ));
           case StatusCode.unauthorized:
             throw NotFoundException(ErrorMessageModel.fromJson(
               const {

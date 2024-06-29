@@ -12,8 +12,8 @@ import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
 import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 import 'package:pharmacy_hub/src/features/order/logic/order_bloc.dart';
 
-class ThirdStepPaymentWidget extends StatelessWidget {
-  const ThirdStepPaymentWidget({
+class StepPaymentWidget extends StatelessWidget {
+  const StepPaymentWidget({
     super.key,
   });
 

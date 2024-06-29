@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pharmacy_hub/src/core/enums.dart';
 import 'package:pharmacy_hub/src/core/helper.dart';
 import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
@@ -13,8 +14,8 @@ import 'package:pharmacy_hub/src/core/widget/RequestWidget.dart';
 import 'package:pharmacy_hub/src/features/home/logic/home_bloc.dart';
 import 'package:pharmacy_hub/src/features/home/ui/all_product_screen.dart';
 import 'package:pharmacy_hub/src/features/home/ui/widget/category_card.dart';
-import 'package:pharmacy_hub/src/features/home/ui/widget/shimmer_widget.dart';
 import 'package:pharmacy_hub/src/features/home/ui/widget/product_card.dart';
+import 'package:pharmacy_hub/src/features/home/ui/widget/shimmer_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -89,6 +90,41 @@ class _HomeScreenState extends State<HomeScreen> {
                     fit: BoxFit.contain,
                   ),
                 ],
+              ),
+            ),
+            20.verticalSpace,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppSize.pagePadding.w),
+              child: GestureDetector(
+                onTap: () {
+                  context.pushNamed(Routes.chat);
+                },
+                child: Container(
+                  padding: EdgeInsetsDirectional.all(8.h),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withOpacity(.05),
+                    borderRadius: BorderRadius.circular(16.r),
+                  ),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        AppImages.chatBot,
+                        width: 80.w,
+                      ),
+                      20.horizontalSpace,
+                      Text(
+                        'Chat with us',
+                        style: GoogleFonts.acme(
+                          textStyle: TextStyle(
+                            color: AppColors.primary,
+                            fontSize: 22.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ),
             ),
             20.verticalSpace,

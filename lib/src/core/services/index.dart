@@ -12,6 +12,7 @@ import 'package:pharmacy_hub/src/features/cart/data/repository/cart_repository_l
 import 'package:pharmacy_hub/src/features/cart/data/repository/cart_repository.dart';
 import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/cart_screen.dart';
+import 'package:pharmacy_hub/src/features/chat/data/repo/chat_repo.dart';
 import 'package:pharmacy_hub/src/features/home/data/repository/repository.dart';
 import 'package:pharmacy_hub/src/features/home/logic/home_bloc.dart';
 import 'package:pharmacy_hub/src/features/home/logic/pagination_bloc/pagination_bloc.dart';

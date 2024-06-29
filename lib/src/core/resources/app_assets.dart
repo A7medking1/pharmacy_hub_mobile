@@ -4,15 +4,10 @@ class AppImages {
   static const String _image = 'assets/images';
   static const String logo = '$_image/logo.png';
   static const String slide = '$_image/slide.png';
-
-  // static const String cat2 = '$_image/cat2.png';
   static const String med = '$_image/med.png';
-
-/*
-  static const String medicine = '$_image/medicine.png';
-  static const String cart1 = '$_image/cart1.png';
-*/
   static const String pickMarker = '$_image/pick_marker.png';
+  static const String chatBot = '$_image/chatbot.png';
+  static const String user = '$_image/user.png';
 }
 
 class AppSvg {

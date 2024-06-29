@@ -13,14 +13,6 @@ class AppPreferences {
   AppPreferences(this._sharedPreferences);
 
   /// user
-  /*Future<void> setUserToken(String userToken) async {
-    await _sharedPreferences.setString(token, userToken);
-  }*/
-
-  /*String getUserToken() {
-    return _sharedPreferences.getString(token) ?? '';
-  }*/
-
   UserModel getUser() {
     String? userPref = _sharedPreferences.getString(userPrefs);
 

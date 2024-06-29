@@ -11,8 +11,8 @@ import 'package:pharmacy_hub/src/core/resources/routes_manager.dart';
 import 'package:pharmacy_hub/src/core/services/index.dart';
 import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 
-class SecondStepAddressWidget extends StatelessWidget {
-  const SecondStepAddressWidget({
+class StepAddressWidget extends StatelessWidget {
+  const StepAddressWidget({
     super.key,
   });
 

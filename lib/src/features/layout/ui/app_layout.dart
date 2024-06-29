@@ -210,6 +210,7 @@ class _AppLayOutState extends State<AppLayOut> {
                           },
                         ),
                       ),
+
                       Expanded(
                         child: buttomTap(
                           index: 1,
@@ -288,64 +289,3 @@ class _AppLayOutState extends State<AppLayOut> {
   }
 }
 
-// class DefaultAppBar extends StatelessWidget {
-//   const DefaultAppBar({
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ClipRRect(
-//       borderRadius: BorderRadius.vertical(bottom: Radius.circular(25.r)),
-//       child: AppBar(
-//         backgroundColor: AppColors.primaryWithOp,
-//         leading: Container(
-//           alignment: Alignment.center,
-//           // color: Colors.red,
-//           child: IconButton(
-//             onPressed: () {},
-//             icon: SvgPicture.asset(
-//               AppSvg.notification,
-//               color: Colors.white,
-//               fit: BoxFit.scaleDown,
-//             ),
-//           ),
-//         ),
-//         actions: [
-//           Column(
-//             children: [
-//               Container(
-//                 margin: EdgeInsetsDirectional.only(
-//                   top: 9.h,
-//                 ),
-//                 child: Text(
-//                   'PHARMACY HUB',
-//                   style: GoogleFonts.dosis(
-//                     fontSize: 18.sp,
-//                     textStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-//                     fontWeight: FontWeight.w700,
-//                   ),
-//                 ),
-//               ),
-//               const Spacer(),
-//               Text(
-//                 'Your medicine with one click',
-//                 style: context.titleSmall.copyWith(
-//                   fontSize: 10.sp,
-//                   color: Colors.white,
-//                 ),
-//               ),
-//             ],
-//           ),
-//           10.horizontalSpace,
-//           Container(
-//             margin: EdgeInsetsDirectional.only(end: 8.w, top: 10.h),
-//             child: SvgPicture.asset(
-//               AppSvg.appBarIcon,
-//             ),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }

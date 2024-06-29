@@ -3,10 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pharmacy_hub/src/core/helper.dart';
-import 'package:pharmacy_hub/src/core/resources/app_assets.dart';
 import 'package:pharmacy_hub/src/core/resources/app_colors.dart';
 import 'package:pharmacy_hub/src/core/services/index.dart';
 import 'package:pharmacy_hub/src/core/widget/RequestWidget.dart';
@@ -14,26 +11,16 @@ import 'package:pharmacy_hub/src/core/widget/custom_button.dart';
 import 'package:pharmacy_hub/src/features/cart/logic/cart_bloc.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/cart_bottom_nav_bar.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/cart_shimmer_loading.dart';
+import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/choose_deliver_method_stepWidget.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/easy_stepper_widget.dart';
+import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/empty_cart_widget.dart';
 import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/first_step_widget.dart';
-import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/second_step_widget.dart';
-import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/third_step_widget.dart';
+import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/address_widget.dart';
+import 'package:pharmacy_hub/src/features/cart/ui/cart_screen/widget/payment_widget.dart';
 import 'package:pharmacy_hub/src/features/order/logic/order_bloc.dart';
 
-class CartScreen extends StatefulWidget {
+class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
-
-  @override
-  State<CartScreen> createState() => _CartScreenState();
-}
-
-class _CartScreenState extends State<CartScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    //   BlocProvider.of<CartBloc>(context).add(const GetCartDataEvent());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,16 +52,8 @@ class _CartScreenState extends State<CartScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            //    const BackButton(),
                             const CustomEasyStepper(),
-                            if (state.selectedStepper == 0)
-                              const FirstStepCartWidget(),
-                            if (state.selectedStepper == 1)
-                              const ChooseDeliverMethodStepWidget(),
-                            if (state.selectedStepper == 2)
-                              const SecondStepAddressWidget(),
-                            if (state.selectedStepper == 3)
-                              const ThirdStepPaymentWidget(),
+                            _getStepWidget(state.selectedStepper),
                           ],
                         ),
                       ),
@@ -89,162 +68,23 @@ class _CartScreenState extends State<CartScreen> {
       ),
     );
   }
-}
 
-class ChooseDeliverMethodStepWidget extends StatelessWidget {
-  const ChooseDeliverMethodStepWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<OrderBloc, OrderState>(
-      builder: (context, orderState) {
-        return Expanded(
-          child: Padding(
-            padding: const EdgeInsetsDirectional.all(20),
-            child: Column(
-              children: [
-                Text(
-                  'Please select a shipping option that best suits your needs. We offer a range of choices varying in speed and cost.',
-                  style: context.titleSmall.copyWith(
-                    fontSize: 15.sp,
-                  ),
-                ),
-                25.h.verticalSpace,
-                RequestStateWidget(
-                  reqState: orderState.getDeliveryReqState,
-                  onLoading: const CircularProgressIndicator(),
-                  onSuccess: Expanded(
-                    child: GridView.builder(
-                      itemCount: orderState.deliveryMethods.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        childAspectRatio: 1 / 1.1,
-                      ),
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () {
-                            context
-                                .read<OrderBloc>()
-                                .add(ChangeDeliveryMethodEvent(index: index));
-                          },
-                          child: Opacity(
-                            opacity: orderState.selectedDeliveryMethod == index
-                                ? 1
-                                : 0.8,
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 100),
-                              padding: EdgeInsets.all(10.h),
-                              decoration: BoxDecoration(
-                                color: AppColors.backGroundColor,
-                                borderRadius:
-                                    BorderRadiusDirectional.circular(15.r),
-                                border:
-                                    orderState.selectedDeliveryMethod == index
-                                        ? Border.all(
-                                            color: AppColors.primary,
-                                            width: 3.w,
-                                          )
-                                        : null,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Align(
-                                        alignment:
-                                            AlignmentDirectional.topCenter,
-                                        child: Text(
-                                          orderState
-                                              .deliveryMethods[index].name,
-                                          style: context.titleSmall,
-                                        ),
-                                      ),
-                                      15.verticalSpace,
-                                      Text(
-                                        orderState
-                                            .deliveryMethods[index].description,
-                                        style: context.titleSmall.copyWith(
-                                          color: AppColors.grey,
-                                        ),
-                                      ),
-                                      10.verticalSpace,
-                                      Text(
-                                          'Delivery Time: ${orderState.deliveryMethods[index].deliveryTime}',
-                                          style: context.titleSmall.copyWith(
-                                            color: AppColors.grey,
-                                            fontSize: 13.sp,
-                                          )),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  //10.verticalSpace,
-                                  Text(
-                                    'EGP ${orderState.deliveryMethods[index].cost}',
-                                    style: context.titleSmall.copyWith(
-                                      color: AppColors.primary,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
+  Widget _getStepWidget(int selectedStepper) {
+    switch (selectedStepper) {
+      case 0:
+        return const FirstStepCartWidget();
+      case 1:
+        return const ChooseDeliverMethodStepWidget();
+      case 2:
+        return const StepAddressWidget();
+      case 3:
+        return const StepPaymentWidget();
+      default:
+        return const SizedBox(); // Return an empty widget or handle the default case appropriately
+    }
   }
 }
 
-class EmptyCartWidget extends StatelessWidget {
-  const EmptyCartWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.sizeOf(context).width,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          /*   const Align(
-            alignment: AlignmentDirectional.topStart,
-            child: BackButton(),
-          ),*/
-          200.verticalSpace,
-          SvgPicture.asset(
-            AppSvg.cart,
-            height: 100.h,
-          ),
-          15.verticalSpace,
-          Padding(
-            padding: const EdgeInsets.all(15),
-            child: Text(
-              'Your cart is empty. Let\'s add some products!',
-              style: context.titleSmall,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class BackButton extends StatelessWidget {
   const BackButton({

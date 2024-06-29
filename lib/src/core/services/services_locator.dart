@@ -30,6 +30,7 @@ class ServicesLocator {
     sl.registerLazySingleton(() => AuthRepository(sl()));
     sl.registerLazySingleton(() => ProfileRepository(sl()));
     sl.registerLazySingleton(() => OrderRepository(sl()));
+    sl.registerLazySingleton(() => ChatRepository(sl()));
 
     sl.registerFactory(() => AuthBloc(sl()));
     sl.registerFactory(() => HomeBloc(sl()));
